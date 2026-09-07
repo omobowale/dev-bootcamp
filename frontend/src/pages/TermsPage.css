@@ -1,0 +1,26 @@
+.terms-page {
+  max-width: 760px;
+  padding: 8px 0 64px;
+}
+.terms-page__content {
+  padding: 40px 44px;
+}
+.terms-page__content h3 {
+  font-size: 16px;
+  margin: 28px 0 8px;
+}
+.terms-page__content h3:first-child {
+  margin-top: 0;
+}
+.terms-page__updated {
+  font-size: 12px;
+  margin: 18px 4px 0;
+}
+.terms-page__cta {
+  margin-top: 40px;
+}
+@media (max-width: 600px) {
+  .terms-page__content {
+    padding: 28px 24px;
+  }
+}

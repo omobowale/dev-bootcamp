@@ -1,0 +1,3 @@
+import { Link } from 'react-router-dom';
+import { Icon } from '../components/Icon';
+export function NotFoundPage() { return <section className="container section not-found"><span className="eyebrow">404 · A SMALL DETOUR</span><Icon name="compass" size={64} /><h1>This page took<br />a different turn.</h1><p className="text-muted">The link may have moved. Let’s get you back to something useful.</p><div className="hero-actions"><Link className="btn btn-primary" to="/courses">Explore courses <Icon name="arrow" size={17} /></Link><Link className="btn btn-secondary" to="/">Back home</Link></div></section>; }

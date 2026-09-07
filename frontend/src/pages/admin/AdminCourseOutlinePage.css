@@ -1,0 +1,204 @@
+/* Shared small icon-button used across the outline page and FAQ cards */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.icon-btn:hover:not(:disabled) {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.icon-btn--danger:hover:not(:disabled) {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+/* Section headings within the outline page */
+.outline-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.outline-section-heading__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--color-accent-soft, color-mix(in srgb, var(--color-primary) 14%, transparent));
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.outline-section-heading h2 {
+  font-size: 17px;
+  margin: 0;
+}
+.outline-section-heading p {
+  margin: 2px 0 0;
+  font-size: 12px;
+}
+
+/* Modules */
+.outline-module {
+  padding: 0;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.outline-module__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+.outline-module__position {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--color-surface-muted);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+.outline-module__title {
+  flex: 1;
+  min-width: 0;
+}
+.outline-module__title strong {
+  display: block;
+  font-size: 15px;
+}
+.outline-module__title p {
+  margin: 3px 0 0;
+  font-size: 12px;
+}
+.outline-module__actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.outline-module__body {
+  padding: 16px 20px 20px;
+}
+
+.outline-list {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.outline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 9px 9px 14px;
+  background: var(--color-surface-muted);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.outline-item__actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.outline-add-form {
+  display: flex;
+  gap: 10px;
+}
+.outline-add-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 13px;
+}
+
+.outline-add-module-card {
+  padding: 22px 24px;
+  border: 1.5px dashed var(--color-border);
+  background: var(--color-surface-muted);
+  box-shadow: none;
+}
+.outline-add-module-card .form-field {
+  margin-bottom: 14px;
+}
+.outline-add-module-card__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+
+/* FAQ cards (shared between per-course and site FAQs) */
+.faq-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+.faq-card--editing {
+  display: block;
+}
+.faq-card__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: var(--color-accent-soft, color-mix(in srgb, var(--color-primary) 14%, transparent));
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.faq-card__body {
+  flex: 1;
+  min-width: 0;
+}
+.faq-card__body strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.faq-card__answer {
+  font-size: 13px;
+}
+.faq-card__actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.outline-add-faq-card {
+  padding: 22px 24px;
+  border: 1.5px dashed var(--color-border);
+  background: var(--color-surface-muted);
+  box-shadow: none;
+}

@@ -1,0 +1,49 @@
+package com.trainingplatform.controller;
+
+import com.trainingplatform.dto.CourseRequest;
+import com.trainingplatform.dto.CourseResponse;
+import com.trainingplatform.service.CourseService;
+import jakarta.validation.Valid;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/admin/courses")
+@RequiredArgsConstructor
+public class AdminCourseController {
+
+    private final CourseService courseService;
+
+    @GetMapping
+    public List<CourseResponse> list() {
+        return courseService.findAll();
+    }
+
+    @PostMapping
+    public CourseResponse create(@Valid @RequestBody CourseRequest request) {
+        return courseService.create(request);
+    }
+
+    @GetMapping("/{id}")
+    public CourseResponse get(@PathVariable Long id) {
+        return courseService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public CourseResponse update(@PathVariable Long id, @Valid @RequestBody CourseRequest request) {
+        return courseService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void archive(@PathVariable Long id) {
+        courseService.archive(id);
+    }
+}

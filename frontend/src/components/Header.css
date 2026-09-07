@@ -1,0 +1,109 @@
+.site-header {
+  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  backdrop-filter: blur(18px);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 80px;
+}
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.site-header__link {
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--color-text-muted);
+  border-radius: 7px;
+  padding: 8px 13px;
+}
+.site-header__link:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+.site-header__link--active {
+  color: var(--color-primary);
+  background: var(--color-accent-soft);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.header-cta {
+  min-height: 42px;
+  padding: 10px 17px;
+  font-size: 12px;
+}
+.site-header__toggle {
+  display: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.mobile-cta {
+  display: none;
+}
+@media (max-width: 1000px) {
+  .site-header__inner {
+    gap: 16px;
+  }
+  .site-header__link {
+    padding: 8px;
+    font-size: 12px;
+  }
+  .header-actions {
+    gap: 10px;
+  }
+  .brand {
+    font-size: 19px;
+  }
+}
+@media (max-width: 1000px) {
+  .site-header__inner {
+    height: 72px;
+  }
+  .site-header__toggle {
+    display: grid;
+  }
+  .header-cta {
+    display: none;
+  }
+  .site-header__nav {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    padding: 20px 22px 24px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 20px 30px #11182715;
+  }
+  .site-header__nav--open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .site-header__link {
+    font-size: 14px;
+    padding: 12px;
+  }
+  .mobile-cta {
+    display: flex;
+    margin-top: 8px;
+  }
+}

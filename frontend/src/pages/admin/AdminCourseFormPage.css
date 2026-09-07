@@ -1,0 +1,123 @@
+.course-form-section {
+  margin-bottom: 34px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--color-border);
+}
+.course-form-section:last-of-type {
+  margin-bottom: 28px;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.course-form-online-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-primary);
+  background: var(--color-accent-soft);
+  border-radius: 9px;
+  padding: 10px 14px;
+  margin: -6px 0 14px;
+}
+
+.course-form-image-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.course-form-image-row .form-field {
+  flex: 1;
+  min-width: 0;
+}
+.course-form-image-preview {
+  flex-shrink: 0;
+  width: 74px;
+  height: 74px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  background-size: cover;
+  background-position: center;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-muted);
+  margin-top: 26px;
+}
+
+.option-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+}
+.option-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.option-card:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 40%, var(--color-border));
+}
+.option-card--active {
+  border-color: var(--color-primary);
+  background: var(--color-accent-soft, color-mix(in srgb, var(--color-primary) 8%, transparent));
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+.option-card__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: background-color 0.15s, color 0.15s;
+}
+.option-card--active .option-card__icon {
+  background: var(--color-primary);
+  color: #fff;
+}
+.option-card__body {
+  flex: 1;
+  min-width: 0;
+}
+.option-card__body strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+.option-card__body p {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+.option-card input[type="checkbox"] {
+  margin-top: 2px;
+  width: 17px;
+  height: 17px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.course-form-hint {
+  margin: -10px 0 14px;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .course-form-image-row {
+    flex-direction: column;
+  }
+  .course-form-image-preview {
+    margin-top: 0;
+  }
+}
