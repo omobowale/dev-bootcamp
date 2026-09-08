@@ -61,7 +61,7 @@ export function StudentClassSessionPage() {
             )}
 
             {(session.meetingLink || session.recordingUrl) && (
-              <div className="card student-class-card student-class-card__links">
+              <div className="student-class-card__links">
                 {session.meetingLink && (
                   <a href={session.meetingLink} target="_blank" rel="noreferrer" className="btn btn-primary">
                     <Icon name="diagonal" size={15} /> Join live class
