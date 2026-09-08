@@ -11,9 +11,10 @@ public record StudentClassSessionResponse(
         Instant scheduledAt,
         String meetingLink,
         String recordingUrl,
-        List<LessonSectionDto> sections) {
+        List<LessonSectionDto> sections,
+        StudentQuizSummaryResponse quiz) {
 
-    public static StudentClassSessionResponse from(ClassSession session) {
+    public static StudentClassSessionResponse from(ClassSession session, StudentQuizSummaryResponse quiz) {
         return new StudentClassSessionResponse(
                 session.getId(),
                 session.getTitle(),
@@ -21,6 +22,7 @@ public record StudentClassSessionResponse(
                 session.getScheduledAt(),
                 session.getMeetingLink(),
                 session.getRecordingUrl(),
-                session.getSections().stream().map(LessonSectionDto::from).toList());
+                session.getSections().stream().map(LessonSectionDto::from).toList(),
+                quiz);
     }
 }

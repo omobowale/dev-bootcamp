@@ -147,3 +147,40 @@ export interface AdminFaq {
   answer: string;
   position: number;
 }
+
+export interface AdminQuizOption {
+  text: string;
+  correct: boolean;
+}
+
+export interface AdminQuizQuestion {
+  id: number;
+  quizId: number;
+  text: string;
+  points: number;
+  explanation: string | null;
+  position: number;
+  options: AdminQuizOption[];
+}
+
+export type AdminQuizQuestionInput = Omit<AdminQuizQuestion, "id" | "quizId">;
+
+export interface AdminQuiz {
+  id: number;
+  classSessionId: number;
+  passingPercentage: number;
+  maxAttempts: number | null;
+  questions: AdminQuizQuestion[];
+}
+
+export interface AdminQuizAttempt {
+  id: number;
+  studentId: string;
+  studentName: string;
+  score: number | null;
+  totalPossible: number | null;
+  percentage: number | null;
+  passed: boolean | null;
+  startedAt: string;
+  submittedAt: string | null;
+}

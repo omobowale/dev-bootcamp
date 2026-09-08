@@ -10,6 +10,7 @@ import { useUnsavedChanges } from "../../hooks/useUnsavedChanges";
 import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { RichTextEditor } from "../../components/admin/RichTextEditor";
+import { AdminQuizEditor } from "./AdminQuizEditor";
 import { Icon } from "../../components/Icon";
 import { ROUTES, adminCourseOutlinePath } from "../../constants/routes";
 import type { AdminClassSessionInput, LessonSectionInput } from "../../types/admin";
@@ -277,6 +278,23 @@ export function AdminClassSessionFormPage() {
           </Link>
         </div>
       </form>
+
+      {isEditing && classSessionId && (
+        <div className="card admin-form-panel">
+          <div className="outline-section-heading" style={{ marginBottom: 18 }}>
+            <span className="outline-section-heading__icon">
+              <Icon name="check" size={16} />
+            </span>
+            <div>
+              <h2 style={{ margin: 0 }}>Quiz</h2>
+              <p className="text-muted" style={{ margin: "2px 0 0" }}>
+                Auto-graded multiple-choice questions for this class. Saved independently of the class form above.
+              </p>
+            </div>
+          </div>
+          <AdminQuizEditor classSessionId={classSessionId} />
+        </div>
+      )}
     </div>
   );
 }

@@ -19,6 +19,7 @@ export const QUERY_KEYS = {
     enrollments: ["student", "enrollments"] as const,
     classesForCourse: (courseId: number) => ["student", "courses", courseId, "classes"] as const,
     classDetail: (classSessionId: number) => ["student", "classes", classSessionId] as const,
+    quizAttemptResult: (attemptId: number) => ["student", "quiz-attempts", attemptId] as const,
   },
   admin: {
     courses: {
@@ -30,6 +31,10 @@ export const QUERY_KEYS = {
     },
     classSessions: {
       detail: (id: number) => ["admin", "class-sessions", id] as const,
+    },
+    quizzes: {
+      byClassSession: (classSessionId: number) => ["admin", "class-sessions", classSessionId, "quiz"] as const,
+      attempts: (quizId: number) => ["admin", "quizzes", quizId, "attempts"] as const,
     },
     cohorts: {
       all: ["admin", "cohorts"] as const,

@@ -22,6 +22,8 @@ export const ROUTES = {
   studentClassSessionDetail: "/student/classes/:classSessionId",
   adminClassSessionNew: "/admin/courses/:courseId/modules/:moduleId/classes/new",
   adminClassSessionEdit: "/admin/courses/:courseId/modules/:moduleId/classes/:classSessionId",
+  studentQuizAttempt: "/student/quizzes/:quizId/attempt",
+  adminQuizAttempts: "/admin/courses/quizzes/:quizId/attempts",
 } as const;
 
 export function adminCourseOutlinePath(courseId: number): string {
@@ -62,4 +64,12 @@ export function registerPath(courseSlug?: string): string {
 
 export function studentInvitePath(token: string): string {
   return `/student/invite/${token}`;
+}
+
+export function studentQuizAttemptPath(quizId: number): string {
+  return `/student/quizzes/${quizId}/attempt`;
+}
+
+export function adminQuizAttemptsPath(quizId: number): string {
+  return `/admin/courses/quizzes/${quizId}/attempts`;
 }

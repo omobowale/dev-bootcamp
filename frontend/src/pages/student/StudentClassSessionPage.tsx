@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentClass, useStudentMe } from "../../hooks/student/useStudentPortal";
 import { LoadingState } from "../../components/LoadingState";
@@ -6,6 +6,7 @@ import { ErrorState } from "../../components/ErrorState";
 import { Icon } from "../../components/Icon";
 import { sanitizeRichText } from "../../utils/richText";
 import { formatDateTime } from "../../utils/formatDate";
+import { studentQuizAttemptPath } from "../../constants/routes";
 import "./StudentDashboardPage.css";
 
 export function StudentClassSessionPage() {
@@ -91,6 +92,38 @@ export function StudentClassSessionPage() {
                 )}
               </div>
             ))}
+
+            {session.quiz && (
+              <div className="card student-class-card quiz-summary-card">
+                <div>
+                  <h3 style={{ margin: "0 0 6px" }}>Quiz</h3>
+                  <p className="text-muted" style={{ margin: 0 }}>
+                    {session.quiz.questionCount} question{session.quiz.questionCount === 1 ? "" : "s"} · Pass at{" "}
+                    {session.quiz.passingPercentage}%
+                    {session.quiz.maxAttempts !== null && ` · ${session.quiz.maxAttempts} attempt${session.quiz.maxAttempts === 1 ? "" : "s"} allowed`}
+                  </p>
+                  {session.quiz.attemptsUsed > 0 && (
+                    <p className="text-muted" style={{ margin: "4px 0 0" }}>
+                      Best score: {session.quiz.bestPercentage?.toFixed(0)}%{" "}
+                      {session.quiz.bestPassed ? (
+                        <span className="quiz-result-correct">Passed</span>
+                      ) : (
+                        <span className="quiz-result-incorrect">Not passed yet</span>
+                      )}
+                    </p>
+                  )}
+                </div>
+                {session.quiz.canAttempt ? (
+                  <Link to={studentQuizAttemptPath(session.quiz.quizId)} className="btn btn-primary">
+                    {session.quiz.attemptsUsed > 0 ? "Retake quiz" : "Start quiz"}
+                  </Link>
+                ) : (
+                  <span className="text-muted">
+                    {session.quiz.questionCount === 0 ? "Not ready yet" : "No attempts remaining"}
+                  </span>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>

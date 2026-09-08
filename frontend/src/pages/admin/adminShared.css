@@ -201,6 +201,42 @@
     grid-template-columns: 1fr;
   }
 }
+.quiz-question-card {
+  margin-bottom: 16px;
+}
+.quiz-options-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.quiz-options-editor__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.quiz-options-editor__row input[type="radio"] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+}
+.quiz-options-editor__row input:not([type="radio"]) {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 15px;
+  min-height: 47px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 13px;
+}
+.quiz-options-editor__row input:not([type="radio"]):focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
 /* Workspace surfaces and controls */
 .admin-page {
   max-width: 1450px;

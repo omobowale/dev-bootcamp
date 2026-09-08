@@ -148,3 +148,44 @@
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
+
+.quiz-summary-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.quiz-result-correct {
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 650;
+}
+.quiz-result-incorrect {
+  color: var(--color-danger);
+  font-size: 12px;
+  font-weight: 650;
+}
+.quiz-review-options {
+  list-style: none;
+  margin: 10px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+.quiz-review-options li {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--color-surface-muted);
+}
+.quiz-review-options__correct {
+  background: color-mix(in srgb, var(--color-primary) 18%, var(--color-surface-muted)) !important;
+  color: var(--color-primary);
+  font-weight: 650;
+}
+.quiz-review-options__wrong-pick {
+  background: color-mix(in srgb, var(--color-danger) 15%, var(--color-surface-muted)) !important;
+  color: var(--color-danger);
+}

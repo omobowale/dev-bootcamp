@@ -8,7 +8,9 @@ import { StudentInvitePage } from "./pages/student/StudentInvitePage";
 import { StudentDashboardPage } from "./pages/student/StudentDashboardPage";
 import { StudentCourseClassesPage } from "./pages/student/StudentCourseClassesPage";
 import { StudentClassSessionPage } from "./pages/student/StudentClassSessionPage";
+import { StudentQuizAttemptPage } from "./pages/student/StudentQuizAttemptPage";
 import { AdminClassSessionFormPage } from "./pages/admin/AdminClassSessionFormPage";
+import { AdminQuizAttemptsPage } from "./pages/admin/AdminQuizAttemptsPage";
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Outlet, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { StudentAuthProvider } from "./context/StudentAuthContext";
@@ -78,6 +80,14 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
               }
             />
             <Route
+              path="/student/quizzes/:quizId/attempt"
+              element={
+                <StudentProtectedRoute>
+                  <StudentQuizAttemptPage />
+                </StudentProtectedRoute>
+              }
+            />
+            <Route
               element={
                 <ProtectedRoute>
                   <AdminLayout />
@@ -94,6 +104,7 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
                 path="/admin/courses/:courseId/modules/:moduleId/classes/:classSessionId"
                 element={<AdminClassSessionFormPage />}
               />
+              <Route path="/admin/courses/quizzes/:quizId/attempts" element={<AdminQuizAttemptsPage />} />
               <Route path="/admin/cohorts" element={<AdminCohortsPage />} />
               <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
               <Route path="/admin/registrations/:id" element={<AdminRegistrationDetailPage />} />
