@@ -1,3 +1,4 @@
+import { useRubric,RubricBreakdown } from "../../components/AssignmentRubric";
 import { SubmissionHistory } from "../../components/SubmissionHistory";
 import { Select } from "../../components/Select";
 import { useState } from "react";
@@ -24,9 +25,17 @@ export function SubmissionCard({ submission, assignmentId }: { submission: Admin
     submission.status === "SUBMITTED" ? "UNDER_REVIEW" : submission.status,
   );
   const review = useReviewSubmission(assignmentId);
+  const rubric=useRubric(assignmentId);
+  const [criterionScores,setCriterionScores]=useState<Record<string,string>>(()=>Object.fromEntries((submission.rubricBreakdown??[]).map(m=>[m.id,String(m.points)])));
+  const [criterionFeedback,setCriterionFeedback]=useState<Record<string,string>>(()=>Object.fromEntries((submission.rubricBreakdown??[]).map(m=>[m.id,m.feedback??""])));
+  const structured=Boolean(rubric.data?.criteria.length);
+  const completeRubric=rubric.data?.criteria.every(c=>criterionScores[c.id]!==undefined&&criterionScores[c.id]!==""&&Number.isInteger(Number(criterionScores[c.id]))&&Number(criterionScores[c.id])>=0&&Number(criterionScores[c.id])<=c.maxPoints);
+  const rubricTotal=rubric.data?.criteria.reduce((sum,c)=>sum+Number(criterionScores[c.id]||0),0)??0;
 
   const handleReview = () => {
     review.mutate({
+      rubricVersion: rubric.data?.version,
+      criterionScores: structured&&status==="REVIEWED"?rubric.data!.criteria.map(c=>({id:c.id,points:Number(criterionScores[c.id]),feedback:criterionFeedback[c.id]||""})):undefined,
       submissionId: submission.id,
       version: submission.version,
       status,
@@ -61,6 +70,9 @@ export function SubmissionCard({ submission, assignmentId }: { submission: Admin
         </a>
       )}
 
+      {submission.rubricBreakdown&&<RubricBreakdown marks={submission.rubricBreakdown}/>}
+      {rubric.isError&&<ErrorState message="Could not load grading criteria." onRetry={()=>rubric.refetch()}/>}
+      {structured&&status==="REVIEWED"&&<section className="rubric-criteria" aria-label="Criterion scores">{rubric.data!.criteria.map(c=><article key={c.id} className="rubric-criterion"><div className="rubric-criterion__heading"><strong>{c.label}</strong><span>/{c.maxPoints} points</span></div><p className="text-muted">{c.description}</p><label className="form-field">Points for {c.label}<input type="number" min={0} max={c.maxPoints} step={1} value={criterionScores[c.id]??""} onChange={e=>setCriterionScores(values=>({...values,[c.id]:e.target.value}))}/></label><label className="form-field">Feedback for {c.label}<textarea rows={2} maxLength={2000} value={criterionFeedback[c.id]??""} onChange={e=>setCriterionFeedback(values=>({...values,[c.id]:e.target.value}))}/></label></article>)}<p className="rubric-points">Total: {rubricTotal} / {rubric.data!.maxScore}</p></section>}
       <div className="admin-form-grid">
         <label className="form-field">
           Status
@@ -70,7 +82,7 @@ export function SubmissionCard({ submission, assignmentId }: { submission: Admin
             <option value="NEEDS_RESUBMISSION">Needs resubmission</option>
           </Select>
         </label>
-        {status === "REVIEWED" && (
+        {status === "REVIEWED" && !structured && (
           <label className="form-field">
             Score
             <input type="number" min={0} value={score} onChange={(e) => setScore(e.target.value)} />
@@ -85,7 +97,7 @@ export function SubmissionCard({ submission, assignmentId }: { submission: Admin
       <button
         type="button"
         className="btn btn-primary"
-        disabled={review.isPending || (status === "REVIEWED" && score.trim() === "")}
+        disabled={review.isPending || !rubric.data || (status === "REVIEWED" && (structured ? !completeRubric : score.trim() === ""))}
         onClick={handleReview}
       >
         {review.isPending ? "Saving…" : "Save review"}

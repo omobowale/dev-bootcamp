@@ -1,0 +1,10 @@
+import { apiClient } from "../client";
+export type CalendarEvent={id:string;kind:"CLASS"|"ASSIGNMENT";title:string;courseTitle:string;startsAt:string;path:string;status:string};
+export type Notice={id:string;kind:string;title:string;detail:string;occurredAt:string;path:string;read:boolean};
+export type Inbox={items:Notice[];unreadCount:number};
+export type ReminderPreferences={enabled:boolean;hoursBefore:number};
+export const getInbox=async()=>(await apiClient.get<Inbox>("/api/student/workspace/notifications")).data;
+export const markNoticesRead=async(ids:string[])=>apiClient.post("/api/student/workspace/notifications/read",ids);
+export const getCalendar=async(from:string,to:string)=>(await apiClient.get<CalendarEvent[]>("/api/student/workspace/calendar",{params:{from,to}})).data;
+export const getReminderPreferences=async()=>(await apiClient.get<ReminderPreferences>("/api/student/workspace/preferences")).data;
+export const saveReminderPreferences=async(value:ReminderPreferences)=>(await apiClient.put<ReminderPreferences>("/api/student/workspace/preferences",value)).data;

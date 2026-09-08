@@ -12,7 +12,7 @@ public record StudentSubmissionResponse(
         Instant submittedAt,
         Integer score,
         String feedback,
-        Instant reviewedAt, Long version) {
+        Instant reviewedAt, Long version, java.util.List<com.trainingplatform.service.RubricData.Mark> rubricBreakdown) {
 
     public static StudentSubmissionResponse from(AssignmentSubmission submission) {
         return new StudentSubmissionResponse(
@@ -23,6 +23,6 @@ public record StudentSubmissionResponse(
                 submission.getSubmittedAt(),
                 submission.getScore(),
                 submission.getFeedback(),
-                submission.getReviewedAt(), submission.getVersion());
+                submission.getReviewedAt(), submission.getVersion(), com.trainingplatform.service.RubricData.marks(submission.getRubricBreakdown()));
     }
 }

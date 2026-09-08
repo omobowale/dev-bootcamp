@@ -61,6 +61,7 @@ export interface StudentQuizSummary {
 export type AssignmentSubmissionStatus = "SUBMITTED" | "UNDER_REVIEW" | "REVIEWED" | "NEEDS_RESUBMISSION";
 
 export interface StudentSubmission {
+  rubricBreakdown?: import("../components/AssignmentRubric").RubricMark[];
   version: number;
   responseText: string | null;
   attachmentUrl: string | null;

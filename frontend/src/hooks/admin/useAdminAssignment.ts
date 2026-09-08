@@ -53,7 +53,7 @@ export function useReviewSubmission(assignmentId: number) {
   const queryClient = useQueryClient();
   return useMutation({
     meta: { notify: true },
-    mutationFn: (vars: { version: number; submissionId: number; status: AssignmentSubmissionStatus; score: number | null; feedback: string | null }) =>
+    mutationFn: (vars: { rubricVersion?:number; criterionScores?:{id:string;points:number;feedback:string}[]; version: number; submissionId: number; status: AssignmentSubmissionStatus; score: number | null; feedback: string | null }) =>
       adminReviewSubmission(vars.submissionId, vars),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin","grading"] });

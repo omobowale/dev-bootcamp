@@ -1,4 +1,5 @@
 import { LearningOverview } from "../../components/LearningOverview";
+import { StudentTools } from "../../components/StudentTools";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
@@ -35,6 +36,7 @@ export function StudentCourseClassesPage() {
           </div>
         </div>
       </header>
+      <StudentTools/>
 
       <div className="container student-page">
         <div className="student-page__header">

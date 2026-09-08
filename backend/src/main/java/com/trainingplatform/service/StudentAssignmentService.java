@@ -50,6 +50,8 @@ public class StudentAssignmentService {
     @Transactional
     public StudentSubmissionResponse submit(Long assignmentId, String responseText, MultipartFile attachment, Long expectedVersion) {
         Student student = currentStudentProvider.getCurrentStudent();
+        jdbcTemplate.queryForObject("SELECT id FROM students WHERE id=? FOR UPDATE",Long.class,student.getId());
+        jdbcTemplate.queryForList("SELECT id FROM assignments WHERE id=? FOR UPDATE",Long.class,assignmentId);
         Assignment assignment = assignmentRepository
                 .findById(assignmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Assignment not found: " + assignmentId));
@@ -82,6 +84,7 @@ public class StudentAssignmentService {
             jdbcTemplate.update("INSERT INTO assignment_submission_revisions (submission_id, snapshot) SELECT id, row_to_json(s)::text FROM assignment_submissions s WHERE id = ?", submission.getId());
         }
         submission.setScore(null);
+        submission.setRubricBreakdown(null);
         submission.setFeedback(null);
         submission.setReviewedAt(null);
         submission.setResponseText(responseText);
@@ -95,6 +98,7 @@ public class StudentAssignmentService {
         submission.setSubmittedAt(Instant.now());
         submission = submissionRepository.saveAndFlush(submission);
 
+        jdbcTemplate.update("DELETE FROM assignment_drafts WHERE student_id=? AND assignment_id=?",student.getId(),assignmentId);
         return StudentSubmissionResponse.from(submission);
     }
 

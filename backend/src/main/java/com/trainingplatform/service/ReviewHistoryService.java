@@ -13,7 +13,7 @@ public class ReviewHistoryService {
     private final CourseEnrollmentRepository enrollments;
     private final CurrentStudentProvider current;
     private final JdbcTemplate jdbc;
-    public record Revision(String archivedAt,String responseText,Integer score,String feedback,String attachmentUrl) {}
+    public record Revision(String archivedAt,String responseText,Integer score,String feedback,String attachmentUrl,List<RubricData.Mark> rubricBreakdown) {}
     public List<Revision> adminHistory(Long id) {
         if(!submissions.existsById(id)) throw new ResourceNotFoundException("Submission not found.");return history(id);
     }
@@ -25,7 +25,7 @@ public class ReviewHistoryService {
     private List<Revision> history(Long id) {
         return jdbc.query("SELECT archived_at,snapshot FROM assignment_submission_revisions WHERE submission_id=? ORDER BY id DESC",(rs,n)->{
             var data=QuizSnapshot.JSON.readTree(rs.getString("snapshot"));
-            return new Revision(rs.getTimestamp("archived_at").toInstant().toString(),data.path("response_text").asText(""),data.path("score").isNumber()?data.path("score").asInt():null,data.path("feedback").asText(""),data.path("attachment_url").asText(""));
+            return new Revision(rs.getTimestamp("archived_at").toInstant().toString(),data.path("response_text").asText(""),data.path("score").isNumber()?data.path("score").asInt():null,data.path("feedback").asText(""),data.path("attachment_url").asText(""),RubricData.marks(data.path("rubric_breakdown").asText(null)));
         },id);
     }
 }

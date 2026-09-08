@@ -31,6 +31,7 @@ public class AdminAssignmentService {
     private final ClassSessionRepository classSessionRepository;
     private final CurrentAdminProvider currentAdminProvider;
     private final AdminActionLogService adminActionLogService;
+    private final EmailService emailService;
 
     @Transactional(readOnly = true)
     public Optional<AssignmentResponse> findForClassSession(Long classSessionId) {
@@ -58,7 +59,8 @@ public class AdminAssignmentService {
 
     @Transactional
     public AssignmentResponse update(Long assignmentId, AssignmentRequest request) {
-        Assignment assignment = getAssignmentOrThrow(assignmentId);
+        Assignment assignment = assignmentRepository.findForUpdate(assignmentId).orElseThrow(()->new ResourceNotFoundException("Assignment not found."));
+        RubricData.validate(RubricData.criteria(assignment.getRubricCriteria()),request.maxScore());
         assignment.setTitle(request.title());
         assignment.setLearningObjective(request.learningObjective());
         assignment.setInstructions(request.instructions());
@@ -92,23 +94,40 @@ public class AdminAssignmentService {
         if (request.status() == AssignmentSubmissionStatus.SUBMITTED) {
             throw new BadRequestException("An admin review can't set the status back to Submitted.");
         }
+        Integer reviewedScore=request.score();
+        var criteria=RubricData.criteria(submission.getAssignment().getRubricCriteria());
+        submission.setRubricBreakdown(null);
+        if(!criteria.isEmpty() && request.status()==AssignmentSubmissionStatus.REVIEWED) {
+            if(request.rubricVersion()==null || request.rubricVersion()!=submission.getAssignment().getRubricVersion())
+                throw new ConflictException("Reload the current rubric before grading.");
+            var marks=RubricData.grade(criteria,request.criterionScores());
+            reviewedScore=marks.stream().mapToInt(RubricData.Mark::points).sum();
+            submission.setRubricBreakdown(RubricData.json(marks));
+        }
         if (request.status() == AssignmentSubmissionStatus.REVIEWED) {
-            if (request.score() == null) {
+            if (reviewedScore == null) {
                 throw new BadRequestException("A score is required to mark a submission as Reviewed.");
             }
-            if (request.score() < 0 || request.score() > submission.getAssignment().getMaxScore()) {
+            if (reviewedScore < 0 || reviewedScore > submission.getAssignment().getMaxScore()) {
                 throw new BadRequestException("Score must be between 0 and " + submission.getAssignment().getMaxScore() + ".");
             }
         }
 
         submission.setStatus(request.status());
-        submission.setScore(request.score());
+        submission.setScore(reviewedScore);
         submission.setFeedback(request.feedback());
         if (request.status() == AssignmentSubmissionStatus.REVIEWED
                 || request.status() == AssignmentSubmissionStatus.NEEDS_RESUBMISSION) {
             submission.setReviewedAt(Instant.now());
         }
         submission = submissionRepository.saveAndFlush(submission);
+
+        // Best-effort, same as every other notification in this app — a failed send here
+        // never blocks the review itself from being recorded.
+        if (request.status() == AssignmentSubmissionStatus.REVIEWED
+                || request.status() == AssignmentSubmissionStatus.NEEDS_RESUBMISSION) {
+            emailService.sendAssignmentReviewed(submission);
+        }
 
         adminActionLogService.log(
                 currentAdminProvider.getCurrentAdmin(),

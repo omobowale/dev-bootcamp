@@ -1,6 +1,10 @@
+import { useAssignmentDraft } from "../../hooks/student/useAssignmentDraft";
+import { useUnsavedChanges } from "../../hooks/useUnsavedChanges";
+import { RubricBreakdown, StudentRubric } from "../../components/AssignmentRubric";
 import { SubmissionHistory } from "../../components/SubmissionHistory";
+import { StudentTools } from "../../components/StudentTools";
 import { ThemeToggle } from "../../components/ThemeToggle";
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentClass, useStudentMe } from "../../hooks/student/useStudentPortal";
@@ -25,23 +29,20 @@ const SUBMISSION_STATUS_LABELS: Record<string, string> = {
 function AssignmentSection({ assignment }: { assignment: StudentAssignment }) {
   const { student } = useStudentAuth();
   const draftKey = `assignment-draft:${student?.email}:${assignment.id}:${assignment.mySubmission?.version ?? "new"}`;
-  const [responseText, setResponseText] = useState(() => {
-    try { return sessionStorage.getItem(draftKey) ?? assignment.mySubmission?.responseText ?? ""; }
-    catch { return assignment.mySubmission?.responseText ?? ""; }
-  });
+  const editable=!assignment.mySubmission||assignment.mySubmission.status==="NEEDS_RESUBMISSION";
+  const draft=useAssignmentDraft(assignment.id,draftKey,assignment.mySubmission?.responseText??"",editable);
+  const responseText=draft.text;
   const [uploadProgress,setUploadProgress]=useState(0);
   const [confirmRevision,setConfirmRevision]=useState(false);
-  useEffect(() => {
-    try { sessionStorage.setItem(draftKey,responseText); } catch { /* Storage may be unavailable. */ }
-  }, [draftKey,responseText]);
   const [attachment, setAttachment] = useState<File | null>(null);
   const submit = useSubmitAssignment();
+  useUnsavedChanges(editable&&!submit.isSuccess&&(draft.dirty||draft.saving||!!attachment));
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (assignment.mySubmission && !confirmRevision) { setConfirmRevision(true); return; }
     submit.mutate({ version: assignment.mySubmission?.version, assignmentId: assignment.id, responseText, attachment, onUploadProgress: setUploadProgress }, {
-      onSuccess: () => { try { sessionStorage.removeItem(draftKey); } catch { /* Storage may be unavailable. */ } setAttachment(null); setConfirmRevision(false); },
+      onSuccess: () => { draft.submitted(); setAttachment(null); setConfirmRevision(false); },
     });
   };
 
@@ -66,6 +67,8 @@ function AssignmentSection({ assignment }: { assignment: StudentAssignment }) {
         </p>
       )}
 
+      <StudentRubric assignmentId={assignment.id}/>
+      {assignment.mySubmission?.rubricBreakdown&&<RubricBreakdown marks={assignment.mySubmission.rubricBreakdown}/>}
       {assignment.mySubmission && <SubmissionHistory url={`/api/student/assignments/${assignment.id}/history`} />}
       {assignment.mySubmission && (
         <div className="notice-panel" style={{ margin: "16px 0" }}>
@@ -90,17 +93,20 @@ function AssignmentSection({ assignment }: { assignment: StudentAssignment }) {
       {(!assignment.mySubmission || assignment.mySubmission.status === "NEEDS_RESUBMISSION") && <form onSubmit={handleSubmit}>
         <label className="form-field form-field--full">
           {assignment.mySubmission ? "Resubmit your response" : "Your response"}
-          <textarea rows={5} value={responseText} onChange={(e) => setResponseText(e.target.value)} />
+          <textarea rows={7} maxLength={100000} disabled={!draft.ready||submit.isPending} value={responseText} onChange={(e) => draft.setText(e.target.value)} />
         </label>
         <label className="form-field form-field--full">
           Attachment (optional){assignment.allowedAttachmentTypes && ` — ${assignment.allowedAttachmentTypes}`}
           <input accept={assignment.allowedAttachmentTypes || undefined} type="file" onChange={(e) => setAttachment(e.target.files?.[0] ?? null)} />
         </label>
-        <p className="text-muted">Response text is kept in this tab while you work. Attachments must be selected again after refreshing. Maximum file size: 10 MB.</p>
+        <p className="text-muted">Your response saves to your account as you write. Attachments stay on this device until submitted. Maximum file size: 10 MB.</p>
+        <p className="draft-status" role="status"><Icon name={draft.error?"alertTriangle":draft.saving||draft.dirty?"clock":"check"} size={15}/>{draft.error||(!draft.ready?"Restoring your draft…":draft.saving?"Saving to your account…":draft.dirty?"Changes waiting to save…":"Saved to your account")}</p>
+        {draft.error&&!draft.conflict&&<button type="button" className="btn btn-secondary" onClick={draft.retry}>Retry draft sync</button>}
+        {draft.conflict&&<div className="draft-conflict" role="alert"><strong>A different version was saved.</strong><p>Choose the text you want to continue with. If the submission changed, refresh to see its new status.</p><details><summary>Read the account draft</summary><p style={{whiteSpace:"pre-wrap"}}>{draft.conflict.responseText||"Empty draft"}</p></details><div><button type="button" className="btn btn-secondary" onClick={()=>draft.resolve(false)}>Use account draft</button><button type="button" className="btn btn-primary" onClick={()=>draft.resolve(true)}>Keep my text</button></div></div>}
         {confirmRevision && <p className="notice-panel" role="status">Your previous submission and feedback will be kept in history. Confirm to send this revision for a fresh review.</p>}
         {submit.isPending && attachment && <label className="form-field">Uploading {uploadProgress}%<progress max={100} value={uploadProgress} /></label>}
         {submit.isError && <p role="alert" className="form-error">Submission failed. Your draft is still here. Check the deadline and file restrictions, then try again.</p>}
-        <button type="submit" className="btn btn-primary" disabled={submit.isPending || (!responseText.trim() && !attachment)}>
+        <button type="submit" className="btn btn-primary" disabled={submit.isPending || !draft.ready || draft.saving || draft.dirty || !!draft.conflict || !!draft.error || (!responseText.trim() && !attachment)}>
 
           {submit.isPending ? "Submitting…" : confirmRevision ? "Confirm resubmission" : assignment.mySubmission ? "Resubmit" : "Submit assignment"}
         </button>
@@ -140,6 +146,7 @@ export function StudentClassSessionPage() {
           </div>
         </div>
       </header>
+      <StudentTools/>
 
       <div className="container student-page">
         {isLoading && <LoadingState label="Loading class…" />}
@@ -261,7 +268,7 @@ export function StudentClassSessionPage() {
               </div>
             )}
 
-            {session.assignment && <AssignmentSection assignment={session.assignment} />}
+            {session.assignment && <AssignmentSection key={`${session.assignment.id}-${session.assignment.mySubmission?.version??"new"}`} assignment={session.assignment} />}
           </>
         )}
       </div>

@@ -44,6 +44,8 @@ public class Assignment extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String rubric;
+    @Column(columnDefinition = "TEXT") private String rubricCriteria;
+    @Column(nullable = false) private long rubricVersion;
 
     @Column(name = "allowed_attachment_types")
     private String allowedAttachmentTypes;

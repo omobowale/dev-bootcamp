@@ -1,4 +1,5 @@
 import { useState, type MouseEvent } from "react";
+import { StudentTools } from "../../components/StudentTools";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { Link } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
@@ -91,6 +92,7 @@ export function StudentDashboardPage() {
           </div>
         </div>
       </header>
+      <StudentTools/>
 
       <div className="container student-page">
         <div className="student-page__header">

@@ -56,6 +56,7 @@ public class AssignmentSubmission extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String feedback;
+    @Column(columnDefinition = "TEXT") private String rubricBreakdown;
 
     @Column(name = "reviewed_at")
     private Instant reviewedAt;

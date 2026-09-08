@@ -1,3 +1,4 @@
+import { AdminRubricEditor } from "../../components/AssignmentRubric";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -164,6 +165,7 @@ export function AdminAssignmentEditor({ classSessionId }: { classSessionId: numb
       >
         {updateAssignment.isPending ? "Saving…" : "Save assignment"}
       </button>
+      <AdminRubricEditor assignmentId={assignment.id}/>
     </div>
   );
 }
