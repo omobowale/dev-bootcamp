@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<ApiError> handleUploadTooLarge(MaxUploadSizeExceededException ex) {
-        return build(HttpStatus.BAD_REQUEST, "That file is too large. The maximum size is 15MB.", null);
+        return build(HttpStatus.BAD_REQUEST, "That file is too large. The maximum size is 25MB.", null);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

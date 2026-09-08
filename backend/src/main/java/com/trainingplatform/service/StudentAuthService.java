@@ -32,9 +32,19 @@ public class StudentAuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
+    // A fixed, never-matching hash compared against when the email doesn't exist, so a failed
+    // login always pays the same BCrypt cost either way — otherwise a nonexistent email returns
+    // measurably faster than a wrong password on a real one (no hash comparison ran at all),
+    // letting an attacker enumerate registered emails by timing alone. Mirrors the same
+    // defense Spring Security's own DaoAuthenticationProvider uses for the admin login path.
+    private static final String DUMMY_HASH =
+            "$2a$10$7EqJtq98hPqEX7fNZaFWoOa3HkPmT5aNfPnrpP6P7qzWxYq7ByR3S";
+
     public LoginResponse login(LoginRequest request) {
         var userDetails = tryLoad(request.email());
-        if (userDetails == null || !passwordEncoder.matches(request.password(), userDetails.getPassword())) {
+        boolean passwordMatches = passwordEncoder.matches(
+                request.password(), userDetails != null ? userDetails.getPassword() : DUMMY_HASH);
+        if (userDetails == null || !passwordMatches) {
             throw new BadCredentialsException("Invalid email or password");
         }
 
@@ -42,7 +52,7 @@ public class StudentAuthService {
                 .findByEmail(request.email())
                 .orElseThrow(() -> new IllegalStateException("Student disappeared after authentication"));
 
-        String token = jwtService.generateToken(student.getEmail(), "STUDENT");
+        String token = jwtService.generateToken(student.getEmail(), "STUDENT", student.getAuthVersion());
         return new LoginResponse(token, student.getEmail(), student.getFullName(), "STUDENT");
     }
 
@@ -52,7 +62,7 @@ public class StudentAuthService {
                 .findByInviteToken(request.token())
                 .orElseThrow(() -> new BadRequestException("This invite link is invalid or has already been used."));
 
-        if (student.getInviteTokenExpiresAt() == null || student.getInviteTokenExpiresAt().isBefore(Instant.now())) {
+        if (student.isLoginSuspended() || student.getInviteTokenExpiresAt() == null || student.getInviteTokenExpiresAt().isBefore(Instant.now())) {
             throw new BadRequestException("This invite link has expired. Contact us for a new one.");
         }
 
@@ -62,7 +72,7 @@ public class StudentAuthService {
         student.setInviteTokenExpiresAt(null);
         studentRepository.save(student);
 
-        String token = jwtService.generateToken(student.getEmail(), "STUDENT");
+        String token = jwtService.generateToken(student.getEmail(), "STUDENT", student.getAuthVersion());
         return new LoginResponse(token, student.getEmail(), student.getFullName(), "STUDENT");
     }
 
