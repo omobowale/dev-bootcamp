@@ -168,7 +168,7 @@ export function CourseDetailPage() {
         )}
 
         {cohortsError && <ErrorState message="We couldn’t check cohort availability." onRetry={() => refetchCohorts()} />}
-        {!cohortsLoading && !cohortsError && !available && <div className="notice-panel"><h2>The next cohort is on its way.</h2><p>There are no open cohorts right now. Contact our team for upcoming dates.</p></div>}
+        {!cohortsLoading && !cohortsError && !available && <div className="notice-panel notice-panel--quiet"><h2>The next cohort is on its way.</h2><p>There are no open cohorts right now. Contact our team for upcoming dates.</p></div>}
         {cohorts && cohorts.length > 0 && (
           <section data-reveal>
             <h2>Upcoming cohorts</h2>

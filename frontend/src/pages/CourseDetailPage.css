@@ -2,6 +2,14 @@
   display: flex;
   width: fit-content;
 }
+.notice-panel--quiet {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  padding: 24px;
+}
+.notice-panel--quiet h2 {
+  font-size: 18px;
+}
 .course-detail-intro h1 {
   max-width: 800px;
 }
