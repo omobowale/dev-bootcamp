@@ -12,12 +12,14 @@ public record StudentClassSessionResponse(
         String meetingLink,
         String recordingUrl,
         List<LessonSectionDto> sections,
+        List<MaterialResponse> materials,
         StudentQuizSummaryResponse quiz,
         StudentAssignmentResponse assignment,
         boolean completed) {
 
     public static StudentClassSessionResponse from(
             ClassSession session,
+            List<MaterialResponse> materials,
             StudentQuizSummaryResponse quiz,
             StudentAssignmentResponse assignment,
             boolean completed) {
@@ -29,6 +31,7 @@ public record StudentClassSessionResponse(
                 session.getMeetingLink(),
                 session.getRecordingUrl(),
                 session.getSections().stream().map(LessonSectionDto::from).toList(),
+                materials,
                 quiz,
                 assignment,
                 completed);

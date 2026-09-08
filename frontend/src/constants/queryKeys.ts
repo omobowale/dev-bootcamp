@@ -45,6 +45,9 @@ export const QUERY_KEYS = {
     attendance: {
       byClassSession: (classSessionId: number) => ["admin", "class-sessions", classSessionId, "attendance"] as const,
     },
+    materials: {
+      byClassSession: (classSessionId: number) => ["admin", "class-sessions", classSessionId, "materials"] as const,
+    },
     completionCriteria: {
       byCourse: (courseId: number) => ["admin", "courses", courseId, "completion-criteria"] as const,
     },

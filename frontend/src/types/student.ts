@@ -93,9 +93,19 @@ export interface StudentClassSession {
   meetingLink: string | null;
   recordingUrl: string | null;
   sections: StudentLessonSection[];
+  materials: CourseMaterial[];
   quiz: StudentQuizSummary | null;
   assignment: StudentAssignment | null;
   completed: boolean;
+}
+
+export interface CourseMaterial {
+  id: number;
+  title: string;
+  description: string | null;
+  fileUrl: string;
+  fileName: string;
+  position: number;
 }
 
 export interface CourseProgress {

@@ -254,3 +254,17 @@ export interface AdminCertificate {
   completionDate: string;
   issuedAt: string;
 }
+
+export interface AdminCourseMaterial {
+  id: number;
+  title: string;
+  description: string | null;
+  fileUrl: string;
+  fileName: string;
+  position: number;
+}
+
+export interface MaterialMetaInput {
+  title: string;
+  description: string | null;
+}

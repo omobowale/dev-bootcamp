@@ -79,7 +79,7 @@ public class StudentAssignmentService {
         submission.setReviewedAt(null);
         submission.setResponseText(responseText);
         if (attachment != null && !attachment.isEmpty()) {
-            CloudinaryService.UploadResult uploaded = cloudinaryService.upload(attachment);
+            CloudinaryService.UploadResult uploaded = cloudinaryService.upload(attachment, "assignment-submissions");
             submission.setAttachmentUrl(uploaded.url());
             submission.setAttachmentPublicId(uploaded.publicId());
             submission.setAttachmentFilename(attachment.getOriginalFilename());

@@ -1,5 +1,6 @@
 package com.trainingplatform.service;
 
+import com.trainingplatform.dto.MaterialResponse;
 import com.trainingplatform.dto.StudentClassListItemResponse;
 import com.trainingplatform.dto.StudentClassSessionResponse;
 import com.trainingplatform.dto.StudentEnrollmentResponse;
@@ -11,6 +12,7 @@ import com.trainingplatform.exception.ResourceNotFoundException;
 import com.trainingplatform.repository.ClassCompletionRepository;
 import com.trainingplatform.repository.ClassSessionRepository;
 import com.trainingplatform.repository.CourseEnrollmentRepository;
+import com.trainingplatform.repository.CourseMaterialRepository;
 import com.trainingplatform.security.CurrentStudentProvider;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class StudentPortalService {
     private final StudentQuizService studentQuizService;
     private final StudentAssignmentService studentAssignmentService;
     private final ClassCompletionRepository classCompletionRepository;
+    private final CourseMaterialRepository courseMaterialRepository;
 
     public StudentMeResponse getMe() {
         return StudentMeResponse.from(currentStudentProvider.getCurrentStudent());
@@ -54,11 +57,14 @@ public class StudentPortalService {
                 .findById(classSessionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Class not found: " + classSessionId));
         requireEnrolled(student, session.getModule().getCourse().getId());
+        List<MaterialResponse> materials = courseMaterialRepository.findByClassSessionIdOrderByPositionAsc(classSessionId).stream()
+                .map(MaterialResponse::from)
+                .toList();
         var quiz = studentQuizService.summaryFor(classSessionId, student).orElse(null);
         var assignment = studentAssignmentService.summaryFor(classSessionId, student).orElse(null);
         boolean completed =
                 classCompletionRepository.existsByClassSessionIdAndStudentId(classSessionId, student.getId());
-        return StudentClassSessionResponse.from(session, quiz, assignment, completed);
+        return StudentClassSessionResponse.from(session, materials, quiz, assignment, completed);
     }
 
     private void requireEnrolled(Student student, Long courseId) {

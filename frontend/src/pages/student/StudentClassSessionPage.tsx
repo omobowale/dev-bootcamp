@@ -175,6 +175,22 @@ export function StudentClassSessionPage() {
               </div>
             )}
 
+            {session.materials.length > 0 && (
+              <div className="card student-class-card">
+                <h3>Materials</h3>
+                <ul className="student-materials-list">
+                  {session.materials.map((material) => (
+                    <li key={material.id}>
+                      <a href={material.fileUrl} target="_blank" rel="noreferrer" className="text-link">
+                        <Icon name="book" size={14} /> {material.title}
+                      </a>
+                      {material.description && <p className="text-muted" style={{ margin: "2px 0 0" }}>{material.description}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {session.sections.length === 0 && (
               <div className="notice-panel">
                 <Icon name="book" size={24} />

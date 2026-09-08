@@ -14,6 +14,7 @@ import { RichTextEditor } from "../../components/admin/RichTextEditor";
 import { AdminQuizEditor } from "./AdminQuizEditor";
 import { AdminAssignmentEditor } from "./AdminAssignmentEditor";
 import { AdminAttendanceEditor } from "./AdminAttendanceEditor";
+import { AdminMaterialsEditor } from "./AdminMaterialsEditor";
 import { Icon } from "../../components/Icon";
 import { ROUTES, adminCourseOutlinePath } from "../../constants/routes";
 import type { AdminClassSessionInput, LessonSectionInput } from "../../types/admin";
@@ -159,7 +160,7 @@ export function AdminClassSessionFormPage() {
         </Link>
       </div>
 
-      <nav className="academic-section-nav" aria-label="Class editor sections"><a href="#class-details">Class details</a><a href="#lesson-content">Lesson content</a>{isEditing && <><a href="#class-quiz">Quiz</a><a href="#class-assignment">Assignment</a><a href="#class-attendance">Attendance</a></>}</nav><form id="class-details" className="card admin-form-panel" onSubmit={handleSubmit}>
+      <nav className="academic-section-nav" aria-label="Class editor sections"><a href="#class-details">Class details</a><a href="#lesson-content">Lesson content</a>{isEditing && <><a href="#class-quiz">Quiz</a><a href="#class-assignment">Assignment</a><a href="#class-attendance">Attendance</a><a href="#class-materials">Materials</a></>}</nav><form id="class-details" className="card admin-form-panel" onSubmit={handleSubmit}>
         {error && (
           <div className="form-error" role="alert">
             {error}
@@ -339,6 +340,23 @@ export function AdminClassSessionFormPage() {
             </div>
           </div>
           <AdminAttendanceEditor classSessionId={classSessionId} />
+        </div>
+      )}
+
+      {isEditing && classSessionId && (
+        <div id="class-materials" className="card admin-form-panel">
+          <div className="outline-section-heading" style={{ marginBottom: 18 }}>
+            <span className="outline-section-heading__icon">
+              <Icon name="book" size={16} />
+            </span>
+            <div>
+              <h2 style={{ margin: 0 }}>Materials</h2>
+              <p className="text-muted" style={{ margin: "2px 0 0" }}>
+                Downloadable resources for this class — slides, cheat sheets, sample code. Saved independently of the class form above.
+              </p>
+            </div>
+          </div>
+          <AdminMaterialsEditor classSessionId={classSessionId} />
         </div>
       )}
     </div>

@@ -17,10 +17,12 @@ spring:
     locations: classpath:db/migration
   servlet:
     multipart:
-      # Assignment attachments (Phase 11) — comfortably above typical PDFs/zips of coursework
-      # without inviting abuse; Cloudinary itself caps free-tier uploads around 10MB anyway.
-      max-file-size: 15MB
-      max-request-size: 15MB
+      # Ceiling shared by assignment attachments (Phase 11, capped stricter at 10MB in
+      # StudentAssignmentService) and course materials (Phase 14, capped at 20MB in
+      # AdminMaterialService) — set a bit above the higher of the two so the app's own clean
+      # BadRequestException fires before Spring's raw multipart limit would.
+      max-file-size: 25MB
+      max-request-size: 25MB
   mail:
     host: ${BREVO_SMTP_HOST:smtp-relay.brevo.com}
     port: ${BREVO_SMTP_PORT:587}

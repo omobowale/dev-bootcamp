@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Thin wrapper around the Cloudinary SDK for assignment attachments (Phase 11). Unlike
- * {@link EmailService}, which is best-effort everywhere because a failed email never changes
- * what the user asked for, a failed upload here DOES change the outcome the student asked for
- * (their attachment wouldn't actually be saved) — so this throws a clear error instead of
- * silently succeeding without the file.
+ * Thin wrapper around the Cloudinary SDK, shared by assignment attachments (Phase 11) and course
+ * materials (Phase 14) — each caller picks its own folder. Unlike {@link EmailService}, which is
+ * best-effort everywhere because a failed email never changes what the user asked for, a failed
+ * upload here DOES change the outcome the caller asked for (the file wouldn't actually be saved)
+ * — so this throws a clear error instead of silently succeeding without the file.
  */
 @Slf4j
 @Service
@@ -43,19 +43,18 @@ public class CloudinaryService {
     }
 
     @SuppressWarnings("unchecked")
-    public UploadResult upload(MultipartFile file) {
+    public UploadResult upload(MultipartFile file, String folder) {
         if (!configured) {
             throw new BadRequestException(
                     "File attachments aren't available right now — you can still submit without one.");
         }
         try {
-            Map<String, Object> result = cloudinary
-                    .uploader()
-                    .upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto", "folder", "assignment-submissions"));
+            Map<String, Object> result =
+                    cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto", "folder", folder));
             return new UploadResult((String) result.get("secure_url"), (String) result.get("public_id"));
         } catch (IOException e) {
-            log.error("Failed to upload assignment attachment to Cloudinary", e);
-            throw new BadRequestException("Couldn't upload your attachment. Please try again.");
+            log.error("Failed to upload file to Cloudinary (folder={})", folder, e);
+            throw new BadRequestException("Couldn't upload the file. Please try again.");
         }
     }
 }
