@@ -24,3 +24,27 @@ export interface AdminStudent {
   enrolledCourseTitles: string[];
   createdAt: string;
 }
+
+export interface StudentClassListItem {
+  id: number;
+  moduleId: number;
+  moduleTitle: string;
+  title: string;
+  position: number;
+  scheduledAt: string | null;
+}
+
+export interface StudentLessonSection {
+  title: string;
+  body: string | null;
+}
+
+export interface StudentClassSession {
+  id: number;
+  title: string;
+  objectives: string | null;
+  scheduledAt: string | null;
+  meetingLink: string | null;
+  recordingUrl: string | null;
+  sections: StudentLessonSection[];
+}

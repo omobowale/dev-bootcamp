@@ -17,6 +17,8 @@ export const QUERY_KEYS = {
   student: {
     me: ["student", "me"] as const,
     enrollments: ["student", "enrollments"] as const,
+    classesForCourse: (courseId: number) => ["student", "courses", courseId, "classes"] as const,
+    classDetail: (classSessionId: number) => ["student", "classes", classSessionId] as const,
   },
   admin: {
     courses: {
@@ -25,6 +27,9 @@ export const QUERY_KEYS = {
     },
     modules: {
       byCourse: (courseId: number) => ["admin", "courses", courseId, "modules"] as const,
+    },
+    classSessions: {
+      detail: (id: number) => ["admin", "class-sessions", id] as const,
     },
     cohorts: {
       all: ["admin", "cohorts"] as const,

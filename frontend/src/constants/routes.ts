@@ -18,10 +18,30 @@ export const ROUTES = {
   adminStudents: "/admin/students",
   studentLogin: "/student/login",
   student: "/student",
+  studentCourseClasses: "/student/courses/:courseId/classes",
+  studentClassSessionDetail: "/student/classes/:classSessionId",
+  adminClassSessionNew: "/admin/courses/:courseId/modules/:moduleId/classes/new",
+  adminClassSessionEdit: "/admin/courses/:courseId/modules/:moduleId/classes/:classSessionId",
 } as const;
 
 export function adminCourseOutlinePath(courseId: number): string {
   return `/admin/courses/${courseId}/outline`;
+}
+
+export function adminClassSessionNewPath(courseId: number, moduleId: number): string {
+  return `/admin/courses/${courseId}/modules/${moduleId}/classes/new`;
+}
+
+export function adminClassSessionEditPath(courseId: number, moduleId: number, classSessionId: number): string {
+  return `/admin/courses/${courseId}/modules/${moduleId}/classes/${classSessionId}`;
+}
+
+export function studentCourseClassesPath(courseId: number): string {
+  return `/student/courses/${courseId}/classes`;
+}
+
+export function studentClassSessionDetailPath(classSessionId: number): string {
+  return `/student/classes/${classSessionId}`;
 }
 
 export function adminCourseEditPath(courseId: number): string {

@@ -1,5 +1,5 @@
 import { apiClient } from "../client";
-import type { StudentEnrollment, StudentMe } from "../../types/student";
+import type { StudentClassListItem, StudentClassSession, StudentEnrollment, StudentMe } from "../../types/student";
 
 export async function getStudentMe(): Promise<StudentMe> {
   const response = await apiClient.get<StudentMe>("/api/student/me");
@@ -8,5 +8,15 @@ export async function getStudentMe(): Promise<StudentMe> {
 
 export async function getStudentEnrollments(): Promise<StudentEnrollment[]> {
   const response = await apiClient.get<StudentEnrollment[]>("/api/student/enrollments");
+  return response.data;
+}
+
+export async function getStudentClassesForCourse(courseId: number): Promise<StudentClassListItem[]> {
+  const response = await apiClient.get<StudentClassListItem[]>(`/api/student/courses/${courseId}/classes`);
+  return response.data;
+}
+
+export async function getStudentClass(classSessionId: number): Promise<StudentClassSession> {
+  const response = await apiClient.get<StudentClassSession>(`/api/student/classes/${classSessionId}`);
   return response.data;
 }

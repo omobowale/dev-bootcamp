@@ -6,6 +6,9 @@ import { AdminStudentsPage } from "./pages/admin/AdminStudentsPage";
 import { StudentLoginPage } from "./pages/student/StudentLoginPage";
 import { StudentInvitePage } from "./pages/student/StudentInvitePage";
 import { StudentDashboardPage } from "./pages/student/StudentDashboardPage";
+import { StudentCourseClassesPage } from "./pages/student/StudentCourseClassesPage";
+import { StudentClassSessionPage } from "./pages/student/StudentClassSessionPage";
+import { AdminClassSessionFormPage } from "./pages/admin/AdminClassSessionFormPage";
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Outlet, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { StudentAuthProvider } from "./context/StudentAuthContext";
@@ -59,6 +62,22 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
               }
             />
             <Route
+              path="/student/courses/:courseId/classes"
+              element={
+                <StudentProtectedRoute>
+                  <StudentCourseClassesPage />
+                </StudentProtectedRoute>
+              }
+            />
+            <Route
+              path="/student/classes/:classSessionId"
+              element={
+                <StudentProtectedRoute>
+                  <StudentClassSessionPage />
+                </StudentProtectedRoute>
+              }
+            />
+            <Route
               element={
                 <ProtectedRoute>
                   <AdminLayout />
@@ -70,6 +89,11 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
               <Route path="/admin/courses/new" element={<AdminCourseFormPage />} />
               <Route path="/admin/courses/:id/edit" element={<AdminCourseFormPage />} />
               <Route path="/admin/courses/:id/outline" element={<AdminCourseOutlinePage />} />
+              <Route path="/admin/courses/:courseId/modules/:moduleId/classes/new" element={<AdminClassSessionFormPage />} />
+              <Route
+                path="/admin/courses/:courseId/modules/:moduleId/classes/:classSessionId"
+                element={<AdminClassSessionFormPage />}
+              />
               <Route path="/admin/cohorts" element={<AdminCohortsPage />} />
               <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
               <Route path="/admin/registrations/:id" element={<AdminRegistrationDetailPage />} />

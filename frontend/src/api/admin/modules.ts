@@ -1,5 +1,5 @@
 import { apiClient } from "../client";
-import type { AdminModule, AdminTopic } from "../../types/admin";
+import type { AdminClassSession, AdminClassSessionInput, AdminModule, AdminTopic } from "../../types/admin";
 
 export async function adminGetModules(courseId: number): Promise<AdminModule[]> {
   const response = await apiClient.get<AdminModule[]>(`/api/admin/courses/${courseId}/modules`);
@@ -53,5 +53,41 @@ export async function adminDeleteTopic(topicId: number): Promise<void> {
 
 export async function adminReorderTopics(moduleId: number, orderedTopicIds: number[]): Promise<AdminTopic[]> {
   const response = await apiClient.put<AdminTopic[]>(`/api/admin/modules/${moduleId}/topics/reorder`, orderedTopicIds);
+  return response.data;
+}
+
+export async function adminGetClassSession(id: number): Promise<AdminClassSession> {
+  const response = await apiClient.get<AdminClassSession>(`/api/admin/class-sessions/${id}`);
+  return response.data;
+}
+
+export async function adminCreateClassSession(
+  moduleId: number,
+  input: AdminClassSessionInput,
+): Promise<AdminClassSession> {
+  const response = await apiClient.post<AdminClassSession>(`/api/admin/modules/${moduleId}/class-sessions`, input);
+  return response.data;
+}
+
+export async function adminUpdateClassSession(
+  id: number,
+  input: AdminClassSessionInput,
+): Promise<AdminClassSession> {
+  const response = await apiClient.put<AdminClassSession>(`/api/admin/class-sessions/${id}`, input);
+  return response.data;
+}
+
+export async function adminDeleteClassSession(id: number): Promise<void> {
+  await apiClient.delete(`/api/admin/class-sessions/${id}`);
+}
+
+export async function adminReorderClassSessions(
+  moduleId: number,
+  orderedClassSessionIds: number[],
+): Promise<AdminClassSession[]> {
+  const response = await apiClient.put<AdminClassSession[]>(
+    `/api/admin/modules/${moduleId}/class-sessions/reorder`,
+    orderedClassSessionIds,
+  );
   return response.data;
 }

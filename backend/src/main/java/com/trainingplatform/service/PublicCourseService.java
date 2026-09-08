@@ -86,6 +86,9 @@ public class PublicCourseService {
         List<TopicResponse> topics = topicRepository.findByModuleIdOrderByPositionAsc(module.getId()).stream()
                 .map(TopicResponse::from)
                 .toList();
-        return ModuleResponse.from(module, topics);
+        // Class sessions are gated lesson content for enrolled students only (see
+        // StudentPortalService) — this public endpoint never includes them, unlike the admin
+        // module listing.
+        return ModuleResponse.from(module, topics, List.of());
     }
 }

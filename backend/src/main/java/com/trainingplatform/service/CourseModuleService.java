@@ -1,11 +1,13 @@
 package com.trainingplatform.service;
 
+import com.trainingplatform.dto.ClassSessionResponse;
 import com.trainingplatform.dto.ModuleRequest;
 import com.trainingplatform.dto.ModuleResponse;
 import com.trainingplatform.dto.TopicResponse;
 import com.trainingplatform.entity.Course;
 import com.trainingplatform.entity.CourseModule;
 import com.trainingplatform.exception.ResourceNotFoundException;
+import com.trainingplatform.repository.ClassSessionRepository;
 import com.trainingplatform.repository.CourseModuleRepository;
 import com.trainingplatform.repository.CourseRepository;
 import com.trainingplatform.repository.CourseTopicRepository;
@@ -21,6 +23,7 @@ public class CourseModuleService {
 
     private final CourseModuleRepository moduleRepository;
     private final CourseTopicRepository topicRepository;
+    private final ClassSessionRepository classSessionRepository;
     private final CourseRepository courseRepository;
     private final CurrentAdminProvider currentAdminProvider;
     private final AdminActionLogService adminActionLogService;
@@ -109,6 +112,11 @@ public class CourseModuleService {
         List<TopicResponse> topics = topicRepository.findByModuleIdOrderByPositionAsc(module.getId()).stream()
                 .map(TopicResponse::from)
                 .toList();
-        return ModuleResponse.from(module, topics);
+        List<ClassSessionResponse> classSessions = classSessionRepository
+                .findByModuleIdOrderByPositionAsc(module.getId())
+                .stream()
+                .map(ClassSessionResponse::from)
+                .toList();
+        return ModuleResponse.from(module, topics, classSessions);
     }
 }

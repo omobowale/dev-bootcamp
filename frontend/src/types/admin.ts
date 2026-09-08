@@ -93,6 +93,7 @@ export interface AdminModule {
   description: string | null;
   position: number;
   topics: AdminTopic[];
+  classSessions: AdminClassSession[];
 }
 
 export interface AdminTopic {
@@ -101,6 +102,26 @@ export interface AdminTopic {
   title: string;
   position: number;
 }
+
+export interface LessonSectionInput {
+  title: string;
+  body: string | null;
+}
+
+export interface AdminClassSession {
+  id: number;
+  moduleId: number;
+  topicId: number | null;
+  title: string;
+  objectives: string | null;
+  scheduledAt: string | null;
+  meetingLink: string | null;
+  recordingUrl: string | null;
+  position: number;
+  sections: LessonSectionInput[];
+}
+
+export type AdminClassSessionInput = Omit<AdminClassSession, "id" | "moduleId">;
 
 export interface AdminCohort {
   id: number;

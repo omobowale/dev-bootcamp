@@ -5,6 +5,7 @@ import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { CourseArtwork } from "../../components/CourseArtwork";
 import { Icon } from "../../components/Icon";
+import { studentCourseClassesPath } from "../../constants/routes";
 import "../../components/CourseCard.css";
 import "./StudentDashboardPage.css";
 
@@ -52,7 +53,11 @@ export function StudentDashboardPage() {
         {enrollments && enrollments.length > 0 && (
           <div className="student-course-grid">
             {enrollments.map((enrollment) => (
-              <article className="course-card student-course-card" key={`${enrollment.courseId}-${enrollment.cohortId}`}>
+              <Link
+                to={studentCourseClassesPath(enrollment.courseId)}
+                className="course-card student-course-card"
+                key={`${enrollment.courseId}-${enrollment.cohortId}`}
+              >
                 <div className="course-card__image-link">
                   <CourseArtwork title={enrollment.courseTitle} image={enrollment.courseImage} />
                 </div>
@@ -65,10 +70,10 @@ export function StudentDashboardPage() {
                   </div>
                   <h3>{enrollment.courseTitle}</h3>
                   <p className="text-muted student-course-card__note">
-                    Lesson content for this course is on its way — check back soon.
+                    View classes <Icon name="arrow" size={13} />
                   </p>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         )}

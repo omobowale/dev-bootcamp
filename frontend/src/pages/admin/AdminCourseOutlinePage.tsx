@@ -7,8 +7,10 @@ import {
   useAdminModules,
   useCreateModule,
   useCreateTopic,
+  useDeleteClassSession,
   useDeleteModule,
   useDeleteTopic,
+  useReorderClassSessions,
   useReorderModules,
   useReorderTopics,
   useUpdateModule,
@@ -20,8 +22,8 @@ import { LoadingState } from "../../components/LoadingState";
 import { FaqEditor } from "../../components/admin/FaqEditor";
 import { RichTextEditor } from "../../components/admin/RichTextEditor";
 import { Icon } from "../../components/Icon";
-import { ROUTES } from "../../constants/routes";
-import type { AdminModule, AdminTopic } from "../../types/admin";
+import { ROUTES, adminClassSessionEditPath, adminClassSessionNewPath } from "../../constants/routes";
+import type { AdminClassSession, AdminModule, AdminTopic } from "../../types/admin";
 import "./adminShared.css";
 import "./AdminCourseOutlinePage.css";
 
@@ -34,6 +36,58 @@ function InlineTitle({ title, saving, onSave }: { title: string; saving: boolean
 function TopicRow({ topic, courseId, isFirst, isLast, onMove, onDelete }: { topic: AdminTopic; courseId: number; isFirst: boolean; isLast: boolean; onMove: (direction: 'up' | 'down') => void; onDelete: () => void }) {
   const update = useUpdateTopic(courseId);
   return <li className="outline-item"><InlineTitle title={topic.title} saving={update.isPending} onSave={(title, done) => update.mutate({ topicId: topic.id, input: { title, position: topic.position } }, { onSuccess: done })} /><div className="admin-actions-row"><button type="button" className="btn btn-secondary outline-btn" aria-label={`Move ${topic.title} up`} disabled={isFirst} onClick={() => onMove('up')}>↑</button><button type="button" className="btn btn-secondary outline-btn" aria-label={`Move ${topic.title} down`} disabled={isLast} onClick={() => onMove('down')}>↓</button><button type="button" className="btn btn-secondary outline-btn" aria-label={`Delete ${topic.title}`} onClick={onDelete}>Delete</button></div></li>;
+}
+
+function ClassSessionRow({
+  session,
+  courseId,
+  isFirst,
+  isLast,
+  onMove,
+  onDelete,
+}: {
+  session: AdminClassSession;
+  courseId: number;
+  isFirst: boolean;
+  isLast: boolean;
+  onMove: (direction: "up" | "down") => void;
+  onDelete: () => void;
+}) {
+  return (
+    <li className="outline-item">
+      <Link to={adminClassSessionEditPath(courseId, session.moduleId, session.id)} className="text-link">
+        <strong>{session.title}</strong>
+      </Link>
+      <div className="admin-actions-row">
+        <button
+          type="button"
+          className="btn btn-secondary outline-btn"
+          aria-label={`Move ${session.title} up`}
+          disabled={isFirst}
+          onClick={() => onMove("up")}
+        >
+          ↑
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary outline-btn"
+          aria-label={`Move ${session.title} down`}
+          disabled={isLast}
+          onClick={() => onMove("down")}
+        >
+          ↓
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary outline-btn"
+          aria-label={`Delete ${session.title}`}
+          onClick={onDelete}
+        >
+          Delete
+        </button>
+      </div>
+    </li>
+  );
 }
 
 function ModuleCard({
@@ -60,7 +114,33 @@ function ModuleCard({
   const reorderTopics = useReorderTopics(courseId);
   const createTopic = useCreateTopic(courseId);
   const deleteTopic = useDeleteTopic(courseId);
+  const reorderClassSessions = useReorderClassSessions(courseId);
+  const deleteClassSession = useDeleteClassSession(courseId);
   const confirm = useConfirm();
+
+  const moveClassSession = (sessionId: number, direction: "up" | "down") => {
+    const ids = module.classSessions.map((s) => s.id);
+    const index = ids.indexOf(sessionId);
+    const swapWith = direction === "up" ? index - 1 : index + 1;
+    if (swapWith < 0 || swapWith >= ids.length) return;
+    [ids[index], ids[swapWith]] = [ids[swapWith], ids[index]];
+    reorderClassSessions.mutate({ moduleId: module.id, orderedClassSessionIds: ids });
+  };
+
+  const handleDeleteClassSession = async (session: AdminClassSession) => {
+    try {
+      const ok = await confirm({
+        title: `Delete class "${session.title}"?`,
+        description: "This also deletes its lesson sections. This can't be undone.",
+        confirmLabel: "Delete class",
+        danger: true,
+        icon: "trash",
+      });
+      if (ok) deleteClassSession.mutate(session.id);
+    } catch {
+      /* Shared mutation feedback preserves the draft. */
+    }
+  };
 
   const moveTopic = (topicId: number, direction: "up" | "down") => {
     const ids = module.topics.map((t) => t.id);
@@ -183,6 +263,29 @@ function ModuleCard({
             <Icon name="plus" size={14} /> Add topic
           </button>
         </form>
+
+        <div className="outline-module__subheading">
+          <strong>Classes</strong>
+          <span className="text-muted">Gated lesson content for enrolled students only.</span>
+        </div>
+
+        <ul className="outline-list">
+          {module.classSessions.map((session, index) => (
+            <ClassSessionRow
+              key={session.id}
+              session={session}
+              courseId={courseId}
+              isFirst={index === 0}
+              isLast={index === module.classSessions.length - 1}
+              onMove={(direction) => moveClassSession(session.id, direction)}
+              onDelete={() => handleDeleteClassSession(session)}
+            />
+          ))}
+        </ul>
+
+        <Link to={adminClassSessionNewPath(courseId, module.id)} className="btn btn-secondary">
+          <Icon name="plus" size={14} /> Add class
+        </Link>
       </div>
     </div>
   );
