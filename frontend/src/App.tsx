@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { LoadingState } from "./components/LoadingState";
+const StudentWorkspacePage = lazy(() => import("./pages/student/StudentWorkspacePage").then(module => ({default:module.StudentWorkspacePage})));
 const StudentQuizResultPage = lazy(() => import("./pages/student/StudentQuizResultPage").then(module => ({ default: module.StudentQuizResultPage })));
 const AdminGradingPage = lazy(() => import("./pages/admin/AdminGradingPage").then(module => ({ default: module.AdminGradingPage })));
 const AdminStudentDetailPage = lazy(() => import("./pages/admin/AdminStudentDetailPage").then(module => ({ default: module.AdminStudentDetailPage })));
@@ -41,6 +42,7 @@ const AdminCohortsPage = lazy(() => import("./pages/admin/AdminCohortsPage").the
 const AdminRegistrationsPage = lazy(() => import("./pages/admin/AdminRegistrationsPage").then(module => ({ default: module.AdminRegistrationsPage })));
 const AdminRegistrationDetailPage = lazy(() => import("./pages/admin/AdminRegistrationDetailPage").then(module => ({ default: module.AdminRegistrationDetailPage })));
 const AdminGlobalFaqsPage = lazy(() => import("./pages/admin/AdminGlobalFaqsPage").then(module => ({ default: module.AdminGlobalFaqsPage })));
+const AdminActionLogPage = lazy(() => import("./pages/admin/AdminActionLogPage").then(module => ({ default: module.AdminActionLogPage })));
 
 import { Toasts } from './components/Toasts';
 import { RouteExperience } from './components/RouteExperience';
@@ -65,6 +67,8 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
             </Route>
 
             <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route path="/student/planner" element={<StudentProtectedRoute><StudentWorkspacePage/></StudentProtectedRoute>}/>
+            <Route path="/student/notifications" element={<StudentProtectedRoute><StudentWorkspacePage/></StudentProtectedRoute>}/>
             <Route path="/student/login" element={<StudentLoginPage />} />
             <Route path="/student/invite/:token" element={<StudentInvitePage />} />
             <Route
@@ -127,6 +131,7 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
               <Route path="/admin/settings/terms" element={<AdminTermsPage />} />
 <Route path="/admin/students/:studentId" element={<AdminStudentDetailPage />} /><Route path="/admin/grading" element={<AdminGradingPage />} /><Route path="/admin/students" element={<AdminStudentsPage />} />
 <Route path="/admin/faqs" element={<AdminGlobalFaqsPage />} />
+<Route path="/admin/activity" element={<AdminActionLogPage />} />
 <Route path="/admin/site-content" element={<AdminSiteContentPage />} />
             </Route>
           </Route>));

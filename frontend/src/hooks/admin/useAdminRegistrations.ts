@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  adminCreateManualEnrollment,
   adminGetRegistration,
   adminGetRegistrationActivity,
   adminGetRegistrations,
@@ -7,7 +8,7 @@ import {
   type AdminRegistrationFilters,
 } from "../../api/admin/registrations";
 import { QUERY_KEYS } from "../../constants/queryKeys";
-import type { RegistrationStatus } from "../../types/admin";
+import type { ManualEnrollmentInput, RegistrationStatus } from "../../types/admin";
 
 export function useAdminRegistrations(filters: AdminRegistrationFilters) {
   return useQuery({
@@ -40,6 +41,19 @@ export function useUpdateRegistrationStatus(id: number) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.admin.registrations.all });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.admin.registrations.activity(id) });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.admin.dashboard });
+    },
+  });
+}
+
+export function useCreateManualEnrollment() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { notify: true },
+    mutationFn: (input: ManualEnrollmentInput) => adminCreateManualEnrollment(input),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.admin.registrations.all });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.admin.students.all });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.admin.dashboard });
     },
   });

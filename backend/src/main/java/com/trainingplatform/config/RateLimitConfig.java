@@ -11,7 +11,10 @@ public class RateLimitConfig {
     public FilterRegistrationBean<RegistrationRateLimitFilter> registrationRateLimitFilter() {
         FilterRegistrationBean<RegistrationRateLimitFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new RegistrationRateLimitFilter());
-        registration.addUrlPatterns("/api/registrations", "/api/student/auth/recovery");
+        // Registration/recovery abuse and login brute-forcing are the same shape of problem —
+        // too many requests per IP in a short window — so they share one limiter and one budget.
+        registration.addUrlPatterns(
+                "/api/registrations", "/api/student/auth/recovery", "/api/admin/login", "/api/student/auth/login");
         registration.setOrder(1);
         return registration;
     }

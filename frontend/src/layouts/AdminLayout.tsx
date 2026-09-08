@@ -13,6 +13,7 @@ const links: { to: string; label: string; icon: IconName; end?: boolean }[] = [
   { to: ROUTES.adminRegistrations, label: "Registrations", icon: "users" },
   { to: "/admin/grading", label: "Grading queue", icon: "check" },
   { to: ROUTES.adminStudents, label: "Students", icon: "users" },
+  { to: "/admin/activity", label: "Activity log", icon: "clock" },
   { to: "/admin/settings/terms", label: "Terms & conditions", icon: "shield" },
   { to: "/admin/site-content", label: "Site content", icon: "spark" },
   { to: ROUTES.adminFaqs, label: "Site FAQs", icon: "book" },

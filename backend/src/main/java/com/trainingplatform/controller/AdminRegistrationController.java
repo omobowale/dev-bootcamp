@@ -3,6 +3,7 @@ package com.trainingplatform.controller;
 import com.trainingplatform.dto.AdminActionLogResponse;
 import com.trainingplatform.dto.AdminRegistrationDetailResponse;
 import com.trainingplatform.dto.AdminRegistrationListItemResponse;
+import com.trainingplatform.dto.ManualEnrollmentRequest;
 import com.trainingplatform.dto.PagedResponse;
 import com.trainingplatform.dto.RegistrationStatusUpdateRequest;
 import com.trainingplatform.entity.RegistrationStatus;
@@ -12,6 +13,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,5 +52,10 @@ public class AdminRegistrationController {
     public AdminRegistrationDetailResponse updateStatus(
             @PathVariable Long id, @Valid @RequestBody RegistrationStatusUpdateRequest request) {
         return adminRegistrationService.updateStatus(id, request.status());
+    }
+
+    @PostMapping("/manual")
+    public AdminRegistrationDetailResponse createManual(@Valid @RequestBody ManualEnrollmentRequest request) {
+        return adminRegistrationService.createManual(request);
     }
 }

@@ -6,6 +6,8 @@ import { useAdminCourses } from "../../hooks/admin/useAdminCourses";
 import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { StatusBadge } from "../../components/admin/StatusBadge";
+import { ManualEnrollmentModal } from "../../components/admin/ManualEnrollmentModal";
+import { Icon } from "../../components/Icon";
 import { REGISTRATION_STATUSES } from "../../constants/adminOptions";
 import { adminRegistrationDetailPath } from "../../constants/routes";
 import { formatDate } from "../../utils/formatDate";
@@ -13,6 +15,7 @@ import type { RegistrationStatus } from "../../types/admin";
 import "./adminShared.css";
 
 export function AdminRegistrationsPage() {
+  const [showManualModal, setShowManualModal] = useState(false);
   const [params, setParams] = useSearchParams();
   const status = (params.get('status') || '') as RegistrationStatus | '';
   const courseId = params.get('course') ? Number(params.get('course')) : '';
@@ -44,7 +47,12 @@ export function AdminRegistrationsPage() {
           <h1>Registrations</h1>
           <p className="text-muted">Filter, search, and update registration status.</p>
         </div>
+        <button type="button" className="btn btn-primary" onClick={() => setShowManualModal(true)}>
+          <Icon name="plus" size={14} /> Enroll manually
+        </button>
       </div>
+
+      {showManualModal && <ManualEnrollmentModal onClose={() => setShowManualModal(false)} />}
 
       <div className="admin-filters">
         <input

@@ -1,4 +1,5 @@
 import type { AdminRegistrationFilters } from "../api/admin/registrations";
+import type { AdminActionLogFilters } from "../api/admin/actionLogs";
 
 export const QUERY_KEYS = {
   courses: {
@@ -73,6 +74,9 @@ export const QUERY_KEYS = {
     },
     students: {
       all: ["admin", "students"] as const,
+    },
+    actionLogs: {
+      list: (filters: AdminActionLogFilters) => ["admin", "action-logs", "list", filters] as const,
     },
   },
 };

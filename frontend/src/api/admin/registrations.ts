@@ -1,5 +1,12 @@
 import { apiClient } from "../client";
-import type { AdminActionLog, AdminRegistrationDetail, AdminRegistrationListItem, PagedResponse, RegistrationStatus } from "../../types/admin";
+import type {
+  AdminActionLog,
+  AdminRegistrationDetail,
+  AdminRegistrationListItem,
+  ManualEnrollmentInput,
+  PagedResponse,
+  RegistrationStatus,
+} from "../../types/admin";
 
 export interface AdminRegistrationFilters {
   status?: RegistrationStatus | "";
@@ -41,5 +48,10 @@ export async function adminUpdateRegistrationStatus(
   status: RegistrationStatus,
 ): Promise<AdminRegistrationDetail> {
   const response = await apiClient.put<AdminRegistrationDetail>(`/api/admin/registrations/${id}/status`, { status });
+  return response.data;
+}
+
+export async function adminCreateManualEnrollment(input: ManualEnrollmentInput): Promise<AdminRegistrationDetail> {
+  const response = await apiClient.post<AdminRegistrationDetail>("/api/admin/registrations/manual", input);
   return response.data;
 }

@@ -45,6 +45,8 @@ export interface AdminRegistrationDetail {
 
 export interface AdminActionLog {
   action: string;
+  entityType: string | null;
+  entityId: number | null;
   details: string | null;
   adminName: string;
   createdAt: string;
@@ -205,6 +207,7 @@ export interface AdminAssignment {
 export type AdminAssignmentInput = Omit<AdminAssignment, "id" | "classSessionId">;
 
 export interface AdminSubmission {
+  rubricBreakdown?: import("../components/AssignmentRubric").RubricMark[];
   version: number;
   id: number;
   studentId: string;
@@ -269,4 +272,14 @@ export interface AdminCourseMaterial {
 export interface MaterialMetaInput {
   title: string;
   description: string | null;
+}
+
+export interface ManualEnrollmentInput {
+  fullName: string;
+  email: string;
+  whatsappNumber: string;
+  courseId: number;
+  cohortId: number;
+  experienceLevel: string;
+  preferredTime: string;
 }

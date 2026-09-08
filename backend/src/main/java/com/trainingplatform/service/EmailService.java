@@ -1,5 +1,7 @@
 package com.trainingplatform.service;
 
+import com.trainingplatform.entity.AssignmentSubmission;
+import com.trainingplatform.entity.AssignmentSubmissionStatus;
 import com.trainingplatform.entity.Registration;
 import com.trainingplatform.entity.Student;
 import lombok.extern.slf4j.Slf4j;
@@ -112,6 +114,58 @@ public class EmailService {
                         .formatted(student.getFullName(), courseTitle, student.getStudentId(), inviteUrl);
 
         send(student.getEmail(), "Set up your student portal access — " + student.getStudentId(), body);
+    }
+
+    public void sendAssignmentReviewed(AssignmentSubmission submission) {
+        Student student = submission.getStudent();
+        String assignmentTitle = submission.getAssignment().getTitle();
+        String courseTitle = submission.getAssignment().getClassSession().getModule().getCourse().getTitle();
+
+        String body;
+        String subject;
+        if (submission.getStatus() == AssignmentSubmissionStatus.NEEDS_RESUBMISSION) {
+            subject = "Resubmission requested — " + assignmentTitle;
+            body =
+                    """
+                    Hi %s,
+
+                    Your instructor has reviewed your submission for "%s" (%s) and asked you to resubmit it.
+                    %s
+
+                    Log in to your student portal to see the full feedback and submit an updated response.
+                    """
+                            .formatted(
+                                    student.getFullName(),
+                                    assignmentTitle,
+                                    courseTitle,
+                                    submission.getFeedback() != null && !submission.getFeedback().isBlank()
+                                            ? "\nFeedback: " + submission.getFeedback()
+                                            : "");
+        } else {
+            subject = "Your assignment has been reviewed — " + assignmentTitle;
+            body =
+                    """
+                    Hi %s,
+
+                    Your submission for "%s" (%s) has been reviewed.
+
+                    Score: %s/%s
+                    %s
+
+                    Log in to your student portal to see the full feedback.
+                    """
+                            .formatted(
+                                    student.getFullName(),
+                                    assignmentTitle,
+                                    courseTitle,
+                                    submission.getScore(),
+                                    submission.getAssignment().getMaxScore(),
+                                    submission.getFeedback() != null && !submission.getFeedback().isBlank()
+                                            ? "\nFeedback: " + submission.getFeedback()
+                                            : "");
+        }
+
+        send(student.getEmail(), subject, body);
     }
 
     public void sendStudentRecovery(Student student, String url) {
