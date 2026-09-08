@@ -36,6 +36,10 @@ export const QUERY_KEYS = {
       byClassSession: (classSessionId: number) => ["admin", "class-sessions", classSessionId, "quiz"] as const,
       attempts: (quizId: number) => ["admin", "quizzes", quizId, "attempts"] as const,
     },
+    assignments: {
+      byClassSession: (classSessionId: number) => ["admin", "class-sessions", classSessionId, "assignment"] as const,
+      submissions: (assignmentId: number) => ["admin", "assignments", assignmentId, "submissions"] as const,
+    },
     cohorts: {
       all: ["admin", "cohorts"] as const,
     },

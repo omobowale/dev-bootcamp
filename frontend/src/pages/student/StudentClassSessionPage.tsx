@@ -1,13 +1,92 @@
+import { useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentClass, useStudentMe } from "../../hooks/student/useStudentPortal";
+import { useSubmitAssignment } from "../../hooks/student/useStudentAssignment";
 import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { Icon } from "../../components/Icon";
 import { sanitizeRichText } from "../../utils/richText";
-import { formatDateTime } from "../../utils/formatDate";
+import { formatDate, formatDateTime } from "../../utils/formatDate";
 import { studentQuizAttemptPath } from "../../constants/routes";
+import type { StudentAssignment } from "../../types/student";
 import "./StudentDashboardPage.css";
+
+const SUBMISSION_STATUS_LABELS: Record<string, string> = {
+  SUBMITTED: "Submitted — awaiting review",
+  UNDER_REVIEW: "Under review",
+  REVIEWED: "Reviewed",
+  NEEDS_RESUBMISSION: "Needs resubmission",
+};
+
+function AssignmentSection({ assignment }: { assignment: StudentAssignment }) {
+  const [responseText, setResponseText] = useState(assignment.mySubmission?.responseText ?? "");
+  const [attachment, setAttachment] = useState<File | null>(null);
+  const submit = useSubmitAssignment();
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    submit.mutate({ assignmentId: assignment.id, responseText, attachment });
+  };
+
+  return (
+    <div className="card student-class-card">
+      <h3>{assignment.title}</h3>
+      {assignment.dueAt && <p className="text-muted">Due {formatDate(assignment.dueAt)}</p>}
+
+      {assignment.learningObjective && <p>{assignment.learningObjective}</p>}
+      {assignment.instructions && (
+        <div className="rich-content" dangerouslySetInnerHTML={{ __html: sanitizeRichText(assignment.instructions) }} />
+      )}
+      {assignment.tasks && (
+        <>
+          <h4>Tasks</h4>
+          <div className="rich-content" dangerouslySetInnerHTML={{ __html: sanitizeRichText(assignment.tasks) }} />
+        </>
+      )}
+      {assignment.submissionRequirements && (
+        <p className="text-muted">
+          <strong>Submission requirements:</strong> {assignment.submissionRequirements}
+        </p>
+      )}
+
+      {assignment.mySubmission && (
+        <div className="notice-panel" style={{ margin: "16px 0" }}>
+          <p>
+            <strong>{SUBMISSION_STATUS_LABELS[assignment.mySubmission.status]}</strong> ·{" "}
+            {formatDateTime(assignment.mySubmission.submittedAt)}
+          </p>
+          {assignment.mySubmission.score !== null && (
+            <p>
+              Score: {assignment.mySubmission.score}/{assignment.maxScore}
+            </p>
+          )}
+          {assignment.mySubmission.feedback && <p>Feedback: {assignment.mySubmission.feedback}</p>}
+          {assignment.mySubmission.attachmentUrl && (
+            <a href={assignment.mySubmission.attachmentUrl} target="_blank" rel="noreferrer" className="text-link">
+              {assignment.mySubmission.attachmentFilename ?? "View submitted attachment"}
+            </a>
+          )}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <label className="form-field form-field--full">
+          {assignment.mySubmission ? "Resubmit your response" : "Your response"}
+          <textarea rows={5} value={responseText} onChange={(e) => setResponseText(e.target.value)} />
+        </label>
+        <label className="form-field form-field--full">
+          Attachment (optional){assignment.allowedAttachmentTypes && ` — ${assignment.allowedAttachmentTypes}`}
+          <input type="file" onChange={(e) => setAttachment(e.target.files?.[0] ?? null)} />
+        </label>
+        <button type="submit" className="btn btn-primary" disabled={submit.isPending}>
+          {submit.isPending ? "Submitting…" : assignment.mySubmission ? "Resubmit" : "Submit assignment"}
+        </button>
+        {submit.isSuccess && <p className="quiz-result-correct" style={{ marginTop: 8 }}>Submitted!</p>}
+      </form>
+    </div>
+  );
+}
 
 export function StudentClassSessionPage() {
   const { classSessionId } = useParams<{ classSessionId: string }>();
@@ -124,6 +203,8 @@ export function StudentClassSessionPage() {
                 )}
               </div>
             )}
+
+            {session.assignment && <AssignmentSection assignment={session.assignment} />}
           </>
         )}
       </div>

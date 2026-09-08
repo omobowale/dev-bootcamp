@@ -25,6 +25,7 @@ public class StudentPortalService {
     private final CourseEnrollmentRepository courseEnrollmentRepository;
     private final ClassSessionRepository classSessionRepository;
     private final StudentQuizService studentQuizService;
+    private final StudentAssignmentService studentAssignmentService;
 
     public StudentMeResponse getMe() {
         return StudentMeResponse.from(currentStudentProvider.getCurrentStudent());
@@ -52,7 +53,8 @@ public class StudentPortalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Class not found: " + classSessionId));
         requireEnrolled(student, session.getModule().getCourse().getId());
         var quiz = studentQuizService.summaryFor(classSessionId, student).orElse(null);
-        return StudentClassSessionResponse.from(session, quiz);
+        var assignment = studentAssignmentService.summaryFor(classSessionId, student).orElse(null);
+        return StudentClassSessionResponse.from(session, quiz, assignment);
     }
 
     private void requireEnrolled(Student student, Long courseId) {

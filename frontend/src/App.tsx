@@ -11,6 +11,7 @@ import { StudentClassSessionPage } from "./pages/student/StudentClassSessionPage
 import { StudentQuizAttemptPage } from "./pages/student/StudentQuizAttemptPage";
 import { AdminClassSessionFormPage } from "./pages/admin/AdminClassSessionFormPage";
 import { AdminQuizAttemptsPage } from "./pages/admin/AdminQuizAttemptsPage";
+import { AdminAssignmentSubmissionsPage } from "./pages/admin/AdminAssignmentSubmissionsPage";
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Outlet, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { StudentAuthProvider } from "./context/StudentAuthContext";
@@ -105,6 +106,10 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
                 element={<AdminClassSessionFormPage />}
               />
               <Route path="/admin/courses/quizzes/:quizId/attempts" element={<AdminQuizAttemptsPage />} />
+              <Route
+                path="/admin/courses/assignments/:assignmentId/submissions"
+                element={<AdminAssignmentSubmissionsPage />}
+              />
               <Route path="/admin/cohorts" element={<AdminCohortsPage />} />
               <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
               <Route path="/admin/registrations/:id" element={<AdminRegistrationDetailPage />} />

@@ -24,6 +24,7 @@ export const ROUTES = {
   adminClassSessionEdit: "/admin/courses/:courseId/modules/:moduleId/classes/:classSessionId",
   studentQuizAttempt: "/student/quizzes/:quizId/attempt",
   adminQuizAttempts: "/admin/courses/quizzes/:quizId/attempts",
+  adminAssignmentSubmissions: "/admin/courses/assignments/:assignmentId/submissions",
 } as const;
 
 export function adminCourseOutlinePath(courseId: number): string {
@@ -72,4 +73,8 @@ export function studentQuizAttemptPath(quizId: number): string {
 
 export function adminQuizAttemptsPath(quizId: number): string {
   return `/admin/courses/quizzes/${quizId}/attempts`;
+}
+
+export function adminAssignmentSubmissionsPath(assignmentId: number): string {
+  return `/admin/courses/assignments/${assignmentId}/submissions`;
 }

@@ -184,3 +184,35 @@ export interface AdminQuizAttempt {
   startedAt: string;
   submittedAt: string | null;
 }
+
+export type AssignmentSubmissionStatus = "SUBMITTED" | "UNDER_REVIEW" | "REVIEWED" | "NEEDS_RESUBMISSION";
+
+export interface AdminAssignment {
+  id: number;
+  classSessionId: number;
+  title: string;
+  learningObjective: string | null;
+  instructions: string | null;
+  tasks: string | null;
+  submissionRequirements: string | null;
+  maxScore: number;
+  dueAt: string | null;
+  rubric: string | null;
+  allowedAttachmentTypes: string | null;
+}
+
+export type AdminAssignmentInput = Omit<AdminAssignment, "id" | "classSessionId">;
+
+export interface AdminSubmission {
+  id: number;
+  studentId: string;
+  studentName: string;
+  responseText: string | null;
+  attachmentUrl: string | null;
+  attachmentFilename: string | null;
+  status: AssignmentSubmissionStatus;
+  submittedAt: string;
+  score: number | null;
+  feedback: string | null;
+  reviewedAt: string | null;
+}

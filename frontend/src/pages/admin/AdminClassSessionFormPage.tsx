@@ -11,6 +11,7 @@ import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { RichTextEditor } from "../../components/admin/RichTextEditor";
 import { AdminQuizEditor } from "./AdminQuizEditor";
+import { AdminAssignmentEditor } from "./AdminAssignmentEditor";
 import { Icon } from "../../components/Icon";
 import { ROUTES, adminCourseOutlinePath } from "../../constants/routes";
 import type { AdminClassSessionInput, LessonSectionInput } from "../../types/admin";
@@ -65,19 +66,28 @@ export function AdminClassSessionFormPage() {
   const savedNavigation = useRef(false);
   const [error, setError] = useState<string | null>(null);
 
+  // existing carries id/moduleId, which form never does — compare against the same
+  // stripped-down shape on both sides, otherwise this never matches and "dirty" is stuck
+  // true even with zero edits, firing the unsaved-changes prompt on every navigation away.
+  const existingAsInput: AdminClassSessionInput | null = existing
+    ? (() => {
+        const { id: _id, moduleId: _moduleId, ...rest } = existing;
+        return rest;
+      })()
+    : null;
   const dirty =
-    JSON.stringify(form) !== JSON.stringify(existing ?? EMPTY_FORM) &&
+    JSON.stringify(form) !== JSON.stringify(existingAsInput ?? EMPTY_FORM) &&
     !createMutation.isSuccess &&
     !updateMutation.isSuccess;
   useUnsavedChanges(dirty, savedNavigation);
 
   useEffect(() => {
-    if (existing) {
-      const { id: _id, moduleId: _moduleId, ...rest } = existing;
-      setForm(rest);
+    if (existingAsInput) {
+      setForm(existingAsInput);
     } else if (!isEditing && module) {
       setForm((prev) => ({ ...prev, position: module.topics.length + module.classSessions.length + 1 }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [existing, isEditing, module]);
 
   const updateField = <K extends keyof AdminClassSessionInput>(key: K, value: AdminClassSessionInput[K]) => {
@@ -293,6 +303,23 @@ export function AdminClassSessionFormPage() {
             </div>
           </div>
           <AdminQuizEditor classSessionId={classSessionId} />
+        </div>
+      )}
+
+      {isEditing && classSessionId && (
+        <div className="card admin-form-panel">
+          <div className="outline-section-heading" style={{ marginBottom: 18 }}>
+            <span className="outline-section-heading__icon">
+              <Icon name="edit" size={16} />
+            </span>
+            <div>
+              <h2 style={{ margin: 0 }}>Assignment</h2>
+              <p className="text-muted" style={{ margin: "2px 0 0" }}>
+                A theory/practical task reviewed by hand. Saved independently of the class form above.
+              </p>
+            </div>
+          </div>
+          <AdminAssignmentEditor classSessionId={classSessionId} />
         </div>
       )}
     </div>

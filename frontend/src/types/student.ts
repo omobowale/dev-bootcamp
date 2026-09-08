@@ -50,6 +50,33 @@ export interface StudentQuizSummary {
   canAttempt: boolean;
 }
 
+export type AssignmentSubmissionStatus = "SUBMITTED" | "UNDER_REVIEW" | "REVIEWED" | "NEEDS_RESUBMISSION";
+
+export interface StudentSubmission {
+  responseText: string | null;
+  attachmentUrl: string | null;
+  attachmentFilename: string | null;
+  status: AssignmentSubmissionStatus;
+  submittedAt: string;
+  score: number | null;
+  feedback: string | null;
+  reviewedAt: string | null;
+}
+
+export interface StudentAssignment {
+  id: number;
+  title: string;
+  learningObjective: string | null;
+  instructions: string | null;
+  tasks: string | null;
+  submissionRequirements: string | null;
+  maxScore: number;
+  dueAt: string | null;
+  rubric: string | null;
+  allowedAttachmentTypes: string | null;
+  mySubmission: StudentSubmission | null;
+}
+
 export interface StudentClassSession {
   id: number;
   title: string;
@@ -59,6 +86,7 @@ export interface StudentClassSession {
   recordingUrl: string | null;
   sections: StudentLessonSection[];
   quiz: StudentQuizSummary | null;
+  assignment: StudentAssignment | null;
 }
 
 export interface StudentQuizOption {
