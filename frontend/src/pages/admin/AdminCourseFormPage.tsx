@@ -9,6 +9,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useAdminCourse, useCreateCourse, useUpdateCourse } from "../../hooks/admin/useAdminCourses";
 import { RichTextEditor } from "../../components/admin/RichTextEditor";
 import { AdminCompletionCriteriaEditor } from "./AdminCompletionCriteriaEditor";
+import { AdminCertificatesList } from "./AdminCertificatesList";
 import { LoadingState } from "../../components/LoadingState";
 import { Icon, type IconName } from "../../components/Icon";
 import { ROUTES } from "../../constants/routes";
@@ -462,6 +463,17 @@ export function AdminCourseFormPage() {
             description="What counts as finishing this course. Saved independently of the form above."
           />
           <AdminCompletionCriteriaEditor courseId={courseId} />
+        </div>
+      )}
+
+      {isEditing && courseId && (
+        <div className="card admin-form-panel">
+          <SectionHeading
+            icon="shield"
+            title="Certificates"
+            description="Issued automatically once a student meets the completion criteria above."
+          />
+          <AdminCertificatesList courseId={courseId} />
         </div>
       )}
     </div>

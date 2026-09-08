@@ -65,6 +65,7 @@ public class SecurityConfig {
                                         "/api/faqs/**",
                                         "/api/settings/**",
                                         "/api/registrations",
+                                        "/api/certificates/verify/**",
                                         "/actuator/health",
                                         "/actuator/info")
                                 .permitAll()

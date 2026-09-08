@@ -1,13 +1,15 @@
+import { ErrorState } from "../../components/ErrorState";
 import { Select } from "../../components/Select";
 import { useEffect, useState } from "react";
 import { useAdminAttendance, useSaveAttendance } from "../../hooks/admin/useAdminAttendance";
 import { LoadingState } from "../../components/LoadingState";
 import type { AdminAttendanceRow, AttendanceEntry, AttendanceStatus } from "../../types/admin";
 
-function toRowState(row: AdminAttendanceRow): AttendanceEntry {
+type AttendanceDraft = Omit<AttendanceEntry, "status"> & { status: AttendanceStatus | "" };
+function toRowState(row: AdminAttendanceRow): AttendanceDraft {
   return {
     studentId: row.studentId,
-    status: row.status ?? "PRESENT",
+    status: row.status ?? "",
     checkInTime: row.checkInTime,
     checkOutTime: row.checkOutTime,
     notes: row.notes,
@@ -15,9 +17,9 @@ function toRowState(row: AdminAttendanceRow): AttendanceEntry {
 }
 
 export function AdminAttendanceEditor({ classSessionId }: { classSessionId: number }) {
-  const { data: rows, isLoading } = useAdminAttendance(classSessionId);
+  const { data: rows, isLoading, isError, refetch } = useAdminAttendance(classSessionId);
   const saveAttendance = useSaveAttendance(classSessionId);
-  const [entries, setEntries] = useState<Record<number, AttendanceEntry>>({});
+  const [entries, setEntries] = useState<Record<number, AttendanceDraft>>({});
 
   useEffect(() => {
     if (rows) {
@@ -27,16 +29,18 @@ export function AdminAttendanceEditor({ classSessionId }: { classSessionId: numb
 
   if (isLoading) return <LoadingState label="Loading attendance…" />;
 
+  if (isError) return <ErrorState message="Could not load attendance." onRetry={() => refetch()} />;
+
   if (!rows || rows.length === 0) {
     return <p className="text-muted">No students are enrolled in this course yet.</p>;
   }
 
-  const updateEntry = (studentId: number, patch: Partial<AttendanceEntry>) => {
+  const updateEntry = (studentId: number, patch: Partial<AttendanceDraft>) => {
     setEntries((prev) => ({ ...prev, [studentId]: { ...prev[studentId], ...patch } }));
   };
 
   const handleSave = () => {
-    saveAttendance.mutate(Object.values(entries));
+    saveAttendance.mutate(Object.values(entries).filter((entry): entry is AttendanceEntry => entry.status !== ""));
   };
 
   return (
@@ -64,6 +68,7 @@ export function AdminAttendanceEditor({ classSessionId }: { classSessionId: numb
                       value={entry.status}
                       onChange={(e) => updateEntry(row.studentId, { status: e.target.value as AttendanceStatus })}
                     >
+                      <option value="" disabled>Unmarked</option>
                       <option value="PRESENT">Present</option>
                       <option value="ABSENT">Absent</option>
                     </Select>
@@ -82,7 +87,7 @@ export function AdminAttendanceEditor({ classSessionId }: { classSessionId: numb
           </tbody>
         </table>
       </div>
-      <button type="button" className="btn btn-primary" disabled={saveAttendance.isPending} onClick={handleSave}>
+      <button type="button" className="btn btn-primary" disabled={saveAttendance.isPending || !Object.values(entries).some(entry => entry.status !== "")} onClick={handleSave}>
         {saveAttendance.isPending ? "Saving…" : "Save attendance"}
       </button>
     </div>

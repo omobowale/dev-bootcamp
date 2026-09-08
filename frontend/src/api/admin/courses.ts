@@ -1,5 +1,6 @@
 import { apiClient } from "../client";
 import type {
+  AdminCertificate,
   AdminCourse,
   AdminCourseInput,
   CourseCompletionCriteria,
@@ -43,5 +44,10 @@ export async function adminUpdateCompletionCriteria(
     `/api/admin/courses/${courseId}/completion-criteria`,
     input,
   );
+  return response.data;
+}
+
+export async function adminGetCertificates(courseId: number): Promise<AdminCertificate[]> {
+  const response = await apiClient.get<AdminCertificate[]>(`/api/admin/courses/${courseId}/certificates`);
   return response.data;
 }

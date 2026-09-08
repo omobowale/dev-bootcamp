@@ -1,8 +1,11 @@
+import { useState, type MouseEvent } from "react";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { Link } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentEnrollments, useStudentMe } from "../../hooks/student/useStudentPortal";
 import { useCourseProgress } from "../../hooks/student/useStudentProgress";
+import { useIssueCertificate, useMyCertificate } from "../../hooks/student/useStudentCertificate";
+import { downloadCertificatePdf } from "../../utils/certificatePdf";
 import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { CourseArtwork } from "../../components/CourseArtwork";
@@ -14,6 +17,21 @@ import "./StudentDashboardPage.css";
 
 function StudentCourseCard({ enrollment }: { enrollment: StudentEnrollment }) {
   const { data: progress } = useCourseProgress(enrollment.courseId);
+  const { data: certificate } = useMyCertificate(enrollment.courseId);
+  const issueCertificate = useIssueCertificate(enrollment.courseId);
+  const [downloading, setDownloading] = useState(false);
+
+  const handleCertificate = async (event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDownloading(true);
+    try {
+      const cert = certificate ?? (await issueCertificate.mutateAsync());
+      await downloadCertificatePdf(cert);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   return (
     <Link to={studentCourseClassesPath(enrollment.courseId)} className="course-card student-course-card">
@@ -37,6 +55,11 @@ function StudentCourseCard({ enrollment }: { enrollment: StudentEnrollment }) {
               {progress.overallPercentage}% {progress.courseComplete && "· Complete"}
             </span>
           </div>
+        )}
+        {progress?.courseComplete && (
+          <button type="button" className="btn btn-secondary student-certificate-btn" onClick={handleCertificate} disabled={downloading}>
+            <Icon name="shield" size={14} /> {downloading ? "Preparing…" : "Download certificate"}
+          </button>
         )}
         <p className="text-muted student-course-card__note">
           Continue learning <Icon name="arrow" size={13} />

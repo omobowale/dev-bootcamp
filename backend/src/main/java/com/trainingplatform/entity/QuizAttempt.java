@@ -41,4 +41,13 @@ public class QuizAttempt extends BaseEntity {
     private Double percentage;
 
     private Boolean passed;
+
+    @Column(name = "question_snapshot", columnDefinition = "TEXT")
+    private String questionSnapshot;
+
+    @Column(name = "result_snapshot", columnDefinition = "TEXT")
+    private String resultSnapshot;
+
+    @Column(name = "passing_percentage_snapshot")
+    private Integer passingPercentageSnapshot;
 }

@@ -246,3 +246,11 @@ export interface CourseCompletionCriteria {
 }
 
 export type CourseCompletionCriteriaInput = Omit<CourseCompletionCriteria, "courseId">;
+
+export interface AdminCertificate {
+  studentCode: string;
+  studentName: string;
+  verificationId: string;
+  completionDate: string;
+  issuedAt: string;
+}

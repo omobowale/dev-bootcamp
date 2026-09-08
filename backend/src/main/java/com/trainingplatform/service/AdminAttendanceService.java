@@ -64,6 +64,9 @@ public class AdminAttendanceService {
         ClassSession session = getSessionOrThrow(classSessionId);
 
         for (AttendanceEntry entry : request.entries()) {
+            if (!courseEnrollmentRepository.existsByStudentIdAndCourseId(entry.studentId(), session.getModule().getCourse().getId())) {
+                throw new BadRequestException("Attendance can only be recorded for enrolled students.");
+            }
             Student student = studentRepository
                     .findById(entry.studentId())
                     .orElseThrow(() -> new BadRequestException("Student not found: " + entry.studentId()));

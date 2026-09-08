@@ -28,6 +28,19 @@ export function StudentQuizAttemptPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizId]);
 
+  const draftKey = startAttempt.data ? `quiz-draft:${student?.email}:${startAttempt.data.attemptId}` : null;
+  useEffect(() => {
+    if (!draftKey) return;
+    try { setAnswers(JSON.parse(sessionStorage.getItem(draftKey) || "{}")); } catch { setAnswers({}); }
+  }, [draftKey]);
+  useEffect(() => {
+    if (submitAttempt.isSuccess && draftKey) sessionStorage.removeItem(draftKey);
+  }, [submitAttempt.isSuccess, draftKey]);
+  const chooseAnswer = (questionId: number, position: number) => {
+    const next = { ...answers, [questionId]: position };
+    setAnswers(next);
+    if (draftKey) sessionStorage.setItem(draftKey, JSON.stringify(next));
+  };
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (!startAttempt.data) return;
@@ -83,7 +96,7 @@ export function StudentQuizAttemptPage() {
                           type="radio"
                           name={`question-${question.id}`}
                           checked={answers[question.id] === option.position}
-                          onChange={() => setAnswers((prev) => ({ ...prev, [question.id]: option.position }))}
+                          onChange={() => chooseAnswer(question.id, option.position)}
                         />
                         {option.text}
                       </label>

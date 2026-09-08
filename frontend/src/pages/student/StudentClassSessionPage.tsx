@@ -72,20 +72,20 @@ function AssignmentSection({ assignment }: { assignment: StudentAssignment }) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
+      {(!assignment.mySubmission || assignment.mySubmission.status === "NEEDS_RESUBMISSION") && <form onSubmit={handleSubmit}>
         <label className="form-field form-field--full">
           {assignment.mySubmission ? "Resubmit your response" : "Your response"}
           <textarea rows={5} value={responseText} onChange={(e) => setResponseText(e.target.value)} />
         </label>
         <label className="form-field form-field--full">
           Attachment (optional){assignment.allowedAttachmentTypes && ` — ${assignment.allowedAttachmentTypes}`}
-          <input type="file" onChange={(e) => setAttachment(e.target.files?.[0] ?? null)} />
+          <input accept={assignment.allowedAttachmentTypes || undefined} type="file" onChange={(e) => setAttachment(e.target.files?.[0] ?? null)} />
         </label>
         <button type="submit" className="btn btn-primary" disabled={submit.isPending}>
           {submit.isPending ? "Submitting…" : assignment.mySubmission ? "Resubmit" : "Submit assignment"}
         </button>
         {submit.isSuccess && <p className="quiz-result-correct" style={{ marginTop: 8 }}>Submitted!</p>}
-      </form>
+      </form>}
     </div>
   );
 }

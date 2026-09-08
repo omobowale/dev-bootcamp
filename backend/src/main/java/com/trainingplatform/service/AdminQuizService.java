@@ -103,6 +103,8 @@ public class AdminQuizService {
     public List<QuizQuestionResponse> reorderQuestions(Long quizId, List<Long> orderedQuestionIds) {
         List<QuizQuestion> questions = quizQuestionRepository.findByQuizIdOrderByPositionAsc(quizId);
 
+        ReorderValidation.requireCompleteOrder(questions.stream().map(QuizQuestion::getId).toList(), orderedQuestionIds);
+
         for (int i = 0; i < questions.size(); i++) {
             questions.get(i).setPosition(-(i + 1));
         }

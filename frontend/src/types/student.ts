@@ -15,6 +15,14 @@ export interface StudentEnrollment {
   enrolledAt: string;
 }
 
+export interface Certificate {
+  verificationId: string;
+  studentName: string;
+  studentCode: string;
+  courseTitle: string;
+  completionDate: string;
+}
+
 export interface AdminStudent {
   id: number;
   studentId: string;

@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   adminArchiveCourse,
   adminCreateCourse,
+  adminGetCertificates,
   adminGetCompletionCriteria,
   adminGetCourse,
   adminGetCourses,
@@ -72,5 +73,13 @@ export function useUpdateCompletionCriteria(courseId: number) {
     onSuccess: (data) => {
       queryClient.setQueryData(QUERY_KEYS.admin.completionCriteria.byCourse(courseId), data);
     },
+  });
+}
+
+export function useAdminCertificates(courseId: number) {
+  return useQuery({
+    queryKey: QUERY_KEYS.admin.certificates.byCourse(courseId),
+    queryFn: () => adminGetCertificates(courseId),
+    enabled: courseId > 0,
   });
 }

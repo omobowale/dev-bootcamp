@@ -1,9 +1,11 @@
 package com.trainingplatform.controller;
 
+import com.trainingplatform.dto.AdminCertificateResponse;
 import com.trainingplatform.dto.CourseCompletionCriteriaRequest;
 import com.trainingplatform.dto.CourseCompletionCriteriaResponse;
 import com.trainingplatform.dto.CourseRequest;
 import com.trainingplatform.dto.CourseResponse;
+import com.trainingplatform.service.AdminCertificateService;
 import com.trainingplatform.service.CourseCompletionCriteriaService;
 import com.trainingplatform.service.CourseService;
 import jakarta.validation.Valid;
@@ -25,6 +27,7 @@ public class AdminCourseController {
 
     private final CourseService courseService;
     private final CourseCompletionCriteriaService courseCompletionCriteriaService;
+    private final AdminCertificateService adminCertificateService;
 
     @GetMapping
     public List<CourseResponse> list() {
@@ -60,5 +63,10 @@ public class AdminCourseController {
     public CourseCompletionCriteriaResponse updateCompletionCriteria(
             @PathVariable Long id, @Valid @RequestBody CourseCompletionCriteriaRequest request) {
         return courseCompletionCriteriaService.update(id, request);
+    }
+
+    @GetMapping("/{id}/certificates")
+    public List<AdminCertificateResponse> listCertificates(@PathVariable Long id) {
+        return adminCertificateService.listForCourse(id);
     }
 }

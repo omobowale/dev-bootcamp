@@ -147,6 +147,7 @@ public class StudentProgressService {
             int assignmentsReviewed,
             Integer attendanceTotal,
             Integer attendancePresent) {
+        if (classesTotal == 0) return false;
         CourseCompletionCriteria criteria = courseCompletionCriteriaRepository.findByCourseId(courseId).orElse(null);
         boolean requireAllClasses = criteria == null || criteria.isRequireAllClassesCompleted();
         boolean requireAllQuizzes = criteria != null && criteria.isRequireAllQuizzesPassed();
@@ -156,17 +157,17 @@ public class StudentProgressService {
         if (requireAllClasses && classesTotal > 0 && classesCompleted < classesTotal) {
             return false;
         }
-        if (requireAllQuizzes && quizzesTotal > 0 && quizzesPassed < quizzesTotal) {
+        if (requireAllQuizzes && (quizzesTotal == 0 || quizzesPassed < quizzesTotal)) {
             return false;
         }
-        if (requireAllAssignments && assignmentsTotal > 0 && assignmentsReviewed < assignmentsTotal) {
+        if (requireAllAssignments && (assignmentsTotal == 0 || assignmentsReviewed < assignmentsTotal)) {
             return false;
         }
         if (minAttendance != null) {
             if (attendanceTotal == null || attendanceTotal == 0) {
                 return false;
             }
-            double attendancePercentage = attendancePresent * 100.0 / attendanceTotal;
+            double attendancePercentage = attendancePresent * 100.0 / Math.max(classesTotal, attendanceTotal);
             if (attendancePercentage < minAttendance) {
                 return false;
             }

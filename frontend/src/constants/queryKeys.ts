@@ -21,6 +21,7 @@ export const QUERY_KEYS = {
     classDetail: (classSessionId: number) => ["student", "classes", classSessionId] as const,
     quizAttemptResult: (attemptId: number) => ["student", "quiz-attempts", attemptId] as const,
     progress: (courseId: number) => ["student", "courses", courseId, "progress"] as const,
+    certificate: (courseId: number) => ["student", "courses", courseId, "certificate"] as const,
   },
   admin: {
     courses: {
@@ -46,6 +47,9 @@ export const QUERY_KEYS = {
     },
     completionCriteria: {
       byCourse: (courseId: number) => ["admin", "courses", courseId, "completion-criteria"] as const,
+    },
+    certificates: {
+      byCourse: (courseId: number) => ["admin", "courses", courseId, "certificates"] as const,
     },
     cohorts: {
       all: ["admin", "cohorts"] as const,

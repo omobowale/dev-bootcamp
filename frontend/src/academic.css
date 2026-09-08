@@ -64,3 +64,80 @@
 @media(prefers-reduced-motion:no-preference) {.student-page,.academic-editor {animation:academic-enter .35s ease both}}
 @media(max-width:760px) {.student-shell .student-topbar__inner {min-height:76px;gap:10px}.student-shell .student-topbar__profile {gap:8px}.student-topbar__profile>div:not(.theme-toggle) {max-width:100px}.student-topbar__profile strong {overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.student-shell .student-page {padding-top:22px}.student-shell .student-page__header {border-radius:20px}.quiz-answer-progress {flex-direction:column;gap:7px}.student-shell .student-class-list__link {padding:18px;gap:12px}.student-shell .student-class-card__links .btn {flex:1}.student-shell .student-class-card {border-radius:16px}.student-shell .rich-content {font-size:15px}.student-shell .student-topbar__profile .student-avatar {display:none}}
 @media(max-width:420px) {.student-topbar__profile>div:has(>strong) {display:none}.student-shell .student-topbar__brand {font-size:19px}.student-shell .student-page__header h1 {letter-spacing:-.8px}.learning-section-heading h2 {font-size:23px}}
+/* Responsive refinement: workspace width and compact learning screens. */
+.admin-shell .admin-layout__main > .container.admin-page {width:100%;max-width:none;padding-inline:clamp(22px,2.5vw,48px)}
+.admin-shell .admin-form-panel,.admin-shell .course-editor {width:100%;max-width:none;min-width:0}
+.admin-shell .admin-page__header {padding-bottom:24px;border-bottom:1px solid var(--color-border)}
+.admin-shell .admin-form-grid {gap:22px}
+.admin-shell .admin-form-grid > * {min-width:0}
+.academic-editor .academic-section-nav {position:sticky;top:0;z-index:12;background:var(--color-bg);padding-block:12px;margin-bottom:24px;scrollbar-width:thin}
+.academic-editor .academic-section-nav a {font-weight:600}
+.academic-editor .admin-form-panel,.academic-editor .course-form-section {scroll-margin-top:85px}
+.student-shell .student-page {padding-inline:32px}
+.student-shell .student-topbar__inner {padding-inline:32px}
+.student-shell .student-course-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+.student-shell .student-page__header h1 {font-weight:650;max-width:700px}
+.student-shell .student-page__header .text-muted {font-weight:400}
+.student-shell .student-class-card__links {align-items:center;padding:16px 20px;background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px}
+.student-shell .lesson-jump-nav {scrollbar-width:thin}
+.student-shell .quiz-answer-progress {border-left:3px solid var(--color-primary)}
+.student-shell .student-help-panel {background:linear-gradient(110deg,var(--color-surface),var(--color-accent-soft))}
+@media(min-width:1500px) {.student-shell .student-course-grid {grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px) {
+ .student-shell .student-page {padding:20px 16px 44px}
+ .student-shell .student-topbar__inner {padding:12px 16px;min-height:68px}
+ .student-shell .student-topbar__brand {font-size:18px;letter-spacing:-.6px}
+ .student-shell .student-topbar__brand span {font-size:9px;letter-spacing:1.6px}
+ .student-shell .student-page__header {padding:23px 22px;border-radius:18px;margin-bottom:24px}
+ .student-shell .student-page__header h1 {font-size:27px;line-height:1.18;letter-spacing:-.85px;margin:10px 0 12px}
+ .student-shell .student-page__header .text-muted {font-size:14px;line-height:1.65}
+ .student-shell .student-page__header .eyebrow {font-size:10px;letter-spacing:1.4px}
+ .student-shell .student-page__header .text-link {margin-bottom:14px;font-size:12px}
+ .student-shell .learning-section-heading {margin:24px 0 16px}
+ .student-shell .learning-section-heading .eyebrow {font-size:9px;letter-spacing:1.3px}
+ .student-shell .learning-section-heading h2 {font-size:23px;margin-top:6px}
+ .student-shell .learning-count {font-size:12px;padding:7px 11px}
+ .student-shell .student-course-grid {grid-template-columns:minmax(0,1fr);gap:16px;margin-bottom:26px}
+ .student-shell .student-course-card {display:grid;grid-template-columns:88px minmax(0,1fr);align-items:start;padding:16px;gap:14px;border-radius:18px}
+ .student-shell .student-course-card .course-card__image-link {margin:0;width:88px;height:100px;border-radius:12px;overflow:hidden}
+ .student-shell .student-course-card .course-artwork {height:100%;min-height:0;aspect-ratio:auto}
+ .student-shell .student-course-card .course-card__body {padding:0;min-width:0}
+ .student-shell .student-course-card .course-card__kicker {font-size:10px;line-height:1.5;margin-bottom:8px}
+ .student-shell .student-course-card h3 {font-size:18px;line-height:1.3;letter-spacing:-.4px;margin:0 0 12px}
+ .student-shell .course-progress-bar {margin-top:12px;flex-wrap:wrap;gap:8px;font-size:11px}
+ .student-shell .course-progress-bar__track {min-width:65px;height:6px}
+ .student-shell .student-course-card__note {font-size:12px;margin:13px 0 0;padding-top:12px;gap:8px}
+ .student-shell .student-help-panel {padding:22px;border-radius:18px}
+ .student-shell .student-help-panel h2 {font-size:20px}
+ .student-shell .student-help-panel p {font-size:13px;line-height:1.7}
+ .student-shell .student-class-list {gap:10px}
+ .student-shell .student-class-list__link {padding:16px 14px;gap:12px;min-height:90px}
+ .student-shell .lesson-number {width:36px;height:42px;font-size:16px;border-radius:10px}
+ .student-shell .lesson-list-copy strong {font-size:15px;line-height:1.45;display:block}
+ .student-shell .student-class-list__module,.student-shell .student-class-list__time {font-size:11px}
+ .student-shell .student-class-card {padding:22px 18px;margin-bottom:16px}
+ .student-shell .student-class-card h3 {font-size:18px;margin-bottom:14px}
+ .student-shell .student-class-card__links {padding:12px;gap:8px}
+ .student-shell .student-class-card__links .btn {min-width:120px;font-size:12px;padding-inline:12px}
+ .student-shell .quiz-options-editor__row {padding:14px 12px;font-size:14px;gap:12px;align-items:flex-start}
+ .student-shell .quiz-options-editor__row input {margin-top:1px}
+ .student-shell .quiz-answer-progress {padding:16px;font-size:12px}
+ .student-shell .quiz-summary-card {align-items:stretch}
+ .student-shell .quiz-summary-card>.btn {width:100%}
+ .student-shell .lesson-jump-nav a {font-size:12px;padding:9px 13px}
+ .student-shell input[type=file] {font-size:12px;padding:12px}
+ .admin-shell .admin-layout__main > .container.admin-page {padding:24px 16px 44px}
+ .admin-shell .admin-page__header {gap:14px;margin-bottom:22px;padding-bottom:20px}
+ .admin-shell .admin-page__header h1 {font-size:25px;letter-spacing:-.7px}
+ .admin-shell .admin-page__header>.btn {width:100%;justify-content:center}
+ .admin-shell .admin-form-panel {padding:20px 16px;border-radius:16px}
+ .admin-shell .admin-form-grid {grid-template-columns:minmax(0,1fr);gap:18px}
+ .academic-editor .content-entry {padding:16px 12px}
+ .academic-editor .academic-section-nav {margin-inline:-16px;padding:12px 16px;margin-bottom:18px;border-bottom:1px solid var(--color-border)}
+ .academic-editor .academic-section-nav a {padding:9px 13px;font-size:12px}
+ .academic-editor .content-entry__actions,.academic-editor .admin-actions-row {flex-wrap:wrap;gap:10px}
+ .academic-editor .admin-actions-row>.btn {flex:1;justify-content:center}
+ .admin-shell .admin-table td {overflow-wrap:anywhere;white-space:normal}
+}
+@media(max-width:360px) {.student-shell .student-course-card {grid-template-columns:64px minmax(0,1fr);gap:12px;padding:14px}.student-shell .student-course-card .course-card__image-link {width:64px;height:80px}.student-shell .student-course-card h3 {font-size:16px}.student-shell .student-topbar__inner {gap:8px}.student-shell .student-topbar__brand {font-size:16px}}
+

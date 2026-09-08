@@ -76,6 +76,8 @@ public class ClassSessionService {
     public List<ClassSessionResponse> reorder(Long moduleId, List<Long> orderedSessionIds) {
         List<ClassSession> sessions = classSessionRepository.findByModuleIdOrderByPositionAsc(moduleId);
 
+        ReorderValidation.requireCompleteOrder(sessions.stream().map(ClassSession::getId).toList(), orderedSessionIds);
+
         for (int i = 0; i < sessions.size(); i++) {
             sessions.get(i).setPosition(-(i + 1));
         }

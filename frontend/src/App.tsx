@@ -39,6 +39,7 @@ import { AdminGlobalFaqsPage } from "./pages/admin/AdminGlobalFaqsPage";
 import { Toasts } from './components/Toasts';
 import { RouteExperience } from './components/RouteExperience';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { VerifyCertificatePage } from './pages/VerifyCertificatePage';
 import { AdminSiteContentPage } from './pages/admin/AdminSiteContentPage';
 import './modern.css';
 import './academic.css';
@@ -51,6 +52,8 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
               <Route path="/registration/success" element={<RegistrationSuccessPage />} />
               <Route path="/terms" element={<TermsPage />} /><Route path="/private-tutorials" element={<PrivateTutorialsPage />} />
 <Route path="/about" element={<AboutPage />} />
+<Route path="/verify" element={<VerifyCertificatePage />} />
+<Route path="/verify/:verificationId" element={<VerifyCertificatePage />} />
 <Route path="*" element={<NotFoundPage />} />
             </Route>
 

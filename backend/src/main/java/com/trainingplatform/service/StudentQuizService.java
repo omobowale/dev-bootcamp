@@ -55,6 +55,17 @@ public class StudentQuizService {
         Quiz quiz = getQuizOrThrow(quizId);
         requireEnrolled(student, quiz);
 
+        var openAttempt = quizAttemptRepository.findByQuizIdAndStudentIdOrderByCreatedAtDesc(quizId, student.getId()).stream()
+                .filter(a -> a.getSubmittedAt() == null).findFirst();
+        if (openAttempt.isPresent()) {
+            QuizAttempt resumed = openAttempt.get();
+            if (resumed.getQuestionSnapshot() == null) {
+                freeze(resumed, quizQuestionRepository.findByQuizIdOrderByPositionAsc(quizId));
+                quizAttemptRepository.save(resumed);
+            }
+            return new StartQuizAttemptResponse(resumed.getId(), quizId, passingPercentage(resumed),
+                    questionsFor(resumed).stream().map(StudentQuizQuestionResponse::from).toList());
+        }
         int attemptsUsed = quizAttemptRepository.countByQuizIdAndStudentId(quizId, student.getId());
         if (quiz.getMaxAttempts() != null && attemptsUsed >= quiz.getMaxAttempts()) {
             throw new BadRequestException("You've used all your attempts for this quiz.");
@@ -68,6 +79,7 @@ public class StudentQuizService {
         QuizAttempt attempt = new QuizAttempt();
         attempt.setQuiz(quiz);
         attempt.setStudent(student);
+        freeze(attempt, questions);
         attempt = quizAttemptRepository.save(attempt);
 
         return new StartQuizAttemptResponse(
@@ -81,17 +93,27 @@ public class StudentQuizService {
     public QuizAttemptResultResponse submitAttempt(Long attemptId, SubmitQuizAttemptRequest request) {
         Student student = currentStudentProvider.getCurrentStudent();
         QuizAttempt attempt = quizAttemptRepository
-                .findByIdAndStudentId(attemptId, student.getId())
+                .findForUpdate(attemptId, student.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Attempt not found: " + attemptId));
 
         if (attempt.getSubmittedAt() != null) {
             throw new BadRequestException("This attempt has already been submitted.");
         }
 
-        List<QuizQuestion> questions = quizQuestionRepository.findByQuizIdOrderByPositionAsc(attempt.getQuiz().getId());
-        Map<Long, Integer> answersByQuestion = request.answers().stream()
-                .collect(Collectors.toMap(
-                        QuizAnswerSubmission::questionId, QuizAnswerSubmission::selectedOptionPosition, (a, b) -> b));
+        List<QuizQuestion> questions = questionsFor(attempt);
+        Map<Long, Integer> answersByQuestion = new java.util.HashMap<>();
+        for (QuizAnswerSubmission answer : request.answers()) {
+            if (answersByQuestion.containsKey(answer.questionId())) {
+                throw new BadRequestException("Duplicate question in submission.");
+            }
+            QuizQuestion question = questions.stream().filter(q -> q.getId().equals(answer.questionId()))
+                    .findFirst().orElseThrow(() -> new BadRequestException("Question does not belong to this quiz."));
+            if (answer.selectedOptionPosition() != null && question.getOptions().stream()
+                    .noneMatch(o -> o.getPosition().equals(answer.selectedOptionPosition()))) {
+                throw new BadRequestException("Invalid answer option.");
+            }
+            answersByQuestion.put(answer.questionId(), answer.selectedOptionPosition());
+        }
 
         int score = 0;
         int totalPossible = 0;
@@ -107,12 +129,14 @@ public class StudentQuizService {
                 score += question.getPoints();
             }
 
+            if (attempt.getQuestionSnapshot() == null) {
             QuizAnswer answer = new QuizAnswer();
             answer.setAttempt(attempt);
             answer.setQuestion(question);
             answer.setSelectedOptionPosition(selectedPosition);
             answer.setCorrect(correct);
             quizAnswerRepository.save(answer);
+            }
 
             results.add(new QuizAnswerResultResponse(
                     question.getId(),
@@ -125,17 +149,18 @@ public class StudentQuizService {
         }
 
         double percentage = totalPossible == 0 ? 0 : (score * 100.0) / totalPossible;
-        boolean passed = percentage >= attempt.getQuiz().getPassingPercentage();
+        boolean passed = percentage >= passingPercentage(attempt);
 
         attempt.setSubmittedAt(Instant.now());
         attempt.setScore(score);
         attempt.setTotalPossible(totalPossible);
         attempt.setPercentage(percentage);
         attempt.setPassed(passed);
+        QuizAttemptResultResponse result = new QuizAttemptResultResponse(
+                attempt.getId(), score, totalPossible, percentage, passed, passingPercentage(attempt), results);
+        attempt.setResultSnapshot(QuizSnapshot.JSON.writeValueAsString(result));
         quizAttemptRepository.save(attempt);
-
-        return new QuizAttemptResultResponse(
-                attempt.getId(), score, totalPossible, percentage, passed, attempt.getQuiz().getPassingPercentage(), results);
+        return result;
     }
 
     @Transactional(readOnly = true)
@@ -149,10 +174,13 @@ public class StudentQuizService {
             throw new BadRequestException("This attempt hasn't been submitted yet.");
         }
 
+        if (attempt.getResultSnapshot() != null) {
+            return QuizSnapshot.JSON.readValue(attempt.getResultSnapshot(), QuizAttemptResultResponse.class);
+        }
         Map<Long, QuizAnswer> answersByQuestionId = quizAnswerRepository.findByAttemptId(attemptId).stream()
                 .collect(Collectors.toMap(a -> a.getQuestion().getId(), a -> a));
 
-        List<QuizQuestion> questions = quizQuestionRepository.findByQuizIdOrderByPositionAsc(attempt.getQuiz().getId());
+        List<QuizQuestion> questions = questionsFor(attempt);
         List<QuizAnswerResultResponse> results = questions.stream()
                 .map(question -> {
                     QuizAnswer answer = answersByQuestionId.get(question.getId());
@@ -173,8 +201,22 @@ public class StudentQuizService {
                 attempt.getTotalPossible(),
                 attempt.getPercentage(),
                 attempt.getPassed(),
-                attempt.getQuiz().getPassingPercentage(),
+                passingPercentage(attempt),
                 results);
+    }
+
+    private void freeze(QuizAttempt attempt, List<QuizQuestion> questions) {
+        attempt.setQuestionSnapshot(QuizSnapshot.encode(questions));
+        attempt.setPassingPercentageSnapshot(attempt.getQuiz().getPassingPercentage());
+    }
+
+    private List<QuizQuestion> questionsFor(QuizAttempt attempt) {
+        return attempt.getQuestionSnapshot() != null ? QuizSnapshot.decode(attempt.getQuestionSnapshot())
+                : quizQuestionRepository.findByQuizIdOrderByPositionAsc(attempt.getQuiz().getId());
+    }
+
+    private int passingPercentage(QuizAttempt attempt) {
+        return attempt.getPassingPercentageSnapshot() != null ? attempt.getPassingPercentageSnapshot() : attempt.getQuiz().getPassingPercentage();
     }
 
     private StudentQuizSummaryResponse buildSummary(Quiz quiz, Student student) {
@@ -188,7 +230,7 @@ public class StudentQuizService {
                 .max(Double::compareTo)
                 .orElse(null);
         Boolean bestPassed = attempts.stream().anyMatch(a -> Boolean.TRUE.equals(a.getPassed()));
-        boolean canAttempt = questionCount > 0 && (quiz.getMaxAttempts() == null || attemptsUsed < quiz.getMaxAttempts());
+        boolean canAttempt = attempts.stream().anyMatch(a -> a.getSubmittedAt() == null) || (questionCount > 0 && (quiz.getMaxAttempts() == null || attemptsUsed < quiz.getMaxAttempts()));
 
         return new StudentQuizSummaryResponse(
                 quiz.getId(),
@@ -209,6 +251,6 @@ public class StudentQuizService {
     }
 
     private Quiz getQuizOrThrow(Long quizId) {
-        return quizRepository.findById(quizId).orElseThrow(() -> new ResourceNotFoundException("Quiz not found: " + quizId));
+        return quizRepository.findForUpdate(quizId).orElseThrow(() -> new ResourceNotFoundException("Quiz not found: " + quizId));
     }
 }
