@@ -1,8 +1,10 @@
+import { ThemeToggle } from "../../components/ThemeToggle";
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentClass, useStudentMe } from "../../hooks/student/useStudentPortal";
 import { useSubmitAssignment } from "../../hooks/student/useStudentAssignment";
+import { useMarkClassComplete } from "../../hooks/student/useStudentProgress";
 import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { Icon } from "../../components/Icon";
@@ -99,13 +101,14 @@ export function StudentClassSessionPage() {
     isError,
     refetch,
   } = useStudentClass(Number(classSessionId));
+  const markComplete = useMarkClassComplete();
 
   return (
     <div className="student-shell">
       <header className="student-topbar">
         <div className="container student-topbar__inner">
-          <span className="student-topbar__brand">DevTraining.</span>
-          <div className="student-topbar__profile">
+          <a href="/student" className="student-topbar__brand">DevTraining<span>Learning space</span></a>
+          <div className="student-topbar__profile"><ThemeToggle />
             <span className="student-avatar">{(me?.fullName ?? student?.name ?? "S").charAt(0).toUpperCase()}</span>
             <div>
               <strong>{me?.fullName ?? student?.name}</strong>
@@ -131,6 +134,23 @@ export function StudentClassSessionPage() {
               <span className="eyebrow">CLASS</span>
               <h1>{session.title}</h1>
               {session.scheduledAt && <p className="text-muted">{formatDateTime(session.scheduledAt)}</p>}
+            </div>
+
+            <div className="student-class-card__links">
+              {session.completed ? (
+                <span className="quiz-result-correct">
+                  <Icon name="check" size={14} /> Marked complete
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  disabled={markComplete.isPending}
+                  onClick={() => markComplete.mutate(session.id)}
+                >
+                  {markComplete.isPending ? "Marking…" : "Mark as complete"}
+                </button>
+              )}
             </div>
 
             {session.objectives && (
@@ -163,8 +183,9 @@ export function StudentClassSessionPage() {
               </div>
             )}
 
+            {session.sections.length > 0 && <nav className="lesson-jump-nav" aria-label="Lesson sections">{session.sections.map((section, index) => <a key={index} href={`#lesson-section-${index}`}>{String(index + 1).padStart(2, "0")} ? {section.title}</a>)}</nav>}
             {session.sections.map((section, index) => (
-              <div className="card student-class-card" key={index}>
+              <div className="card student-class-card lesson-reading-card" id={`lesson-section-${index}`} key={index}>
                 <h3>{section.title}</h3>
                 {section.body && (
                   <div className="rich-content" dangerouslySetInnerHTML={{ __html: sanitizeRichText(section.body) }} />

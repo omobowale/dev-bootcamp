@@ -1,7 +1,10 @@
 package com.trainingplatform.controller;
 
+import com.trainingplatform.dto.CourseCompletionCriteriaRequest;
+import com.trainingplatform.dto.CourseCompletionCriteriaResponse;
 import com.trainingplatform.dto.CourseRequest;
 import com.trainingplatform.dto.CourseResponse;
+import com.trainingplatform.service.CourseCompletionCriteriaService;
 import com.trainingplatform.service.CourseService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminCourseController {
 
     private final CourseService courseService;
+    private final CourseCompletionCriteriaService courseCompletionCriteriaService;
 
     @GetMapping
     public List<CourseResponse> list() {
@@ -45,5 +49,16 @@ public class AdminCourseController {
     @DeleteMapping("/{id}")
     public void archive(@PathVariable Long id) {
         courseService.archive(id);
+    }
+
+    @GetMapping("/{id}/completion-criteria")
+    public CourseCompletionCriteriaResponse getCompletionCriteria(@PathVariable Long id) {
+        return courseCompletionCriteriaService.getForCourse(id);
+    }
+
+    @PutMapping("/{id}/completion-criteria")
+    public CourseCompletionCriteriaResponse updateCompletionCriteria(
+            @PathVariable Long id, @Valid @RequestBody CourseCompletionCriteriaRequest request) {
+        return courseCompletionCriteriaService.update(id, request);
     }
 }

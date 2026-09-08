@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useAdminCourse, useCreateCourse, useUpdateCourse } from "../../hooks/admin/useAdminCourses";
 import { RichTextEditor } from "../../components/admin/RichTextEditor";
+import { AdminCompletionCriteriaEditor } from "./AdminCompletionCriteriaEditor";
 import { LoadingState } from "../../components/LoadingState";
 import { Icon, type IconName } from "../../components/Icon";
 import { ROUTES } from "../../constants/routes";
@@ -452,6 +453,17 @@ export function AdminCourseFormPage() {
         </div></div>
         {preview && <section className="course-draft-preview"><span className="eyebrow">DRAFT PREVIEW</span><CourseArtwork image={form.image} title={form.title || "Your course"} /><h2>{form.title || "Your course title"}</h2><p>{form.shortDescription}</p><div className="rich-content" dangerouslySetInnerHTML={{ __html: sanitizeRichText(form.description || "") }} /><strong>{form.instructorName}</strong><div className="rich-content" dangerouslySetInnerHTML={{ __html: sanitizeRichText(form.instructorBio || "") }} /></section>}
       </form>
+
+      {isEditing && courseId && (
+        <div className="card admin-form-panel">
+          <SectionHeading
+            icon="check"
+            title="Completion criteria"
+            description="What counts as finishing this course. Saved independently of the form above."
+          />
+          <AdminCompletionCriteriaEditor courseId={courseId} />
+        </div>
+      )}
     </div>
   );
 }

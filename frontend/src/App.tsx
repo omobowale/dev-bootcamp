@@ -41,6 +41,7 @@ import { RouteExperience } from './components/RouteExperience';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { AdminSiteContentPage } from './pages/admin/AdminSiteContentPage';
 import './modern.css';
+import './academic.css';
 const router = createBrowserRouter(createRoutesFromElements(<Route element={<><RouteExperience /><Toasts /><Outlet /></>}>
             <Route element={<PublicLayout />}>
               <Route path="/" element={<HomePage />} />

@@ -13,10 +13,14 @@ public record StudentClassSessionResponse(
         String recordingUrl,
         List<LessonSectionDto> sections,
         StudentQuizSummaryResponse quiz,
-        StudentAssignmentResponse assignment) {
+        StudentAssignmentResponse assignment,
+        boolean completed) {
 
     public static StudentClassSessionResponse from(
-            ClassSession session, StudentQuizSummaryResponse quiz, StudentAssignmentResponse assignment) {
+            ClassSession session,
+            StudentQuizSummaryResponse quiz,
+            StudentAssignmentResponse assignment,
+            boolean completed) {
         return new StudentClassSessionResponse(
                 session.getId(),
                 session.getTitle(),
@@ -26,6 +30,7 @@ public record StudentClassSessionResponse(
                 session.getRecordingUrl(),
                 session.getSections().stream().map(LessonSectionDto::from).toList(),
                 quiz,
-                assignment);
+                assignment,
+                completed);
     }
 }

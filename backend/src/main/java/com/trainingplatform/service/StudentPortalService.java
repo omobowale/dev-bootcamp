@@ -8,6 +8,7 @@ import com.trainingplatform.entity.ClassSession;
 import com.trainingplatform.entity.Student;
 import com.trainingplatform.exception.ForbiddenException;
 import com.trainingplatform.exception.ResourceNotFoundException;
+import com.trainingplatform.repository.ClassCompletionRepository;
 import com.trainingplatform.repository.ClassSessionRepository;
 import com.trainingplatform.repository.CourseEnrollmentRepository;
 import com.trainingplatform.security.CurrentStudentProvider;
@@ -26,6 +27,7 @@ public class StudentPortalService {
     private final ClassSessionRepository classSessionRepository;
     private final StudentQuizService studentQuizService;
     private final StudentAssignmentService studentAssignmentService;
+    private final ClassCompletionRepository classCompletionRepository;
 
     public StudentMeResponse getMe() {
         return StudentMeResponse.from(currentStudentProvider.getCurrentStudent());
@@ -54,7 +56,9 @@ public class StudentPortalService {
         requireEnrolled(student, session.getModule().getCourse().getId());
         var quiz = studentQuizService.summaryFor(classSessionId, student).orElse(null);
         var assignment = studentAssignmentService.summaryFor(classSessionId, student).orElse(null);
-        return StudentClassSessionResponse.from(session, quiz, assignment);
+        boolean completed =
+                classCompletionRepository.existsByClassSessionIdAndStudentId(classSessionId, student.getId());
+        return StudentClassSessionResponse.from(session, quiz, assignment, completed);
     }
 
     private void requireEnrolled(Student student, Long courseId) {

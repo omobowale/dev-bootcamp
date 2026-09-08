@@ -1,3 +1,4 @@
+import { ThemeToggle } from "../../components/ThemeToggle";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
@@ -41,8 +42,8 @@ export function StudentQuizAttemptPage() {
     <div className="student-shell">
       <header className="student-topbar">
         <div className="container student-topbar__inner">
-          <span className="student-topbar__brand">DevTraining.</span>
-          <div className="student-topbar__profile">
+          <a href="/student" className="student-topbar__brand">DevTraining<span>Learning space</span></a>
+          <div className="student-topbar__profile"><ThemeToggle />
             <span className="student-avatar">{(me?.fullName ?? student?.name ?? "S").charAt(0).toUpperCase()}</span>
             <div>
               <strong>{me?.fullName ?? student?.name}</strong>
@@ -69,7 +70,7 @@ export function StudentQuizAttemptPage() {
               <p className="text-muted">Passing score: {startAttempt.data.passingPercentage}%</p>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <div className="quiz-answer-progress" role="status"><strong>{Object.keys(answers).length} of {startAttempt.data.questions.length} answered</strong><span>Take your time. Review your choices before submitting.</span></div><form onSubmit={handleSubmit}>
               {startAttempt.data.questions.map((question, index) => (
                 <div className="card student-class-card" key={question.id}>
                   <h3>

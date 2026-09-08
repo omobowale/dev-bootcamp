@@ -1,3 +1,4 @@
+import { Select } from "../../components/Select";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -12,6 +13,7 @@ import { ErrorState } from "../../components/ErrorState";
 import { RichTextEditor } from "../../components/admin/RichTextEditor";
 import { AdminQuizEditor } from "./AdminQuizEditor";
 import { AdminAssignmentEditor } from "./AdminAssignmentEditor";
+import { AdminAttendanceEditor } from "./AdminAttendanceEditor";
 import { Icon } from "../../components/Icon";
 import { ROUTES, adminCourseOutlinePath } from "../../constants/routes";
 import type { AdminClassSessionInput, LessonSectionInput } from "../../types/admin";
@@ -142,7 +144,7 @@ export function AdminClassSessionFormPage() {
   const isSaving = createMutation.isPending || updateMutation.isPending;
 
   return (
-    <div className="container admin-page">
+    <div className="container admin-page academic-editor">
       <div className="admin-page__header">
         <div>
           <span className="eyebrow">LMS · PHASE 9</span>
@@ -157,7 +159,7 @@ export function AdminClassSessionFormPage() {
         </Link>
       </div>
 
-      <form className="card admin-form-panel" onSubmit={handleSubmit}>
+      <nav className="academic-section-nav" aria-label="Class editor sections"><a href="#class-details">Class details</a><a href="#lesson-content">Lesson content</a>{isEditing && <><a href="#class-quiz">Quiz</a><a href="#class-assignment">Assignment</a><a href="#class-attendance">Attendance</a></>}</nav><form id="class-details" className="card admin-form-panel" onSubmit={handleSubmit}>
         {error && (
           <div className="form-error" role="alert">
             {error}
@@ -179,7 +181,7 @@ export function AdminClassSessionFormPage() {
             {module && module.topics.length > 0 && (
               <label className="form-field form-field--full">
                 Linked public topic (optional)
-                <select
+                <Select
                   value={form.topicId ?? ""}
                   onChange={(e) => updateField("topicId", e.target.value ? Number(e.target.value) : null)}
                 >
@@ -189,7 +191,7 @@ export function AdminClassSessionFormPage() {
                       {topic.title}
                     </option>
                   ))}
-                </select>
+                </Select>
               </label>
             )}
 
@@ -232,7 +234,7 @@ export function AdminClassSessionFormPage() {
           </div>
         </section>
 
-        <section className="course-form-section">
+        <section id="lesson-content" className="course-form-section">
           <div className="outline-section-heading" style={{ marginBottom: 18 }}>
             <span className="outline-section-heading__icon">
               <Icon name="layers" size={16} />
@@ -290,7 +292,7 @@ export function AdminClassSessionFormPage() {
       </form>
 
       {isEditing && classSessionId && (
-        <div className="card admin-form-panel">
+        <div id="class-quiz" className="card admin-form-panel">
           <div className="outline-section-heading" style={{ marginBottom: 18 }}>
             <span className="outline-section-heading__icon">
               <Icon name="check" size={16} />
@@ -307,7 +309,7 @@ export function AdminClassSessionFormPage() {
       )}
 
       {isEditing && classSessionId && (
-        <div className="card admin-form-panel">
+        <div id="class-assignment" className="card admin-form-panel">
           <div className="outline-section-heading" style={{ marginBottom: 18 }}>
             <span className="outline-section-heading__icon">
               <Icon name="edit" size={16} />
@@ -320,6 +322,23 @@ export function AdminClassSessionFormPage() {
             </div>
           </div>
           <AdminAssignmentEditor classSessionId={classSessionId} />
+        </div>
+      )}
+
+      {isEditing && classSessionId && (
+        <div id="class-attendance" className="card admin-form-panel">
+          <div className="outline-section-heading" style={{ marginBottom: 18 }}>
+            <span className="outline-section-heading__icon">
+              <Icon name="users" size={16} />
+            </span>
+            <div>
+              <h2 style={{ margin: 0 }}>Attendance</h2>
+              <p className="text-muted" style={{ margin: "2px 0 0" }}>
+                Mark who attended this live class. Saved independently of the class form above.
+              </p>
+            </div>
+          </div>
+          <AdminAttendanceEditor classSessionId={classSessionId} />
         </div>
       )}
     </div>

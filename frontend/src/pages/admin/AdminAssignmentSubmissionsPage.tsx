@@ -1,3 +1,4 @@
+import { Select } from "../../components/Select";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAdminSubmissions, useReviewSubmission } from "../../hooks/admin/useAdminAssignment";
@@ -60,11 +61,11 @@ function SubmissionCard({ submission, assignmentId }: { submission: AdminSubmiss
       <div className="admin-form-grid">
         <label className="form-field">
           Status
-          <select value={status} onChange={(e) => setStatus(e.target.value as AssignmentSubmissionStatus)}>
+          <Select value={status} onChange={(e) => setStatus(e.target.value as AssignmentSubmissionStatus)}>
             <option value="UNDER_REVIEW">Under review</option>
             <option value="REVIEWED">Reviewed</option>
             <option value="NEEDS_RESUBMISSION">Needs resubmission</option>
-          </select>
+          </Select>
         </label>
         {status === "REVIEWED" && (
           <label className="form-field">

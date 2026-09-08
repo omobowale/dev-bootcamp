@@ -1,13 +1,50 @@
+import { ThemeToggle } from "../../components/ThemeToggle";
 import { Link } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentEnrollments, useStudentMe } from "../../hooks/student/useStudentPortal";
+import { useCourseProgress } from "../../hooks/student/useStudentProgress";
 import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { CourseArtwork } from "../../components/CourseArtwork";
 import { Icon } from "../../components/Icon";
 import { studentCourseClassesPath } from "../../constants/routes";
+import type { StudentEnrollment } from "../../types/student";
 import "../../components/CourseCard.css";
 import "./StudentDashboardPage.css";
+
+function StudentCourseCard({ enrollment }: { enrollment: StudentEnrollment }) {
+  const { data: progress } = useCourseProgress(enrollment.courseId);
+
+  return (
+    <Link to={studentCourseClassesPath(enrollment.courseId)} className="course-card student-course-card">
+      <div className="course-card__image-link">
+        <CourseArtwork title={enrollment.courseTitle} image={enrollment.courseImage} />
+      </div>
+      <div className="course-card__body">
+        <div className="course-card__kicker">
+          <span>
+            <span className="live-dot" /> {enrollment.cohortName}
+            {enrollment.privateTutorial ? " · Private tutorial" : ""}
+          </span>
+        </div>
+        <h3>{enrollment.courseTitle}</h3>
+        {progress && (
+          <div className="course-progress-bar" aria-label={`${progress.overallPercentage}% complete`}>
+            <div className="course-progress-bar__track">
+              <div className="course-progress-bar__fill" style={{ width: `${progress.overallPercentage}%` }} />
+            </div>
+            <span className="text-muted">
+              {progress.overallPercentage}% {progress.courseComplete && "· Complete"}
+            </span>
+          </div>
+        )}
+        <p className="text-muted student-course-card__note">
+          Continue learning <Icon name="arrow" size={13} />
+        </p>
+      </div>
+    </Link>
+  );
+}
 
 export function StudentDashboardPage() {
   const { student, logout } = useStudentAuth();
@@ -18,8 +55,8 @@ export function StudentDashboardPage() {
     <div className="student-shell">
       <header className="student-topbar">
         <div className="container student-topbar__inner">
-          <span className="student-topbar__brand">DevTraining.</span>
-          <div className="student-topbar__profile">
+          <a href="/student" className="student-topbar__brand">DevTraining<span>Learning space</span></a>
+          <div className="student-topbar__profile"><ThemeToggle />
             <span className="student-avatar">{(me?.fullName ?? student?.name ?? "S").charAt(0).toUpperCase()}</span>
             <div>
               <strong>{me?.fullName ?? student?.name}</strong>
@@ -35,10 +72,11 @@ export function StudentDashboardPage() {
       <div className="container student-page">
         <div className="student-page__header">
           <span className="eyebrow">YOUR PORTAL</span>
-          <h1>My courses</h1>
-          <p className="text-muted">Everything you're enrolled in, in one place.</p>
+          <h1>Make room for your next breakthrough.</h1>
+          <p className="text-muted">Welcome back. Your classes, practice, and progress are all right here.</p>
         </div>
 
+        <div className="learning-section-heading"><div><span className="eyebrow">YOUR LEARNING JOURNEY</span><h2>My courses</h2></div>{enrollments && <span className="learning-count">{enrollments.length} enrolled</span>}</div>
         {isLoading && <LoadingState label="Loading your courses…" />}
         {isError && <ErrorState message="Couldn't load your courses." onRetry={() => refetch()} />}
 
@@ -53,27 +91,7 @@ export function StudentDashboardPage() {
         {enrollments && enrollments.length > 0 && (
           <div className="student-course-grid">
             {enrollments.map((enrollment) => (
-              <Link
-                to={studentCourseClassesPath(enrollment.courseId)}
-                className="course-card student-course-card"
-                key={`${enrollment.courseId}-${enrollment.cohortId}`}
-              >
-                <div className="course-card__image-link">
-                  <CourseArtwork title={enrollment.courseTitle} image={enrollment.courseImage} />
-                </div>
-                <div className="course-card__body">
-                  <div className="course-card__kicker">
-                    <span>
-                      <span className="live-dot" /> {enrollment.cohortName}
-                      {enrollment.privateTutorial ? " · Private tutorial" : ""}
-                    </span>
-                  </div>
-                  <h3>{enrollment.courseTitle}</h3>
-                  <p className="text-muted student-course-card__note">
-                    View classes <Icon name="arrow" size={13} />
-                  </p>
-                </div>
-              </Link>
+              <StudentCourseCard enrollment={enrollment} key={`${enrollment.courseId}-${enrollment.cohortId}`} />
             ))}
           </div>
         )}

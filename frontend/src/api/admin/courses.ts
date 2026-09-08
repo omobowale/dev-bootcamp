@@ -1,5 +1,10 @@
 import { apiClient } from "../client";
-import type { AdminCourse, AdminCourseInput } from "../../types/admin";
+import type {
+  AdminCourse,
+  AdminCourseInput,
+  CourseCompletionCriteria,
+  CourseCompletionCriteriaInput,
+} from "../../types/admin";
 
 export async function adminGetCourses(): Promise<AdminCourse[]> {
   const response = await apiClient.get<AdminCourse[]>("/api/admin/courses");
@@ -23,4 +28,20 @@ export async function adminUpdateCourse(id: number, input: AdminCourseInput): Pr
 
 export async function adminArchiveCourse(id: number): Promise<void> {
   await apiClient.delete(`/api/admin/courses/${id}`);
+}
+
+export async function adminGetCompletionCriteria(courseId: number): Promise<CourseCompletionCriteria> {
+  const response = await apiClient.get<CourseCompletionCriteria>(`/api/admin/courses/${courseId}/completion-criteria`);
+  return response.data;
+}
+
+export async function adminUpdateCompletionCriteria(
+  courseId: number,
+  input: CourseCompletionCriteriaInput,
+): Promise<CourseCompletionCriteria> {
+  const response = await apiClient.put<CourseCompletionCriteria>(
+    `/api/admin/courses/${courseId}/completion-criteria`,
+    input,
+  );
+  return response.data;
 }

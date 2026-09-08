@@ -87,6 +87,21 @@ export interface StudentClassSession {
   sections: StudentLessonSection[];
   quiz: StudentQuizSummary | null;
   assignment: StudentAssignment | null;
+  completed: boolean;
+}
+
+export interface CourseProgress {
+  classesTotal: number;
+  classesCompleted: number;
+  quizzesTotal: number;
+  quizzesPassed: number;
+  assignmentsTotal: number;
+  assignmentsSubmitted: number;
+  assignmentsReviewed: number;
+  attendanceTotal: number | null;
+  attendancePresent: number | null;
+  overallPercentage: number;
+  courseComplete: boolean;
 }
 
 export interface StudentQuizOption {

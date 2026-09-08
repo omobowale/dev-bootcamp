@@ -216,3 +216,33 @@ export interface AdminSubmission {
   feedback: string | null;
   reviewedAt: string | null;
 }
+
+export type AttendanceStatus = "PRESENT" | "ABSENT";
+
+export interface AdminAttendanceRow {
+  studentId: number;
+  studentCode: string;
+  studentName: string;
+  status: AttendanceStatus | null;
+  checkInTime: string | null;
+  checkOutTime: string | null;
+  notes: string | null;
+}
+
+export interface AttendanceEntry {
+  studentId: number;
+  status: AttendanceStatus;
+  checkInTime: string | null;
+  checkOutTime: string | null;
+  notes: string | null;
+}
+
+export interface CourseCompletionCriteria {
+  courseId: number;
+  requireAllClassesCompleted: boolean;
+  requireAllQuizzesPassed: boolean;
+  requireAllAssignmentsReviewed: boolean;
+  minAttendancePercentage: number | null;
+}
+
+export type CourseCompletionCriteriaInput = Omit<CourseCompletionCriteria, "courseId">;

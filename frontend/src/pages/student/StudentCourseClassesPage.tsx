@@ -1,3 +1,4 @@
+import { ThemeToggle } from "../../components/ThemeToggle";
 import { Link, useParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentClassesForCourse, useStudentMe } from "../../hooks/student/useStudentPortal";
@@ -19,8 +20,8 @@ export function StudentCourseClassesPage() {
     <div className="student-shell">
       <header className="student-topbar">
         <div className="container student-topbar__inner">
-          <span className="student-topbar__brand">DevTraining.</span>
-          <div className="student-topbar__profile">
+          <a href="/student" className="student-topbar__brand">DevTraining<span>Learning space</span></a>
+          <div className="student-topbar__profile"><ThemeToggle />
             <span className="student-avatar">{(me?.fullName ?? student?.name ?? "S").charAt(0).toUpperCase()}</span>
             <div>
               <strong>{me?.fullName ?? student?.name}</strong>
@@ -56,10 +57,10 @@ export function StudentCourseClassesPage() {
 
         {classes && classes.length > 0 && (
           <ul className="student-class-list">
-            {classes.map((session) => (
+            {classes.map((session, index) => (
               <li key={session.id} className="student-class-list__item">
                 <Link to={studentClassSessionDetailPath(session.id)} className="student-class-list__link">
-                  <div>
+                  <span className="lesson-number">{String(index + 1).padStart(2, "0")}</span><div className="lesson-list-copy">
                     <span className="text-muted student-class-list__module">{session.moduleTitle}</span>
                     <strong>{session.title}</strong>
                     {session.scheduledAt && (
