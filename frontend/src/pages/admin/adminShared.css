@@ -129,6 +129,14 @@
   background: #dcf3e6;
   color: #1a7a44;
 }
+.status-badge--active {
+  background: #dcf3e6;
+  color: #1a7a44;
+}
+.status-badge--invited {
+  background: #fdf1d6;
+  color: #a5730a;
+}
 .status-badge--closed,
 .status-badge--full {
   background: var(--color-danger-bg);

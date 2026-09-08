@@ -40,6 +40,7 @@ export interface AdminRegistrationDetail {
   status: RegistrationStatus;
   createdAt: string;
   updatedAt: string;
+  studentId: string | null;
 }
 
 export interface AdminActionLog {

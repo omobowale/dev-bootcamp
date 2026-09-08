@@ -14,6 +14,10 @@ export const QUERY_KEYS = {
   settings: {
     terms: ["settings", "terms"] as const,
   },
+  student: {
+    me: ["student", "me"] as const,
+    enrollments: ["student", "enrollments"] as const,
+  },
   admin: {
     courses: {
       all: ["admin", "courses"] as const,
@@ -38,6 +42,9 @@ export const QUERY_KEYS = {
     },
     settings: {
       terms: ["admin", "settings", "terms"] as const,
+    },
+    students: {
+      all: ["admin", "students"] as const,
     },
   },
 };

@@ -1,5 +1,6 @@
 package com.trainingplatform.config;
 
+import com.trainingplatform.security.AdminUserDetailsService;
 import com.trainingplatform.security.JwtAuthenticationFilter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -34,9 +36,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // Built explicitly against AdminUserDetailsService rather than via
+    // AuthenticationConfiguration#getAuthenticationManager(): with two UserDetailsService
+    // beans in context (admin + student), Spring Security's auto-wiring of the global
+    // AuthenticationManager can't pick one and falls back to resolving an AuthenticationManager
+    // bean from the context — which is this bean itself, causing infinite recursion
+    // (StackOverflowError) on every admin login. Student login never uses this bean; it
+    // verifies credentials manually in StudentAuthService.
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(
+            AdminUserDetailsService adminUserDetailsService, PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(adminUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(provider);
     }
 
     @Bean
@@ -48,6 +60,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(
                                         "/api/admin/login",
+                                        "/api/student/auth/**",
                                         "/api/courses/**",
                                         "/api/faqs/**",
                                         "/api/settings/**",
@@ -56,7 +69,9 @@ public class SecurityConfig {
                                         "/actuator/info")
                                 .permitAll()
                                 .requestMatchers("/api/admin/**")
-                                .authenticated()
+                                .hasRole("ADMIN")
+                                .requestMatchers("/api/student/**")
+                                .hasRole("STUDENT")
                                 .anyRequest()
                                 .permitAll())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

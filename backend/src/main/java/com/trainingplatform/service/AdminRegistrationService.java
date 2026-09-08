@@ -7,6 +7,7 @@ import com.trainingplatform.dto.PagedResponse;
 import com.trainingplatform.entity.Registration;
 import com.trainingplatform.entity.RegistrationStatus;
 import com.trainingplatform.exception.ResourceNotFoundException;
+import com.trainingplatform.repository.CourseEnrollmentRepository;
 import com.trainingplatform.repository.RegistrationRepository;
 import com.trainingplatform.repository.RegistrationSpecifications;
 import com.trainingplatform.security.CurrentAdminProvider;
@@ -24,6 +25,8 @@ public class AdminRegistrationService {
     private final RegistrationRepository registrationRepository;
     private final CurrentAdminProvider currentAdminProvider;
     private final AdminActionLogService adminActionLogService;
+    private final StudentEnrollmentService studentEnrollmentService;
+    private final CourseEnrollmentRepository courseEnrollmentRepository;
 
     @Transactional(readOnly = true)
     public PagedResponse<AdminRegistrationListItemResponse> list(
@@ -36,7 +39,7 @@ public class AdminRegistrationService {
 
     @Transactional(readOnly = true)
     public AdminRegistrationDetailResponse getById(Long id) {
-        return AdminRegistrationDetailResponse.from(getOrThrow(id));
+        return toDetailResponse(getOrThrow(id));
     }
 
     @Transactional(readOnly = true)
@@ -58,7 +61,22 @@ public class AdminRegistrationService {
                 registration.getId(),
                 "New status: " + newStatus);
 
-        return AdminRegistrationDetailResponse.from(registration);
+        // Confirming a registration is the moment it becomes real course access — see
+        // StudentEnrollmentService and 09_LMS_Implementation_Plan.md. Idempotent, so this is
+        // safe to call even if the status bounces through CONFIRMED more than once.
+        if (newStatus == RegistrationStatus.CONFIRMED) {
+            studentEnrollmentService.enroll(registration);
+        }
+
+        return toDetailResponse(registration);
+    }
+
+    private AdminRegistrationDetailResponse toDetailResponse(Registration registration) {
+        String studentId = courseEnrollmentRepository
+                .findByRegistrationId(registration.getId())
+                .map(enrollment -> enrollment.getStudent().getStudentId())
+                .orElse(null);
+        return AdminRegistrationDetailResponse.from(registration, studentId);
     }
 
     private Registration getOrThrow(Long id) {

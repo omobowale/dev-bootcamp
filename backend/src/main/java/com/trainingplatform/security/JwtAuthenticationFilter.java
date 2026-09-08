@@ -21,7 +21,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String BEARER_PREFIX = "Bearer ";
 
     private final JwtService jwtService;
-    private final AdminUserDetailsService userDetailsService;
+    private final AdminUserDetailsService adminUserDetailsService;
+    private final StudentUserDetailsService studentUserDetailsService;
 
     @Override
     protected void doFilterInternal(
@@ -40,7 +41,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (jwtService.isTokenValid(token) && SecurityContextHolder.getContext().getAuthentication() == null) {
             String email = jwtService.extractEmail(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            // The token's role claim only decides which table to look the principal up in —
+            // the actual authority granted still comes from a fresh DB lookup below, not from
+            // anything the token itself claims, so a forged/stale role claim can't grant access.
+            boolean isStudent = "STUDENT".equals(jwtService.extractRole(token));
+            UserDetails userDetails = isStudent
+                    ? studentUserDetailsService.loadUserByUsername(email)
+                    : adminUserDetailsService.loadUserByUsername(email);
 
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

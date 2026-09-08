@@ -11,6 +11,7 @@ const links: { to: string; label: string; icon: IconName; end?: boolean }[] = [
   { to: ROUTES.adminCourses, label: "Courses", icon: "book" },
   { to: ROUTES.adminCohorts, label: "Cohorts", icon: "calendar" },
   { to: ROUTES.adminRegistrations, label: "Registrations", icon: "users" },
+  { to: ROUTES.adminStudents, label: "Students", icon: "users" },
   { to: "/admin/settings/terms", label: "Terms & conditions", icon: "shield" },
   { to: "/admin/site-content", label: "Site content", icon: "spark" },
   { to: ROUTES.adminFaqs, label: "Site FAQs", icon: "book" },

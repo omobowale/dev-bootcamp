@@ -20,9 +20,11 @@ public record AdminRegistrationDetailResponse(
         boolean consentGiven,
         String status,
         Instant createdAt,
-        Instant updatedAt) {
+        Instant updatedAt,
+        String studentId) {
 
-    public static AdminRegistrationDetailResponse from(Registration registration) {
+    /** studentId is null until this registration has produced a CourseEnrollment (see StudentEnrollmentService) — typically the moment it's marked CONFIRMED. */
+    public static AdminRegistrationDetailResponse from(Registration registration, String studentId) {
         return new AdminRegistrationDetailResponse(
                 registration.getId(),
                 registration.getRegistrationNumber(),
@@ -40,6 +42,7 @@ public record AdminRegistrationDetailResponse(
                 registration.isConsentGiven(),
                 registration.getStatus().name(),
                 registration.getCreatedAt(),
-                registration.getUpdatedAt());
+                registration.getUpdatedAt(),
+                studentId);
     }
 }

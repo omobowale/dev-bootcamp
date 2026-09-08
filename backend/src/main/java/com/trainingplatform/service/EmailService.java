@@ -1,6 +1,7 @@
 package com.trainingplatform.service;
 
 import com.trainingplatform.entity.Registration;
+import com.trainingplatform.entity.Student;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -92,6 +93,25 @@ public class EmailService {
                                         : "");
 
         send(adminNotificationTo, "New registration — " + registration.getRegistrationNumber(), body);
+    }
+
+    public void sendStudentInvite(Student student, String inviteUrl, String courseTitle) {
+        String body =
+                """
+                Hi %s,
+
+                Your payment for %s has been confirmed and your student portal account is ready.
+
+                Your Student ID: %s
+
+                Set your password to get started:
+                %s
+
+                This link expires in 7 days. See you in class!
+                """
+                        .formatted(student.getFullName(), courseTitle, student.getStudentId(), inviteUrl);
+
+        send(student.getEmail(), "Set up your student portal access — " + student.getStudentId(), body);
     }
 
     private void send(String to, String subject, String body) {

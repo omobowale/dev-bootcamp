@@ -77,6 +77,11 @@
   align-items: center;
   gap: 8px;
 }
+.footer-bottom__links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 @media (max-width: 900px) {
   .footer-main {
     grid-template-columns: 1.3fr 1fr 1fr;
@@ -96,5 +101,9 @@
   .footer-bottom {
     flex-direction: column;
     gap: 10px;
+  }
+  .footer-bottom__links {
+    flex-wrap: wrap;
+    gap: 12px;
   }
 }

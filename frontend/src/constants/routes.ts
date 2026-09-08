@@ -15,6 +15,9 @@ export const ROUTES = {
   adminRegistrations: "/admin/registrations",
   adminFaqs: "/admin/faqs",
   adminTerms: "/admin/settings/terms",
+  adminStudents: "/admin/students",
+  studentLogin: "/student/login",
+  student: "/student",
 } as const;
 
 export function adminCourseOutlinePath(courseId: number): string {
@@ -35,4 +38,8 @@ export function courseDetailPath(slug: string): string {
 
 export function registerPath(courseSlug?: string): string {
   return courseSlug ? `/register?course=${encodeURIComponent(courseSlug)}` : "/register";
+}
+
+export function studentInvitePath(token: string): string {
+  return `/student/invite/${token}`;
 }

@@ -82,6 +82,18 @@ export function AdminRegistrationDetailPage() {
               {registration.privateTutorial ? " (Private tutorial)" : ""}
             </p>
             <p className="detail-header-card__meta">Registered {formatDateTime(registration.createdAt)}</p>
+            <p className="detail-header-card__meta">
+              {registration.studentId ? (
+                <>
+                  Student account: <strong>{registration.studentId}</strong> ·{" "}
+                  <Link to={ROUTES.adminStudents} className="text-link">
+                    View students
+                  </Link>
+                </>
+              ) : (
+                "No student account yet — created automatically once this registration is Confirmed."
+              )}
+            </p>
           </div>
 
           <div className="card detail-section-card">
