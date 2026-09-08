@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { sanitizeRichText } from "../utils/richText";
 import { Portrait } from "../components/CommunitySections";
 import { Icon } from "../components/Icon";
@@ -6,6 +7,7 @@ import "../components/CourseCard.css";
 import { useParams, Link } from "react-router-dom";
 import { useCourse } from "../hooks/useCourse";
 import { useCourseCohorts } from "../hooks/useCourseCohorts";
+import { useDocumentMeta } from "../hooks/useDocumentMeta";
 import { LoadingState } from "../components/LoadingState";
 import { ErrorState } from "../components/ErrorState";
 import { FaqAccordion } from "../components/FaqAccordion";
@@ -19,6 +21,33 @@ export function CourseDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: course, isLoading, isError, refetch } = useCourse(slug);
   const { data: cohorts, isLoading: cohortsLoading, isError: cohortsError, refetch: refetchCohorts } = useCourseCohorts(course?.id);
+
+  const jsonLd = useMemo(() => {
+    if (!course) return undefined;
+    return {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      name: course.title,
+      description: course.shortDescription ?? course.title,
+      provider: { "@type": "Organization", name: "DevTraining" },
+      ...(course.price != null
+        ? {
+            offers: {
+              "@type": "Offer",
+              price: course.discountPrice ?? course.price,
+              priceCurrency: "NGN",
+              availability: "https://schema.org/InStock",
+            },
+          }
+        : {}),
+    };
+  }, [course]);
+
+  useDocumentMeta({
+    title: course ? `${course.title} — DevTraining` : "Loading course… — DevTraining",
+    description: course?.shortDescription ?? undefined,
+    jsonLd,
+  });
 
   if (isLoading) return <div className="container detail-loading"><LoadingState label="Loading course…" /></div>;
 

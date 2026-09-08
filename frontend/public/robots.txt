@@ -1,0 +1,9 @@
+# TODO: replace devtraining.example with the real production domain once purchased
+# (see Documents/07_Launch_Runbook.md, section 6 "Domain and SSL"), then update
+# the Sitemap line below and regenerate sitemap.xml with the live domain.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /student
+
+Sitemap: https://devtraining.example/sitemap.xml
