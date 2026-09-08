@@ -15,7 +15,7 @@ export function AdminQuizAttemptsPage() {
     <div className="container admin-page">
       <div className="admin-page__header">
         <div>
-          <span className="eyebrow">LMS · PHASE 10</span>
+          <span className="eyebrow">LEARNING MANAGEMENT</span>
           <h1>Quiz attempts</h1>
           <p className="text-muted">Every attempt a student has made on this quiz.</p>
         </div>

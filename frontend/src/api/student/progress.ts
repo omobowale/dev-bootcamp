@@ -1,8 +1,8 @@
 import { apiClient } from "../client";
 import type { CourseProgress } from "../../types/student";
 
-export async function getCourseProgress(courseId: number): Promise<CourseProgress> {
-  const response = await apiClient.get<CourseProgress>(`/api/student/courses/${courseId}/progress`);
+export async function getCourseProgress(courseId: number, cohortId?:number): Promise<CourseProgress> {
+  const response = await apiClient.get<CourseProgress>(`/api/student/courses/${courseId}/progress`, {params:{cohortId}});
   return response.data;
 }
 

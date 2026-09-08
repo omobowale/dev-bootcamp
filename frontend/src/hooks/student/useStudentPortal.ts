@@ -16,10 +16,10 @@ export function useStudentEnrollments() {
   });
 }
 
-export function useStudentClassesForCourse(courseId: number) {
+export function useStudentClassesForCourse(courseId: number, cohortId?:number) {
   return useQuery({
-    queryKey: QUERY_KEYS.student.classesForCourse(courseId),
-    queryFn: () => getStudentClassesForCourse(courseId),
+    queryKey: [...QUERY_KEYS.student.classesForCourse(courseId),cohortId],
+    queryFn: () => getStudentClassesForCourse(courseId,cohortId),
     enabled: Number.isFinite(courseId),
   });
 }

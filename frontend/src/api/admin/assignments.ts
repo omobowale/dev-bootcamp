@@ -25,7 +25,7 @@ export async function adminGetSubmissions(assignmentId: number): Promise<AdminSu
 
 export async function adminReviewSubmission(
   submissionId: number,
-  input: { status: string; score: number | null; feedback: string | null },
+  input: { version: number; status: string; score: number | null; feedback: string | null },
 ): Promise<AdminSubmission> {
   const response = await apiClient.put<AdminSubmission>(
     `/api/admin/assignment-submissions/${submissionId}/review`,

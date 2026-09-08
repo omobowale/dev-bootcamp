@@ -43,4 +43,10 @@ public class Student extends BaseEntity {
 
     @Column(name = "invite_token_expires_at")
     private Instant inviteTokenExpiresAt;
+    private String recoveryTokenHash;
+    private Instant recoveryExpiresAt;
+    private Instant recoveryRequestedAt;
+    private boolean loginSuspended;
+    private long authVersion;
+
 }

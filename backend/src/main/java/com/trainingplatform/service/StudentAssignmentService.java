@@ -44,6 +44,11 @@ public class StudentAssignmentService {
 
     @Transactional
     public StudentSubmissionResponse submit(Long assignmentId, String responseText, MultipartFile attachment) {
+        return submit(assignmentId, responseText, attachment, null);
+    }
+
+    @Transactional
+    public StudentSubmissionResponse submit(Long assignmentId, String responseText, MultipartFile attachment, Long expectedVersion) {
         Student student = currentStudentProvider.getCurrentStudent();
         Assignment assignment = assignmentRepository
                 .findById(assignmentId)
@@ -63,6 +68,8 @@ public class StudentAssignmentService {
                     return created;
                 });
 
+        if (submission.getId() != null && (expectedVersion == null || !java.util.Objects.equals(submission.getVersion(),expectedVersion)))
+            throw new com.trainingplatform.exception.ConflictException("This submission changed. Refresh before resubmitting.");
         if (submission.getId() != null && submission.getStatus() != AssignmentSubmissionStatus.NEEDS_RESUBMISSION) {
             throw new BadRequestException("Your submission is already received. Your instructor must request a resubmission before you can replace it.");
         }
@@ -86,7 +93,7 @@ public class StudentAssignmentService {
         }
         submission.setStatus(AssignmentSubmissionStatus.SUBMITTED);
         submission.setSubmittedAt(Instant.now());
-        submission = submissionRepository.save(submission);
+        submission = submissionRepository.saveAndFlush(submission);
 
         return StudentSubmissionResponse.from(submission);
     }
@@ -106,6 +113,7 @@ public class StudentAssignmentService {
     }
 
     private void requireEnrolled(Student student, Assignment assignment) {
+        LearningAccess.require(courseEnrollmentRepository, student.getId(), assignment.getClassSession());
         Long courseId = assignment.getClassSession().getModule().getCourse().getId();
         if (!courseEnrollmentRepository.existsByStudentIdAndCourseId(student.getId(), courseId)) {
             throw new ForbiddenException("You are not enrolled in this course.");

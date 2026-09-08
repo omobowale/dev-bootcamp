@@ -39,14 +39,18 @@ public class StudentPortalService {
     public List<StudentEnrollmentResponse> listMyEnrollments() {
         var student = currentStudentProvider.getCurrentStudent();
         return courseEnrollmentRepository.findByStudentIdOrderByCreatedAtDesc(student.getId()).stream()
+                .filter(e -> e.isActive() && e.getRegistration().getStatus() != com.trainingplatform.entity.RegistrationStatus.CANCELLED)
                 .map(StudentEnrollmentResponse::from)
                 .toList();
     }
 
-    public List<StudentClassListItemResponse> listClassesForCourse(Long courseId) {
+    public List<StudentClassListItemResponse> listClassesForCourse(Long courseId) {return listClassesForCourse(courseId,null);}
+    public List<StudentClassListItemResponse> listClassesForCourse(Long courseId,Long cohortId) {
         Student student = currentStudentProvider.getCurrentStudent();
         requireEnrolled(student, courseId);
+        LearningAccess.requireCohort(courseEnrollmentRepository,student.getId(),courseId,cohortId);
         return classSessionRepository.findByCourseIdOrderByModulePositionAscPositionAsc(courseId).stream()
+                .filter(session -> (cohortId==null || session.getCohortId()==null || cohortId.equals(session.getCohortId())) && LearningAccess.allows(courseEnrollmentRepository, student.getId(), session))
                 .map(StudentClassListItemResponse::from)
                 .toList();
     }
@@ -60,6 +64,7 @@ public class StudentPortalService {
         List<MaterialResponse> materials = courseMaterialRepository.findByClassSessionIdOrderByPositionAsc(classSessionId).stream()
                 .map(MaterialResponse::from)
                 .toList();
+        LearningAccess.require(courseEnrollmentRepository, student.getId(), session);
         var quiz = studentQuizService.summaryFor(classSessionId, student).orElse(null);
         var assignment = studentAssignmentService.summaryFor(classSessionId, student).orElse(null);
         boolean completed =

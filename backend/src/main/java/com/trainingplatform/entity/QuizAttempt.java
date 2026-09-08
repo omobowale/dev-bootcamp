@@ -44,6 +44,8 @@ public class QuizAttempt extends BaseEntity {
 
     @Column(name = "question_snapshot", columnDefinition = "TEXT")
     private String questionSnapshot;
+    @Column(columnDefinition = "TEXT")
+    private String draftAnswers;
 
     @Column(name = "result_snapshot", columnDefinition = "TEXT")
     private String resultSnapshot;

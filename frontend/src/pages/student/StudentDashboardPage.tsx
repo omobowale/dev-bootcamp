@@ -16,7 +16,7 @@ import "../../components/CourseCard.css";
 import "./StudentDashboardPage.css";
 
 function StudentCourseCard({ enrollment }: { enrollment: StudentEnrollment }) {
-  const { data: progress } = useCourseProgress(enrollment.courseId);
+  const { data: progress } = useCourseProgress(enrollment.courseId,enrollment.cohortId);
   const { data: certificate } = useMyCertificate(enrollment.courseId);
   const issueCertificate = useIssueCertificate(enrollment.courseId);
   const [downloading, setDownloading] = useState(false);
@@ -34,7 +34,7 @@ function StudentCourseCard({ enrollment }: { enrollment: StudentEnrollment }) {
   };
 
   return (
-    <Link to={studentCourseClassesPath(enrollment.courseId)} className="course-card student-course-card">
+    <Link to={`${studentCourseClassesPath(enrollment.courseId)}?cohortId=${enrollment.cohortId}`} className="course-card student-course-card">
       <div className="course-card__image-link">
         <CourseArtwork title={enrollment.courseTitle} image={enrollment.courseImage} />
       </div>

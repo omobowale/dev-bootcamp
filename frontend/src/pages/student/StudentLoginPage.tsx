@@ -129,8 +129,8 @@ export function StudentLoginPage() {
               </button>
             </div>
           </div>
-          <Link to="/about#contact" className="text-link">
-            Trouble signing in? Contact the team
+          <Link to="/student/recover" className="text-link">
+            Forgot password or expired invitation?
           </Link>
 
           <button type="submit" className="btn btn-primary student-login__submit" disabled={submitting}>

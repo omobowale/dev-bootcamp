@@ -29,6 +29,11 @@ public class StudentQuizController {
         return studentQuizService.submitAttempt(attemptId, request);
     }
 
+    @GetMapping("/api/student/quiz-attempts/{attemptId}/draft")
+    public java.util.Map<String,Integer> draft(@PathVariable Long attemptId) {return studentQuizService.getDraft(attemptId);}
+    @PostMapping("/api/student/quiz-attempts/{attemptId}/draft")
+    public void saveDraft(@PathVariable Long attemptId,@Valid @RequestBody com.trainingplatform.dto.QuizAnswerSubmission answer) {studentQuizService.saveDraft(attemptId,answer);}
+
     @GetMapping("/api/student/quiz-attempts/{attemptId}")
     public QuizAttemptResultResponse getAttemptResult(@PathVariable Long attemptId) {
         return studentQuizService.getAttemptResult(attemptId);

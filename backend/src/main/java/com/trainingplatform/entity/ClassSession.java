@@ -26,6 +26,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "class_sessions")
 public class ClassSession extends BaseEntity {
+    private Long cohortId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "module_id", nullable = false)

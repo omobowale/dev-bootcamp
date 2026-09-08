@@ -15,7 +15,8 @@
 .rich-text-editor__toolbar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
   padding: 8px 10px;
   background: var(--color-surface-muted);
   border-bottom: 1px solid var(--color-border);
@@ -27,30 +28,38 @@
   gap: 2px;
 }
 
-.rich-text-editor__style-select {
-  height: 30px;
+.rich-text-editor .rich-text-editor__style-select {
+  flex: 0 0 142px;
+  width: 142px;
+  min-width: 0;
+  max-width: 100%;
+}
+.rich-text-editor .rich-text-editor__style-select .smart-select__trigger {
+  width: 100%;
+  min-width: 0;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 10px;
   border: 1px solid var(--color-border);
-  border-radius: 7px;
   background: var(--color-surface);
-  color: var(--color-text);
-  font-size: 12px;
-  padding: 0 8px;
-  cursor: pointer;
+  justify-content: space-between;
+  font-size: 13px;
+  gap: 5px;
 }
-.rich-text-editor__style-select:hover {
-  border-color: var(--color-primary);
-}
-
 .rich-text-editor__divider {
+  flex: 0 0 1px;
   width: 1px;
-  align-self: stretch;
+  height: 24px;
+  align-self: center;
   margin: 2px 0;
   background: var(--color-border);
 }
 
-.rich-text-editor__toolbar button {
-  min-width: 30px;
-  height: 30px;
+.rich-text-editor__toolbar > .rich-text-editor__group button {
+  flex: 0 0 36px;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
   border: none;
   border-radius: 7px;
   background: transparent;
@@ -124,45 +133,19 @@
   font-size: 1.08em;
   margin: 4px 0 8px;
 }
-/* Toolbar controls must not inherit full-width form-field sizing. */
-.rich-text-editor .rich-text-editor__toolbar {
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.rich-text-editor .rich-text-editor__toolbar .rich-text-editor__style-select {
-  flex: 0 0 142px;
-  width: 142px;
-  min-width: 142px;
-  max-width: 100%;
-  height: 36px;
-  min-height: 36px;
-  padding: 0 10px;
-  font-size: 13px;
-  line-height: normal;
-}
-.rich-text-editor .rich-text-editor__group {
-  flex: 0 0 auto;
-}
-.rich-text-editor .rich-text-editor__divider {
-  flex: 0 0 1px;
-  align-self: center;
-  height: 24px;
-}
-.rich-text-editor .rich-text-editor__toolbar button {
-  flex: 0 0 36px;
-  width: 36px;
-  min-width: 36px;
-  height: 36px;
+
+.rich-text-editor__toolbar button[aria-pressed="true"] {
+  color: var(--color-primary);
+  background: var(--color-accent-soft);
 }
 @media (pointer: coarse) {
-  .rich-text-editor .rich-text-editor__toolbar button {
+  .rich-text-editor__toolbar > .rich-text-editor__group button {
     flex-basis: 40px;
     width: 40px;
     height: 40px;
   }
-  .rich-text-editor .rich-text-editor__toolbar .rich-text-editor__style-select {
+  .rich-text-editor .rich-text-editor__style-select .smart-select__trigger {
     height: 40px;
     min-height: 40px;
   }
 }
-

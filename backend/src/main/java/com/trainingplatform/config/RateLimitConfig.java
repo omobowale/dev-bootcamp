@@ -11,7 +11,7 @@ public class RateLimitConfig {
     public FilterRegistrationBean<RegistrationRateLimitFilter> registrationRateLimitFilter() {
         FilterRegistrationBean<RegistrationRateLimitFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new RegistrationRateLimitFilter());
-        registration.addUrlPatterns("/api/registrations");
+        registration.addUrlPatterns("/api/registrations", "/api/student/auth/recovery");
         registration.setOrder(1);
         return registration;
     }

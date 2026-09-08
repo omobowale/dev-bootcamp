@@ -20,7 +20,9 @@ class LmsRegressionTest {
     private final StudentQuizService service = new StudentQuizService(quizzes, questions, attempts, answers, enrollments, current);
     private void quizFixture() {
         Student student = new Student(); student.setId(1L); when(current.getCurrentStudent()).thenReturn(student);
-        Quiz quiz = new Quiz(); quiz.setId(2L); quiz.setPassingPercentage(70);
+        Course course = new Course();course.setId(7L);CourseModule module = new CourseModule();module.setCourse(course);ClassSession session = new ClassSession();session.setModule(module);
+        Quiz quiz = new Quiz(); quiz.setId(2L); quiz.setPassingPercentage(70);quiz.setClassSession(session);
+        when(enrollments.existsByStudentIdAndCourseId(1L,7L)).thenReturn(true);
         QuizAttempt attempt = new QuizAttempt(); attempt.setId(3L); attempt.setQuiz(quiz);
         when(attempts.findForUpdate(3L,1L)).thenReturn(Optional.of(attempt));
         QuizQuestion question = new QuizQuestion(); question.setId(4L); question.setText("Question"); question.setPoints(5);

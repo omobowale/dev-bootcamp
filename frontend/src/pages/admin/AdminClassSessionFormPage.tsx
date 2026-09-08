@@ -1,3 +1,4 @@
+import { useAdminCohorts } from "../../hooks/admin/useAdminCohorts";
 import { Select } from "../../components/Select";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -24,6 +25,7 @@ import "./AdminCourseFormPage.css";
 
 const EMPTY_FORM: AdminClassSessionInput = {
   topicId: null,
+  cohortId: null,
   title: "",
   objectives: "",
   scheduledAt: null,
@@ -52,6 +54,7 @@ export function AdminClassSessionFormPage() {
   const isEditing = Boolean(params.classSessionId);
   const classSessionId = params.classSessionId ? Number(params.classSessionId) : undefined;
   const navigate = useNavigate();
+  const { data: cohorts } = useAdminCohorts();
 
   const { data: modules } = useAdminModules(courseId);
   const module = modules?.find((m) => m.id === moduleId);
@@ -148,7 +151,7 @@ export function AdminClassSessionFormPage() {
     <div className="container admin-page academic-editor">
       <div className="admin-page__header">
         <div>
-          <span className="eyebrow">LMS · PHASE 9</span>
+          <span className="eyebrow">LEARNING MANAGEMENT</span>
           <h1>{isEditing ? "Edit class" : "New class"}</h1>
           <p className="text-muted">
             {module ? `Part of "${module.title}". ` : ""}
@@ -168,6 +171,12 @@ export function AdminClassSessionFormPage() {
         )}
 
         <section className="course-form-section">
+          <label className="form-field">Class audience
+            <Select value={form.cohortId ?? ""} onChange={e => updateField("cohortId",e.target.value ? Number(e.target.value) : null)}>
+              <option value="">Shared lesson (no live schedule)</option>
+              {cohorts?.filter(c => c.courseId===courseId).map(c => <option value={c.id} key={c.id}>{c.name}</option>)}
+            </Select>
+          </label>
           <div className="admin-form-grid">
             <label className="form-field form-field--full">
               Class title

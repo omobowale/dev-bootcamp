@@ -23,13 +23,17 @@ public class StudentUserDetailsService implements UserDetailsService {
 
     private final StudentRepository studentRepository;
 
+    public boolean acceptsVersion(String email, long version) {
+        return studentRepository.findByEmail(email).map(s -> !s.isLoginSuspended() && s.getAuthVersion()==version).orElse(false);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Student student = studentRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("No student with email " + email));
 
-        if (student.getStatus() != StudentStatus.ACTIVE || student.getPasswordHash() == null) {
+        if (student.isLoginSuspended() || student.getStatus() != StudentStatus.ACTIVE || student.getPasswordHash() == null) {
             throw new UsernameNotFoundException("Student account not yet activated: " + email);
         }
 

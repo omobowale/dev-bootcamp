@@ -22,6 +22,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "assignment_submissions")
 public class AssignmentSubmission extends BaseEntity {
+    @jakarta.persistence.Version
+    private Long version;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignment_id", nullable = false)

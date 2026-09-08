@@ -1,5 +1,6 @@
+import { SubmissionHistory } from "../../components/SubmissionHistory";
 import { ThemeToggle } from "../../components/ThemeToggle";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentClass, useStudentMe } from "../../hooks/student/useStudentPortal";
@@ -22,13 +23,26 @@ const SUBMISSION_STATUS_LABELS: Record<string, string> = {
 };
 
 function AssignmentSection({ assignment }: { assignment: StudentAssignment }) {
-  const [responseText, setResponseText] = useState(assignment.mySubmission?.responseText ?? "");
+  const { student } = useStudentAuth();
+  const draftKey = `assignment-draft:${student?.email}:${assignment.id}:${assignment.mySubmission?.version ?? "new"}`;
+  const [responseText, setResponseText] = useState(() => {
+    try { return sessionStorage.getItem(draftKey) ?? assignment.mySubmission?.responseText ?? ""; }
+    catch { return assignment.mySubmission?.responseText ?? ""; }
+  });
+  const [uploadProgress,setUploadProgress]=useState(0);
+  const [confirmRevision,setConfirmRevision]=useState(false);
+  useEffect(() => {
+    try { sessionStorage.setItem(draftKey,responseText); } catch { /* Storage may be unavailable. */ }
+  }, [draftKey,responseText]);
   const [attachment, setAttachment] = useState<File | null>(null);
   const submit = useSubmitAssignment();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    submit.mutate({ assignmentId: assignment.id, responseText, attachment });
+    if (assignment.mySubmission && !confirmRevision) { setConfirmRevision(true); return; }
+    submit.mutate({ version: assignment.mySubmission?.version, assignmentId: assignment.id, responseText, attachment, onUploadProgress: setUploadProgress }, {
+      onSuccess: () => { try { sessionStorage.removeItem(draftKey); } catch { /* Storage may be unavailable. */ } setAttachment(null); setConfirmRevision(false); },
+    });
   };
 
   return (
@@ -52,6 +66,7 @@ function AssignmentSection({ assignment }: { assignment: StudentAssignment }) {
         </p>
       )}
 
+      {assignment.mySubmission && <SubmissionHistory url={`/api/student/assignments/${assignment.id}/history`} />}
       {assignment.mySubmission && (
         <div className="notice-panel" style={{ margin: "16px 0" }}>
           <p>
@@ -81,8 +96,13 @@ function AssignmentSection({ assignment }: { assignment: StudentAssignment }) {
           Attachment (optional){assignment.allowedAttachmentTypes && ` — ${assignment.allowedAttachmentTypes}`}
           <input accept={assignment.allowedAttachmentTypes || undefined} type="file" onChange={(e) => setAttachment(e.target.files?.[0] ?? null)} />
         </label>
-        <button type="submit" className="btn btn-primary" disabled={submit.isPending}>
-          {submit.isPending ? "Submitting…" : assignment.mySubmission ? "Resubmit" : "Submit assignment"}
+        <p className="text-muted">Response text is kept in this tab while you work. Attachments must be selected again after refreshing. Maximum file size: 10 MB.</p>
+        {confirmRevision && <p className="notice-panel" role="status">Your previous submission and feedback will be kept in history. Confirm to send this revision for a fresh review.</p>}
+        {submit.isPending && attachment && <label className="form-field">Uploading {uploadProgress}%<progress max={100} value={uploadProgress} /></label>}
+        {submit.isError && <p role="alert" className="form-error">Submission failed. Your draft is still here. Check the deadline and file restrictions, then try again.</p>}
+        <button type="submit" className="btn btn-primary" disabled={submit.isPending || (!responseText.trim() && !attachment)}>
+
+          {submit.isPending ? "Submitting…" : confirmRevision ? "Confirm resubmission" : assignment.mySubmission ? "Resubmit" : "Submit assignment"}
         </button>
         {submit.isSuccess && <p className="quiz-result-correct" style={{ marginTop: 8 }}>Submitted!</p>}
       </form>}
@@ -128,7 +148,7 @@ export function StudentClassSessionPage() {
         {session && (
           <>
             <div className="student-page__header">
-              <button type="button" className="text-link student-back-link" onClick={() => navigate(-1)}>
+              <button type="button" className="text-link student-back-link" onClick={() => navigate(`/student/courses/${session.courseId}/classes${session.cohortId ? `?cohortId=${session.cohortId}` : ""}`)}>
                 <Icon name="arrow" size={13} style={{ transform: "rotate(180deg)" }} /> Back to classes
               </button>
               <span className="eyebrow">CLASS</span>

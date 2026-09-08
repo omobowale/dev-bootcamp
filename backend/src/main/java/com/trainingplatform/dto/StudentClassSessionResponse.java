@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.List;
 
 public record StudentClassSessionResponse(
-        Long id,
+        Long id, Long courseId, Long cohortId,
         String title,
         String objectives,
         Instant scheduledAt,
@@ -24,12 +24,12 @@ public record StudentClassSessionResponse(
             StudentAssignmentResponse assignment,
             boolean completed) {
         return new StudentClassSessionResponse(
-                session.getId(),
+                session.getId(), session.getModule().getCourse().getId(), session.getCohortId(),
                 session.getTitle(),
                 session.getObjectives(),
-                session.getScheduledAt(),
-                session.getMeetingLink(),
-                session.getRecordingUrl(),
+                session.getCohortId() == null ? null : session.getScheduledAt(),
+                session.getCohortId() == null ? null : session.getMeetingLink(),
+                session.getCohortId() == null ? null : session.getRecordingUrl(),
                 session.getSections().stream().map(LessonSectionDto::from).toList(),
                 materials,
                 quiz,

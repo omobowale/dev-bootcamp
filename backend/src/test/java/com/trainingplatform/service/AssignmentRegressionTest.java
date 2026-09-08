@@ -25,18 +25,18 @@ class AssignmentRegressionTest {
         Course course = new Course();course.setId(2L);CourseModule module = new CourseModule();module.setCourse(course);
         ClassSession session = new ClassSession();session.setModule(module);assignment.setClassSession(session);
         when(assignments.findById(3L)).thenReturn(Optional.of(assignment));when(enrollments.existsByStudentIdAndCourseId(1L,2L)).thenReturn(true);
-        AssignmentSubmission submission = new AssignmentSubmission();submission.setId(4L);submission.setStatus(status);submission.setScore(80);submission.setFeedback("Previous review");submission.setReviewedAt(Instant.now());
+        AssignmentSubmission submission = new AssignmentSubmission();submission.setId(4L);submission.setVersion(0L);submission.setStatus(status);submission.setScore(80);submission.setFeedback("Previous review");submission.setReviewedAt(Instant.now());
         when(submissions.findByAssignmentIdAndStudentId(3L,1L)).thenReturn(Optional.of(submission));
-        when(submissions.save(any())).thenAnswer(i->i.getArgument(0));return submission;
+        when(submissions.saveAndFlush(any())).thenAnswer(i->i.getArgument(0));return submission;
     }
     @Test void reviewedWorkCannotBeReplaced() {
         var previous=fixture(AssignmentSubmissionStatus.REVIEWED);
-        assertThatThrownBy(()->service.submit(3L,"Replacement",null)).isInstanceOf(BadRequestException.class);
-        assertThat(previous.getScore()).isEqualTo(80);verify(submissions,never()).save(any());
+        assertThatThrownBy(()->service.submit(3L,"Replacement",null,0L)).isInstanceOf(BadRequestException.class);
+        assertThat(previous.getScore()).isEqualTo(80);verify(submissions,never()).saveAndFlush(any());
     }
     @Test void requestedCorrectionArchivesOldReviewAndClearsGrade() {
         fixture(AssignmentSubmissionStatus.NEEDS_RESUBMISSION);assignment.setDueAt(Instant.now().minusSeconds(60));
-        var result=service.submit(3L,"Corrected response",null);
+        var result=service.submit(3L,"Corrected response",null,0L);
         assertThat(result.score()).isNull();assertThat(result.feedback()).isNull();assertThat(result.reviewedAt()).isNull();
         assertThat(result.status()).isEqualTo(AssignmentSubmissionStatus.SUBMITTED);
         verify(jdbc).update(anyString(),eq(4L));
@@ -45,7 +45,7 @@ class AssignmentRegressionTest {
         fixture(AssignmentSubmissionStatus.SUBMITTED);when(submissions.findByAssignmentIdAndStudentId(3L,1L)).thenReturn(Optional.empty());
         assignment.setDueAt(Instant.now().minusSeconds(60));
         assertThatThrownBy(()->service.submit(3L,"Late response",null)).isInstanceOf(BadRequestException.class).hasMessageContaining("deadline");
-        verify(submissions,never()).save(any());
+        verify(submissions,never()).saveAndFlush(any());
     }
     @Test void attachmentAllowlistIsEnforced() {
         assignment.setAllowedAttachmentTypes(".pdf, .txt");

@@ -11,8 +11,8 @@ export async function getStudentEnrollments(): Promise<StudentEnrollment[]> {
   return response.data;
 }
 
-export async function getStudentClassesForCourse(courseId: number): Promise<StudentClassListItem[]> {
-  const response = await apiClient.get<StudentClassListItem[]>(`/api/student/courses/${courseId}/classes`);
+export async function getStudentClassesForCourse(courseId: number, cohortId?: number): Promise<StudentClassListItem[]> {
+  const response = await apiClient.get<StudentClassListItem[]>(`/api/student/courses/${courseId}/classes`, {params:{cohortId}});
   return response.data;
 }
 

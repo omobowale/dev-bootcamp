@@ -10,6 +10,7 @@ public record ClassSessionRequest(
         @NotBlank String title,
         String objectives,
         Long topicId,
+        Long cohortId,
         Instant scheduledAt,
         String meetingLink,
         String recordingUrl,

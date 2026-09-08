@@ -114,6 +114,12 @@ public class EmailService {
         send(student.getEmail(), "Set up your student portal access — " + student.getStudentId(), body);
     }
 
+    public void sendStudentRecovery(Student student, String url) {
+        send(student.getEmail(), "Reset your DevTraining password", "Hi " + student.getFullName()
+            + "\n\nSet a new password using this one-time link. It expires in 30 minutes:\n" + url
+            + "\n\nIf you did not request this, you can ignore this email.");
+    }
+
     private void send(String to, String subject, String body) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();

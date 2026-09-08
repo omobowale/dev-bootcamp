@@ -47,7 +47,7 @@ public class RegistrationRateLimitFilter extends OncePerRequestFilter {
             String json =
                     """
                     {"timestamp":"%s","status":429,"error":"Too Many Requests",\
-                    "message":"Too many registration attempts. Please wait a minute and try again."}\
+                    "message":"Too many requests. Please wait a minute and try again."}\
                     """
                             .formatted(Instant.now());
             response.getWriter().write(json);

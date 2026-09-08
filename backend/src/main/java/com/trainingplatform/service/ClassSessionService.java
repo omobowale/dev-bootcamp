@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ClassSessionService {
 
+    private final com.trainingplatform.repository.CohortRepository cohortRepository;
     private final ClassSessionRepository classSessionRepository;
     private final CourseModuleRepository moduleRepository;
     private final CourseTopicRepository topicRepository;
@@ -105,6 +106,14 @@ public class ClassSessionService {
                     .orElseThrow(() -> new BadRequestException("Topic not found: " + request.topicId()));
         }
 
+        if (topic != null && !topic.getModule().getId().equals(session.getModule().getId())) throw new BadRequestException("The topic must belong to this module.");
+        if (request.cohortId() != null) {
+            var cohort=cohortRepository.findById(request.cohortId()).orElseThrow(()->new BadRequestException("Cohort not found."));
+            if (!cohort.getCourse().getId().equals(session.getModule().getCourse().getId())) throw new BadRequestException("The cohort must belong to this course.");
+        } else if (request.scheduledAt()!=null || (request.meetingLink()!=null && !request.meetingLink().isBlank()) || (request.recordingUrl()!=null && !request.recordingUrl().isBlank())) {
+            throw new BadRequestException("Choose a cohort for live schedules and recordings. Shared lessons cannot contain cohort meeting links.");
+        }
+        session.setCohortId(request.cohortId());
         session.setTopic(topic);
         session.setTitle(request.title());
         session.setObjectives(request.objectives());

@@ -1,5 +1,6 @@
+import { LearningOverview } from "../../components/LearningOverview";
 import { ThemeToggle } from "../../components/ThemeToggle";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useStudentAuth } from "../../context/StudentAuthContext";
 import { useStudentClassesForCourse, useStudentMe } from "../../hooks/student/useStudentPortal";
 import { LoadingState } from "../../components/LoadingState";
@@ -11,10 +12,11 @@ import "./StudentDashboardPage.css";
 
 export function StudentCourseClassesPage() {
   const { courseId } = useParams<{ courseId: string }>();
+  const [params]=useSearchParams();const cohortId=params.get("cohortId")?Number(params.get("cohortId")):undefined;
   const courseIdNum = Number(courseId);
   const { student, logout } = useStudentAuth();
   const { data: me } = useStudentMe();
-  const { data: classes, isLoading, isError, refetch } = useStudentClassesForCourse(courseIdNum);
+  const { data: classes, isLoading, isError, refetch } = useStudentClassesForCourse(courseIdNum,cohortId);
 
   return (
     <div className="student-shell">
@@ -44,6 +46,7 @@ export function StudentCourseClassesPage() {
           <p className="text-muted">Everything scheduled for this course, in order.</p>
         </div>
 
+        <LearningOverview courseId={courseIdNum} cohortId={cohortId}/>
         {isLoading && <LoadingState label="Loading classes…" />}
         {isError && <ErrorState message="Couldn't load classes for this course." onRetry={() => refetch()} />}
 

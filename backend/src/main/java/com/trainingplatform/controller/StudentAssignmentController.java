@@ -19,7 +19,8 @@ public class StudentAssignmentController {
     public StudentSubmissionResponse submit(
             @PathVariable Long assignmentId,
             @RequestParam(required = false) String responseText,
-            @RequestParam(required = false) MultipartFile attachment) {
-        return studentAssignmentService.submit(assignmentId, responseText, attachment);
+            @RequestParam(required = false) MultipartFile attachment,
+            @RequestParam(required = false) Long version) {
+        return studentAssignmentService.submit(assignmentId, responseText, attachment, version);
     }
 }

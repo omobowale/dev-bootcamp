@@ -1,0 +1,34 @@
+[
+  {
+    "course": "react",
+    "classes": 6,
+    "questions": 60,
+    "assignments": 6,
+    "rubrics": 6,
+    "published": false
+  },
+  {
+    "course": "vue",
+    "classes": 6,
+    "questions": 60,
+    "assignments": 6,
+    "rubrics": 6,
+    "published": false
+  },
+  {
+    "course": "javascript-node",
+    "classes": 6,
+    "questions": 60,
+    "assignments": 6,
+    "rubrics": 6,
+    "published": false
+  },
+  {
+    "course": "python-django",
+    "classes": 6,
+    "questions": 60,
+    "assignments": 6,
+    "rubrics": 6,
+    "published": false
+  }
+]

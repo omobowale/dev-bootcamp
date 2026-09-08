@@ -1,205 +1,85 @@
 import type { Certificate } from "../types/student";
 import { formatDate } from "./formatDate";
 
-// A4 landscape in points — a certificate reads as a certificate in landscape,
-// not as a tall receipt (that's the registration-confirmation PDF's shape).
-const PAGE_WIDTH = 841.89;
-const PAGE_HEIGHT = 595.28;
-const OUTER_BORDER = 26;
-const INNER_BORDER = 36;
-const CONTENT_MARGIN = 64;
-const CENTER_X = PAGE_WIDTH / 2;
-
-const BRAND_PRIMARY = "#087f68";
-const BRAND_DARK = "#182c27";
-const BRAND_MUTED = "#697c76";
-const BRAND_BORDER = "#e0e8e5";
-
-// jsPDF is a real dependency but this is the only place that needs it — load
-// it lazily so its cost is only paid when a student actually downloads a
-// certificate, not on first page load.
-const loadJsPdf = async () => {
-  const { jsPDF } = await import("jspdf");
-  return jsPDF;
-};
-
+const W = 841.89, H = 595.28;
+const INK = "#183B31", GREEN = "#104C3C", GOLD = "#C3A36B", MUTED = "#62736A";
+const loadJsPdf = async () => (await import("jspdf")).jsPDF;
 type Doc = InstanceType<Awaited<ReturnType<typeof loadJsPdf>>>;
 
-/** Draws the DevTraining brand mark (the same rounded "</>" glyph used on the live site) directly with vector primitives, so the PDF never depends on a separate logo image file. */
-function drawBrandMark(doc: Doc, x: number, y: number, size: number) {
-  doc.setFillColor(BRAND_PRIMARY);
-  doc.roundedRect(x, y, size, size, size * 0.28, size * 0.28, "F");
-  doc.setTextColor("#ffffff");
-  doc.setFont("courier", "bold");
-  doc.setFontSize(size * 0.5);
-  doc.text("</>", x + size / 2, y + size / 2 + size * 0.05, { align: "center", baseline: "middle" });
+function label(doc: Doc, text: string, x: number, y: number, color = MUTED) {
+  doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(color);
+  doc.setCharSpace(1.5); doc.text(text, x, y); doc.setCharSpace(0);
 }
 
-/** Manual letter/word spacing (jsPDF's built-in fonts have no letter-spacing API) for a tracked-out caps look on short headings. */
-function trackedText(text: string): string {
-  return text
-    .split(" ")
-    .map((word) => word.split("").join(" "))
-    .join("   ");
+/** Fit complete values into their reserved area; never truncate a recipient's name. */
+function fitted(doc: Doc, text: string, x: number, y: number, width: number, size: number, maxLines = 2) {
+  const clean = text.replace(/\s+/g, " ").trim();
+  let lines: string[] = [];
+  do { doc.setFontSize(size); lines = doc.splitTextToSize(clean, width); if (lines.length <= maxLines) break; size -= 1; } while (size > 8);
+  doc.text(lines, x, y, { lineHeightFactor: 1.15 });
 }
 
-function addWatermark(doc: Doc) {
-  doc.saveGraphicsState();
-  // @ts-expect-error — GState is attached to the jsPDF instance at runtime, not in its type declarations.
-  doc.setGState(new doc.GState({ opacity: 0.04 }));
-  doc.setTextColor(BRAND_PRIMARY);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(140);
-  doc.text("DEVTRAINING", CENTER_X, PAGE_HEIGHT / 2, { align: "center", angle: 22 });
-  doc.restoreGraphicsState();
+function seal(doc: Doc, x: number, y: number) {
+  doc.setDrawColor(GOLD); doc.setLineWidth(.6);
+  for (let i = 0; i < 48; i++) {
+    const a = i * Math.PI / 24;
+    doc.line(x + Math.cos(a)*35,y + Math.sin(a)*35,x + Math.cos(a)*39,y + Math.sin(a)*39);
+  }
+  doc.circle(x,y,31,"S"); doc.circle(x,y,27,"S");
+  doc.setLineWidth(2);doc.line(x-10,y,x-2,y+8);doc.line(x-2,y+8,x+13,y-10);
 }
 
-/** The double-ruled border a certificate is expected to have — a thin outer rule and a heavier brand-colored inner rule, the classic certificate frame. */
-function addBorderFrame(doc: Doc) {
-  doc.setDrawColor(BRAND_BORDER);
-  doc.setLineWidth(1);
-  doc.rect(OUTER_BORDER, OUTER_BORDER, PAGE_WIDTH - OUTER_BORDER * 2, PAGE_HEIGHT - OUTER_BORDER * 2, "S");
+/** Vector artwork remains sharp on screen and in print; no external images required. */
+export async function createCertificatePdf(certificate: Certificate, origin = window.location.origin) {
+  const JsPdf = await loadJsPdf();
+  const doc = new JsPdf({ unit: "pt", format: "a4", orientation: "landscape", compress: true });
+  doc.setProperties({ title: `Certificate of Completion - ${certificate.studentName}`, subject: certificate.courseTitle, author: "DevTraining", creator: "DevTraining Learning Platform" });
+  doc.setFillColor("#FAF9F5");doc.rect(0,0,W,H,"F");
+  doc.setFillColor(GREEN);doc.rect(20,20,168,H-40,"F");
+  doc.setDrawColor("#28614E");doc.setLineWidth(.5);
+  for(let i=0;i<9;i++) { doc.line(20,220+i*25,188,85+i*25); }
+  doc.setFillColor(GREEN);doc.rect(35,38,138,99,"F");
+  doc.setTextColor("#FFFFFF");doc.setFont("courier","bold");doc.setFontSize(29);doc.text("</>",53,77);
+  doc.setFont("helvetica","bold");doc.setFontSize(17);doc.text("DevTraining.",40,110);
+  label(doc,"LEARN. BUILD. GROW.",40,130,"#D5E5DA");
+  seal(doc,104,376);
+  label(doc,"COMPLETION",62,435,"#E6D5B3");label(doc,"AWARD",83,451,"#E6D5B3");
+  doc.setDrawColor(GOLD);doc.setLineWidth(1);doc.line(60,480,148,480);
+  doc.setFont("times","italic");doc.setFontSize(12);doc.setTextColor("#DFEAE0");
+  doc.text(["A milestone earned.","A future in the making."],104,510,{align:"center",lineHeightFactor:1.5});
 
-  doc.setDrawColor(BRAND_PRIMARY);
-  doc.setLineWidth(1.75);
-  doc.rect(INNER_BORDER, INNER_BORDER, PAGE_WIDTH - INNER_BORDER * 2, PAGE_HEIGHT - INNER_BORDER * 2, "S");
-  doc.setLineWidth(1);
-}
-
-function addHeader(doc: Doc) {
-  const markSize = 30;
-  const wordmark = "DevTraining.";
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(15);
-  const wordmarkWidth = doc.getTextWidth(wordmark);
-  const startX = CENTER_X - (markSize + 10 + wordmarkWidth) / 2;
-  const y = 64;
-  drawBrandMark(doc, startX, y, markSize);
-  doc.setTextColor(BRAND_DARK);
-  doc.text(wordmark, startX + markSize + 10, y + markSize / 2 + 5);
-}
-
-/** A medallion-style seal — concentric rings plus a checkmark — drawn with vector primitives so no image asset is needed, echoing the "verified" idea without a generic clip-art look. */
-function addSeal(doc: Doc, cx: number, cy: number) {
-  const r = 30;
-  doc.setDrawColor(BRAND_PRIMARY);
-  doc.setLineWidth(1.25);
-  doc.circle(cx, cy, r, "S");
-  doc.setLineWidth(0.75);
-  doc.circle(cx, cy, r - 5, "S");
-  doc.setFillColor(BRAND_PRIMARY);
-  doc.circle(cx, cy, r - 10, "F");
-
-  doc.setDrawColor("#ffffff");
-  doc.setLineWidth(2.5);
-  doc.lines(
-    [
-      [7, 7],
-      [13, -15],
-    ],
-    cx - 10,
-    cy + 2,
-    [1, 1],
-    "S",
-    false
-  );
-  doc.setLineWidth(1);
-}
-
-function addFooter(doc: Doc) {
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(7.5);
-  doc.setTextColor(BRAND_MUTED);
-  doc.text(`Generated ${new Date().toLocaleString()}`, OUTER_BORDER + 4, PAGE_HEIGHT - 10);
-  doc.text("Verify this certificate at devtraining.example/verify", PAGE_WIDTH - OUTER_BORDER - 4, PAGE_HEIGHT - 10, {
-    align: "right",
-  });
+  doc.setDrawColor("#DCD9CC");doc.setLineWidth(.6);doc.rect(202,20,W-222,H-40,"S");
+  doc.setDrawColor(GOLD);doc.setLineWidth(2);doc.line(226,43,271,43);doc.line(226,43,226,68);
+  doc.line(W-39,H-43,W-84,H-43);doc.line(W-39,H-43,W-39,H-68);
+  const x=236, width=544;
+  label(doc,"DEVTRAINING LEARNING PLATFORM",x,77);
+  doc.setFont("times","normal");doc.setFontSize(46);doc.setTextColor(INK);doc.text("Certificate",x,132);
+  label(doc,"OF COMPLETION",x+2,155,GREEN);
+  doc.setDrawColor(GOLD);doc.setLineWidth(.8);doc.line(x,177,x+width,177);
+  doc.setFont("helvetica","normal");doc.setFontSize(11);doc.setTextColor(MUTED);doc.text("This certificate is proudly presented to",x,211);
+  doc.setFont("times","bold");doc.setTextColor(INK);fitted(doc,certificate.studentName,x,256,width,37);
+  doc.setFont("helvetica","normal");doc.setFontSize(11);doc.setTextColor(MUTED);
+  doc.text("for successfully completing the course",x,321);
+  doc.setFont("helvetica","bold");doc.setTextColor(GREEN);fitted(doc,certificate.courseTitle,x,354,width,23);
+  doc.setFont("helvetica","normal");doc.setFontSize(10);doc.setTextColor(MUTED);
+  doc.text("Awarded in recognition of meeting the course completion requirements.",x,414);
+  doc.setDrawColor("#DCD9CC");doc.setLineWidth(.6);doc.line(x,443,x+width,443);
+  label(doc,"COMPLETION DATE",x,467);label(doc,"STUDENT ID",x+272,467);
+  doc.setFont("helvetica","bold");doc.setTextColor(INK);
+  fitted(doc,formatDate(certificate.completionDate) || certificate.completionDate,x,490,246,12,1);
+  fitted(doc,certificate.studentCode,x+272,490,272,12,1);
+  label(doc,"ISSUED BY DEVTRAINING",x,520);
+  const verifyUrl = new URL(`/verify/${encodeURIComponent(certificate.verificationId)}`,origin).href;
+  doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(MUTED);
+  doc.text("Certificate ID",x,543);
+  doc.setFont("courier","bold");doc.setTextColor(GREEN);fitted(doc,certificate.verificationId,x+65,543,325,9,1);
+  doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(GREEN);
+  doc.textWithLink("Verify certificate",x+width-74,543,{url:verifyUrl});
+  doc.setDrawColor(GOLD);doc.setLineWidth(.5);doc.line(x+width-74,546,x+width,546);
+  return doc;
 }
 
 export async function downloadCertificatePdf(certificate: Certificate) {
-  const JsPdf = await loadJsPdf();
-  const doc = new JsPdf({ unit: "pt", format: "a4", orientation: "landscape" });
-
-  addWatermark(doc);
-  addBorderFrame(doc);
-  addHeader(doc);
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(11);
-  doc.setTextColor(BRAND_PRIMARY);
-  doc.text(trackedText("CERTIFICATE OF COMPLETION"), CENTER_X, 118, { align: "center" });
-
-  doc.setDrawColor(BRAND_PRIMARY);
-  doc.setLineWidth(1.5);
-  doc.line(CENTER_X - 60, 128, CENTER_X + 60, 128);
-  doc.setLineWidth(1);
-
-  doc.setFont("times", "italic");
-  doc.setFontSize(13);
-  doc.setTextColor(BRAND_MUTED);
-  doc.text("This certifies that", CENTER_X, 168, { align: "center" });
-
-  // The student's name is the focal point of the whole page — largest text, centered, serif.
-  doc.setFont("times", "bold");
-  doc.setFontSize(36);
-  doc.setTextColor(BRAND_DARK);
-  doc.text(certificate.studentName, CENTER_X, 212, { align: "center" });
-  const nameWidth = doc.getTextWidth(certificate.studentName);
-  doc.setDrawColor(BRAND_BORDER);
-  doc.setLineWidth(1);
-  doc.line(CENTER_X - nameWidth / 2 - 20, 224, CENTER_X + nameWidth / 2 + 20, 224);
-
-  doc.setFont("times", "italic");
-  doc.setFontSize(13);
-  doc.setTextColor(BRAND_MUTED);
-  doc.text("has successfully completed the course", CENTER_X, 254, { align: "center" });
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(21);
-  doc.setTextColor(BRAND_PRIMARY);
-  const courseLines = doc.splitTextToSize(certificate.courseTitle, PAGE_WIDTH - CONTENT_MARGIN * 2 - 80);
-  doc.text(courseLines, CENTER_X, 288, { align: "center" });
-  const courseBlockHeight = courseLines.length * 24;
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(11);
-  doc.setTextColor(BRAND_MUTED);
-  const completedLabel = `Completed on ${formatDate(certificate.completionDate) ?? certificate.completionDate}`;
-  doc.text(completedLabel, CENTER_X, 288 + courseBlockHeight + 6, { align: "center" });
-
-  // Bottom row: a signature-style line (left), the seal (center), and the verification id (right) —
-  // the layout a printed certificate normally carries, minus an actual signature image.
-  const lineY = PAGE_HEIGHT - INNER_BORDER - 56;
-
-  const leftX = CONTENT_MARGIN + 10;
-  doc.setDrawColor(BRAND_MUTED);
-  doc.setLineWidth(1);
-  doc.line(leftX, lineY, leftX + 150, lineY);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
-  doc.setTextColor(BRAND_DARK);
-  doc.text("DevTraining Learning Team", leftX, lineY + 16);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(BRAND_MUTED);
-  doc.text("Program administrator", leftX, lineY + 28);
-
-  addSeal(doc, CENTER_X, lineY - 12);
-
-  const rightX = PAGE_WIDTH - CONTENT_MARGIN - 10;
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(BRAND_MUTED);
-  doc.text("VERIFICATION ID", rightX, lineY - 14, { align: "right" });
-  doc.setFont("courier", "bold");
-  doc.setFontSize(13);
-  doc.setTextColor(BRAND_PRIMARY);
-  doc.text(certificate.verificationId, rightX, lineY + 2, { align: "right" });
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(BRAND_MUTED);
-  doc.text(`Student ID ${certificate.studentCode}`, rightX, lineY + 16, { align: "right" });
-
-  addFooter(doc);
-  doc.save(`DevTraining-Certificate-${certificate.verificationId}.pdf`);
+  const doc = await createCertificatePdf(certificate);
+  doc.save(`DevTraining-Certificate-${certificate.verificationId.replace(/[^a-zA-Z0-9_-]/g,"_")}.pdf`);
 }

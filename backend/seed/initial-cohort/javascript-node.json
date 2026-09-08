@@ -1,0 +1,1888 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "file": "javascript-node.txt",
+    "sha256": "c31525c1b25a4fdeee061b1ab5ffe468ffe3d62b025a0f83d07d01898f7d9b4a",
+    "note": "Adapted from the supplied course outline and question bank, with original lesson notes and additional application questions. Instructor review required before publication."
+  },
+  "course": {
+    "title": "Full-Stack Web Application Development with JavaScript & Node.js — Initial cohort draft",
+    "slug": "javascript-node-initial-cohort-draft",
+    "shortDescription": "Six guided classes covering full-stack architecture and javascript; node.js servers and express routes; database modelling and persistence; authentication and access control; react integration and scalable api responses; api tests, documentation and deployment.",
+    "description": "<p>A guided course for learners who want to build and explain a working student-management application.</p><h3>Outcomes</h3><ol><li>Diagram the browser, API and database. Build a five-student dataset with map/filter/find operations. Describe how an invalid request differs from an empty successful result.</li><li>Implement list, detail and create student endpoints against temporary in-memory data. Test invalid JSON, a missing ID and a valid create request. Explain why this storage is only a development exercise.</li><li>Persist students in a database and implement adding and retrieving them. Define a unique student code and a course relationship. Demonstrate duplicate rejection, parameterized input and persistence after restart.</li><li>Build a login and protected profile flow using a maintained authentication library. Demonstrate anonymous rejection, expired-token rejection and denial when one student requests another student’s record. Explain hashing and authorization separately.</li><li>Connect a React student list and create form to the API. Add bounded pagination and failure recovery. Explain what would happen with 100,000 records and distinguish I/O concurrency from CPU-heavy processing.</li><li>Write an endpoint test and its API contract. Produce a production runbook covering configuration, database migration, startup, HTTPS, logging and rollback. Use a local or isolated preview rather than publishing real student records.</li></ol>",
+    "level": "Beginner",
+    "duration": "6 classes · 18 live hours plus independent practice",
+    "mode": "Live online",
+    "price": 0,
+    "requirements": "Basic computer use, a code editor, a browser and a local development environment. Frontend framework tracks assume basic JavaScript; backend tracks include introductory language review.",
+    "targetAudience": "Learners building their first structured web application; instructors should review prerequisites with the cohort.",
+    "certificateAvailable": true,
+    "published": false,
+    "whatsIncluded": []
+  },
+  "completionCriteria": {
+    "requireAllClassesCompleted": true,
+    "requireAllQuizzesPassed": true,
+    "requireAllAssignmentsReviewed": true,
+    "minAttendancePercentage": 80
+  },
+  "module": {
+    "title": "Initial cohort · six guided classes",
+    "description": "A condensed sequence drawing on the ten source-outline modules. Schedule each class for its cohort before launch.",
+    "position": 1
+  },
+  "lessons": [
+    {
+      "class": {
+        "title": "01. Full-stack architecture and JavaScript",
+        "objectives": "Explain full-stack architecture and javascript; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 1,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A student-management application spans a browser interface, a server and persistent storage. Trace one request through these boundaries before implementing the endpoints.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>The browser submits an HTTP request; the server validates input and authorization, queries storage and returns an appropriate response. JavaScript arrays and objects represent records in memory but do not persist across restarts. Use map, filter and find for distinct data operations. An async function returns a promise, and await pauses that function until a promise settles without making slow CPU work non-blocking. Plan both success and failure responses.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>const students = [{id: 1, name: &#x27;Ada&#x27;, score: 82}, {id: 2, name: &#x27;Sam&#x27;, score: 55}];\nconsole.log(students.filter(s =&gt; s.score &gt;= 70).map(s =&gt; s.name)); // [&#x27;Ada&#x27;]</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Diagram the browser, API and database. Build a five-student dataset with map/filter/find operations. Describe how an invalid request differs from an empty successful result.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://nodejs.org/en/learn\">https://nodejs.org/en/learn</a></li><li><a href=\"https://expressjs.com/\">https://expressjs.com/</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Modern Web Development",
+        "JavaScript Programming"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is full-stack development?",
+            "options": [
+              {
+                "text": "Developing only the frontend",
+                "correct": false
+              },
+              {
+                "text": "Developing both frontend and backend parts of an application",
+                "correct": true
+              },
+              {
+                "text": "Managing only databases",
+                "correct": false
+              },
+              {
+                "text": "Designing application logos",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Full-stack development involves working across the frontend, backend, databases, APIs, and related application infrastructure.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What is the primary purpose of a web API?",
+            "options": [
+              {
+                "text": "To design application colors",
+                "correct": false
+              },
+              {
+                "text": "To store images permanently",
+                "correct": false
+              },
+              {
+                "text": "To replace the operating system",
+                "correct": false
+              },
+              {
+                "text": "To allow software systems to communicate with each other",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>APIs provide defined ways for different software systems to exchange data and functionality.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which HTTP method is commonly used to retrieve information?",
+            "options": [
+              {
+                "text": "DELETE",
+                "correct": false
+              },
+              {
+                "text": "PATCH",
+                "correct": false
+              },
+              {
+                "text": "POST",
+                "correct": false
+              },
+              {
+                "text": "GET",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>GET requests are generally used to retrieve resources.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What does CRUD represent?",
+            "options": [
+              {
+                "text": "Compile, Run, Update, Debug",
+                "correct": false
+              },
+              {
+                "text": "Create, Read, Update, Delete",
+                "correct": true
+              },
+              {
+                "text": "Connect, Run, Upload, Download",
+                "correct": false
+              },
+              {
+                "text": "Create, Render, Use, Deploy",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>CRUD represents the four fundamental operations commonly performed on application data.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What is the purpose of a database in a web application?",
+            "options": [
+              {
+                "text": "To persist and organize application data",
+                "correct": true
+              },
+              {
+                "text": "To render CSS",
+                "correct": false
+              },
+              {
+                "text": "To compile JavaScript",
+                "correct": false
+              },
+              {
+                "text": "To replace the frontend",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Databases provide persistent storage and mechanisms for retrieving and managing application data.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A React frontend needs to retrieve customer information from a Node.js backend. What would typically be used?",
+            "options": [
+              {
+                "text": "A CSS selector",
+                "correct": false
+              },
+              {
+                "text": "A JavaScript comment",
+                "correct": false
+              },
+              {
+                "text": "A database password exposed to the browser",
+                "correct": false
+              },
+              {
+                "text": "An API endpoint",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>The frontend can communicate with the backend through defined API endpoints.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Which keyword is commonly used to declare a variable that should not be reassigned?",
+            "options": [
+              {
+                "text": "const",
+                "correct": true
+              },
+              {
+                "text": "static",
+                "correct": false
+              },
+              {
+                "text": "var",
+                "correct": false
+              },
+              {
+                "text": "let",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`const` creates a variable binding that cannot be reassigned.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What is an arrow function?",
+            "options": [
+              {
+                "text": "A CSS component",
+                "correct": false
+              },
+              {
+                "text": "A concise syntax for writing functions",
+                "correct": true
+              },
+              {
+                "text": "A database query",
+                "correct": false
+              },
+              {
+                "text": "A Node.js server",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Arrow functions provide a shorter syntax for defining functions.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What does the `map()` method do?",
+            "options": [
+              {
+                "text": "Creates a new array by transforming each element",
+                "correct": true
+              },
+              {
+                "text": "Deletes every array element",
+                "correct": false
+              },
+              {
+                "text": "Sorts a database table",
+                "correct": false
+              },
+              {
+                "text": "Starts a Node.js server",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`map()` applies a function to every element and returns a new array containing the results.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What does the `filter()` method do?",
+            "options": [
+              {
+                "text": "Deletes the original array permanently",
+                "correct": false
+              },
+              {
+                "text": "Converts JavaScript to PHP",
+                "correct": false
+              },
+              {
+                "text": "Creates a database connection",
+                "correct": false
+              },
+              {
+                "text": "Returns elements that satisfy a condition",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>`filter()` creates a new array containing elements for which the supplied condition returns true.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Full-stack architecture and JavaScript",
+        "learningObjective": "Explain full-stack architecture and javascript; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Diagram the browser, API and database. Build a five-student dataset with map/filter/find operations. Describe how an invalid request differs from an empty successful result.</p><h4>Source questions to address</h4><pre>**Question 1 — Theory**\nWhat does &quot;full-stack web development&quot; mean? Explain the roles of the frontend, backend, and database in a typical full-stack application.\n\n**Question 2 — Hands-on**\nDraw or describe the architecture of a simple student management system showing how the browser, Node.js backend, API, and database communicate with one another.\n\n**Question 3 — Theory**\nExplain variables, functions, arrays, objects, and promises in JavaScript. Give one practical use case for each.\n\n**Question 4 — Hands-on**\nCreate a JavaScript program containing an array of students. Use `map()`, `filter()`, and `find()` to perform different operations on the student data.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "02. Node.js servers and Express routes",
+        "objectives": "Explain node.js servers and express routes; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 2,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>Node.js runs JavaScript outside the browser. Express supplies routing and middleware so requests can pass through shared checks before reaching a handler.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>A route combines an HTTP method and path. Parse JSON bodies before routes that need them, validate every request and return a single response. Treat IDs from URLs as untrusted input. Return 404 for a missing student, 400 for invalid data and a suitable success status when a record is created. Middleware order matters: authentication must run before a protected handler. Use centralized error handling that avoids returning stack traces to clients.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>import express from &#x27;express&#x27;;\nconst app = express();\napp.use(express.json());\napp.get(&#x27;/students&#x27;, (req, res) =&gt; res.json([]));\napp.get(&#x27;/students/:id&#x27;, (req, res) =&gt; res.status(404).json({message: &#x27;Student not found&#x27;}));\napp.listen(3000);</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Implement list, detail and create student endpoints against temporary in-memory data. Test invalid JSON, a missing ID and a valid create request. Explain why this storage is only a development exercise.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://nodejs.org/en/learn\">https://nodejs.org/en/learn</a></li><li><a href=\"https://expressjs.com/\">https://expressjs.com/</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Node.js Fundamentals",
+        "Express.js"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is Node.js?",
+            "options": [
+              {
+                "text": "A database management system",
+                "correct": false
+              },
+              {
+                "text": "A CSS framework",
+                "correct": false
+              },
+              {
+                "text": "A mobile operating system",
+                "correct": false
+              },
+              {
+                "text": "A JavaScript runtime that allows JavaScript to run outside the browser",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Node.js provides a runtime environment for executing JavaScript outside traditional web browsers.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which JavaScript engine powers Node.js?",
+            "options": [
+              {
+                "text": "WebKit",
+                "correct": false
+              },
+              {
+                "text": "Chakra exclusively",
+                "correct": false
+              },
+              {
+                "text": "V8",
+                "correct": true
+              },
+              {
+                "text": "SpiderMonkey only",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Node.js uses Google&#x27;s V8 JavaScript engine.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What is npm?",
+            "options": [
+              {
+                "text": "A web browser",
+                "correct": false
+              },
+              {
+                "text": "A package manager commonly used with Node.js",
+                "correct": true
+              },
+              {
+                "text": "A database engine",
+                "correct": false
+              },
+              {
+                "text": "A CSS framework",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>npm is widely used to install and manage JavaScript packages and project dependencies.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What is the purpose of `package.json`?",
+            "options": [
+              {
+                "text": "To describe a Node.js project's metadata, scripts, and dependencies",
+                "correct": true
+              },
+              {
+                "text": "To store database records",
+                "correct": false
+              },
+              {
+                "text": "To define CSS styles",
+                "correct": false
+              },
+              {
+                "text": "To store user passwords",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`package.json` contains important project information, dependencies, scripts, and configuration.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What does the event-driven nature of Node.js mean?",
+            "options": [
+              {
+                "text": "Node.js can only execute one line of code",
+                "correct": false
+              },
+              {
+                "text": "Node.js does not support APIs",
+                "correct": false
+              },
+              {
+                "text": "Every operation must block execution",
+                "correct": false
+              },
+              {
+                "text": "Applications can respond to events and asynchronous operations",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Node.js uses an event-driven architecture that works particularly well for I/O-heavy applications.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "Why is Node.js commonly used for API development?",
+            "options": [
+              {
+                "text": "It automatically creates databases",
+                "correct": false
+              },
+              {
+                "text": "It does not support HTTP",
+                "correct": false
+              },
+              {
+                "text": "It provides an efficient environment for handling network and I/O operations",
+                "correct": true
+              },
+              {
+                "text": "It can only create static HTML pages",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Node.js is well suited to network applications because of its asynchronous, event-driven architecture.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What is Express.js?",
+            "options": [
+              {
+                "text": "A mobile application framework",
+                "correct": false
+              },
+              {
+                "text": "A web framework for Node.js",
+                "correct": true
+              },
+              {
+                "text": "A database engine",
+                "correct": false
+              },
+              {
+                "text": "A JavaScript compiler",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Express.js is a lightweight Node.js framework commonly used for building web applications and APIs.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What is a route in Express.js?",
+            "options": [
+              {
+                "text": "A definition that determines how the application responds to a particular HTTP request",
+                "correct": true
+              },
+              {
+                "text": "A database table",
+                "correct": false
+              },
+              {
+                "text": "A JavaScript variable",
+                "correct": false
+              },
+              {
+                "text": "A CSS class",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Routes define how an Express application handles requests to particular URLs and HTTP methods.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What is middleware in Express.js?",
+            "options": [
+              {
+                "text": "Database tables",
+                "correct": false
+              },
+              {
+                "text": "CSS components",
+                "correct": false
+              },
+              {
+                "text": "HTML templates only",
+                "correct": false
+              },
+              {
+                "text": "Functions that have access to the request, response, and next middleware function",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Middleware can inspect or modify requests and responses, perform authentication, logging, validation, and other tasks.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "Which object contains information about an incoming HTTP request?",
+            "options": [
+              {
+                "text": "next",
+                "correct": false
+              },
+              {
+                "text": "app",
+                "correct": false
+              },
+              {
+                "text": "req",
+                "correct": true
+              },
+              {
+                "text": "res",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The `req` object contains information about the incoming request, such as parameters, headers, body, and query strings.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Node.js servers and Express routes",
+        "learningObjective": "Explain node.js servers and express routes; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Implement list, detail and create student endpoints against temporary in-memory data. Test invalid JSON, a missing ID and a valid create request. Explain why this storage is only a development exercise.</p><h4>Source questions to address</h4><pre>**Question 5 — Theory**\nWhat is Node.js? Explain why JavaScript can be used for backend development with Node.js.\n\nNode.js is a JavaScript runtime built on the V8 JavaScript engine.\n\n**Question 6 — Hands-on**\nCreate a basic Node.js application that starts an HTTP server and returns &quot;Welcome to My Application&quot; when the root URL is visited.\n\n**Question 7 — Theory**\nWhat is Express.js, and how does it simplify the development of web servers and APIs with Node.js?\n\n**Question 8 — Hands-on**\nCreate an Express.js API with the following endpoints:\n\n* `GET /students`\n* `GET /students/:id`\n* `POST /students`\n\nReturn JSON responses from each endpoint.\n\nExpress is a minimalist web framework for Node.js that provides routing and HTTP-related functionality.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "03. Database modelling and persistence",
+        "objectives": "Explain database modelling and persistence; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 3,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>Persistent records need identifiers, constraints and a clear relationship model. Choose storage based on the data and queries rather than treating a database as a larger array.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>A relational design can separate students, courses and enrollments, using foreign keys to connect valid records. Unique constraints prevent duplicate identifiers even when requests arrive together. Parameterized queries separate data from SQL syntax. A transaction groups dependent changes so they either all succeed or all roll back. Use migrations to reproduce schema changes and test restart persistence. Indexes can speed targeted reads but have a write and storage cost.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>// With a configured PostgreSQL client:\nconst result = await db.query(&#x27;SELECT id, name FROM students WHERE id = $1&#x27;, [studentId]);\n// Never concatenate untrusted input into the SQL string.</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Persist students in a database and implement adding and retrieving them. Define a unique student code and a course relationship. Demonstrate duplicate rejection, parameterized input and persistence after restart.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://nodejs.org/en/learn\">https://nodejs.org/en/learn</a></li><li><a href=\"https://expressjs.com/\">https://expressjs.com/</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Database Development"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "Why does a backend application need a database?",
+            "options": [
+              {
+                "text": "To compile JavaScript",
+                "correct": false
+              },
+              {
+                "text": "To replace HTTP",
+                "correct": false
+              },
+              {
+                "text": "To persist application data",
+                "correct": true
+              },
+              {
+                "text": "To render buttons",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Databases allow applications to store and retrieve information persistently.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which of the following is a relational database?",
+            "options": [
+              {
+                "text": "Firebase Storage",
+                "correct": false
+              },
+              {
+                "text": "PostgreSQL",
+                "correct": true
+              },
+              {
+                "text": "MongoDB",
+                "correct": false
+              },
+              {
+                "text": "Redis only",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>PostgreSQL is a relational database management system that stores structured data in tables.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which of the following is a NoSQL database?",
+            "options": [
+              {
+                "text": "MongoDB",
+                "correct": true
+              },
+              {
+                "text": "PostgreSQL",
+                "correct": false
+              },
+              {
+                "text": "MySQL",
+                "correct": false
+              },
+              {
+                "text": "MariaDB",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>MongoDB is a document-oriented NoSQL database.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What is a primary key?",
+            "options": [
+              {
+                "text": "A database password",
+                "correct": false
+              },
+              {
+                "text": "A server hostname",
+                "correct": false
+              },
+              {
+                "text": "An API endpoint",
+                "correct": false
+              },
+              {
+                "text": "A unique identifier for a record",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>A primary key uniquely identifies each record in a database table.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What is a database index primarily used for?",
+            "options": [
+              {
+                "text": "Deleting duplicate records automatically",
+                "correct": false
+              },
+              {
+                "text": "Creating frontend components",
+                "correct": false
+              },
+              {
+                "text": "Improving the efficiency of certain data retrieval operations",
+                "correct": true
+              },
+              {
+                "text": "Encrypting all database records",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Indexes can significantly improve query performance by allowing databases to locate data more efficiently.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "An application frequently searches users by email address. What could improve query performance?",
+            "options": [
+              {
+                "text": "Making every query slower intentionally",
+                "correct": false
+              },
+              {
+                "text": "An appropriate database index on the email column",
+                "correct": true
+              },
+              {
+                "text": "Removing the email column",
+                "correct": false
+              },
+              {
+                "text": "Storing the email in CSS",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>An index on a frequently queried field can improve lookup performance, assuming it is appropriate for the workload.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Two requests create the same student code concurrently. What provides a durable uniqueness guarantee?",
+            "options": [
+              {
+                "text": "A database unique constraint",
+                "correct": true
+              },
+              {
+                "text": "A disabled browser button alone",
+                "correct": false
+              },
+              {
+                "text": "A console message",
+                "correct": false
+              },
+              {
+                "text": "A CSS class",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The database constraint applies regardless of which client or process writes.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "How should a supplied student ID enter a SQL query?",
+            "options": [
+              {
+                "text": "Through raw string concatenation",
+                "correct": false
+              },
+              {
+                "text": "Through an HTML comment",
+                "correct": false
+              },
+              {
+                "text": "As a database password",
+                "correct": false
+              },
+              {
+                "text": "Through a parameterized value",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Parameter binding keeps data separate from SQL syntax.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Creating a student and enrollment must succeed together. Which database mechanism fits?",
+            "options": [
+              {
+                "text": "A larger font",
+                "correct": false
+              },
+              {
+                "text": "A client-only timeout",
+                "correct": false
+              },
+              {
+                "text": "A transaction",
+                "correct": true
+              },
+              {
+                "text": "A browser animation",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A transaction commits dependent changes together or rolls them back.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "Which test demonstrates persistent storage?",
+            "options": [
+              {
+                "text": "Print the object once",
+                "correct": false
+              },
+              {
+                "text": "Create a record, restart the app, and retrieve it",
+                "correct": true
+              },
+              {
+                "text": "Read an in-memory array twice",
+                "correct": false
+              },
+              {
+                "text": "Refresh CSS",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A process restart removes memory-only state while durable storage remains.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Database modelling and persistence",
+        "learningObjective": "Explain database modelling and persistence; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Persist students in a database and implement adding and retrieving them. Define a unique student code and a course relationship. Demonstrate duplicate rejection, parameterized input and persistence after restart.</p><h4>Source questions to address</h4><pre>**Question 9 — Theory**\nExplain the difference between a relational database and a NoSQL database. Give one example of each and describe a situation where each could be useful.\n\n**Question 10 — Hands-on/Research**\nConnect a Node.js application to a database. Create a `students` collection or table and implement functionality for adding and retrieving student records.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "04. Authentication and access control",
+        "objectives": "Explain authentication and access control; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 4,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>Authentication establishes identity; authorization determines what that identity may do. An authenticated student must still be prevented from reading another student’s private submission.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Store password hashes using a maintained password-hashing implementation, never plaintext or reversible encryption. Verify tokens cryptographically and validate their expiry and expected claims. Derive identity from the verified session rather than a client-supplied student ID. Check resource ownership or role at every protected endpoint. Login errors should avoid exposing whether an account exists. Limit repeated attempts and keep credentials out of logs and source control.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>// After trusted authentication middleware sets req.user:\nif (submission.studentId !== req.user.id &amp;&amp; req.user.role !== &#x27;ADMIN&#x27;) {\n  return res.status(403).json({message: &#x27;Access denied&#x27;});\n}\nreturn res.json(submission);</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Build a login and protected profile flow using a maintained authentication library. Demonstrate anonymous rejection, expired-token rejection and denial when one student requests another student’s record. Explain hashing and authorization separately.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://nodejs.org/en/learn\">https://nodejs.org/en/learn</a></li><li><a href=\"https://expressjs.com/\">https://expressjs.com/</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Authentication & Security"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is authentication?",
+            "options": [
+              {
+                "text": "Formatting API responses",
+                "correct": false
+              },
+              {
+                "text": "Verifying a user's identity",
+                "correct": true
+              },
+              {
+                "text": "Determining what a user is allowed to do",
+                "correct": false
+              },
+              {
+                "text": "Creating database indexes",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Authentication verifies that a user is who they claim to be.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What is authorization?",
+            "options": [
+              {
+                "text": "Determining what an authenticated user is permitted to access or perform",
+                "correct": true
+              },
+              {
+                "text": "Verifying a password only",
+                "correct": false
+              },
+              {
+                "text": "Creating a database",
+                "correct": false
+              },
+              {
+                "text": "Encrypting JavaScript files",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Authorization determines what actions or resources an authenticated user can access.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Why should passwords be hashed?",
+            "options": [
+              {
+                "text": "To make passwords easier to read",
+                "correct": false
+              },
+              {
+                "text": "To allow administrators to retrieve passwords",
+                "correct": false
+              },
+              {
+                "text": "To remove the need for authentication",
+                "correct": false
+              },
+              {
+                "text": "To avoid storing the original password directly",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Password hashing helps protect user credentials if stored password data is compromised.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What is JWT commonly used for?",
+            "options": [
+              {
+                "text": "Styling web pages",
+                "correct": false
+              },
+              {
+                "text": "Compressing images",
+                "correct": false
+              },
+              {
+                "text": "Carrying signed claims for authentication or authorization",
+                "correct": true
+              },
+              {
+                "text": "Creating database tables",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>JSON Web Tokens can carry signed claims and are commonly used in authentication systems.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "Why should sensitive secrets such as API keys not be committed to Git repositories?",
+            "options": [
+              {
+                "text": "API keys are not sensitive",
+                "correct": false
+              },
+              {
+                "text": "They may be exposed to unauthorized users",
+                "correct": true
+              },
+              {
+                "text": "Git cannot store text files",
+                "correct": false
+              },
+              {
+                "text": "Node.js cannot read environment variables",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Public or improperly secured repositories can expose credentials. Secrets should be managed using environment variables or secret-management systems.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A user has a valid login token but tries to access an administrator endpoint. What should happen?",
+            "options": [
+              {
+                "text": "The backend should verify the user's permissions before granting access",
+                "correct": true
+              },
+              {
+                "text": "The token should automatically grant administrator access",
+                "correct": false
+              },
+              {
+                "text": "The database should be deleted",
+                "correct": false
+              },
+              {
+                "text": "The server should restart",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A valid authentication token proves identity or session validity, but authorization must still determine whether the user has the required permissions.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "A student changes a URL ID to another student’s submission. What should stop access?",
+            "options": [
+              {
+                "text": "A hidden link alone",
+                "correct": false
+              },
+              {
+                "text": "A random button colour",
+                "correct": false
+              },
+              {
+                "text": "A frontend comment",
+                "correct": false
+              },
+              {
+                "text": "A server-side ownership or permission check",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Authentication alone does not authorize every resource.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What should be stored for password verification?",
+            "options": [
+              {
+                "text": "Base64-encoded plaintext",
+                "correct": false
+              },
+              {
+                "text": "A reversible client-side string",
+                "correct": false
+              },
+              {
+                "text": "A hash from a maintained password-hashing implementation",
+                "correct": true
+              },
+              {
+                "text": "Plaintext passwords",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Password hashes support verification without storing recoverable plaintext.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Where should an authenticated request obtain its trusted identity?",
+            "options": [
+              {
+                "text": "From the browser window title",
+                "correct": false
+              },
+              {
+                "text": "From the verified session or token",
+                "correct": true
+              },
+              {
+                "text": "From an arbitrary body studentId",
+                "correct": false
+              },
+              {
+                "text": "From a CSS attribute",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Client-supplied ownership claims require verification and cannot establish identity.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "A signed token is past its expiry time. What should the API do?",
+            "options": [
+              {
+                "text": "Reject it",
+                "correct": true
+              },
+              {
+                "text": "Accept it forever because it is signed",
+                "correct": false
+              },
+              {
+                "text": "Use the email alone",
+                "correct": false
+              },
+              {
+                "text": "Ignore all claims",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Token validation includes time constraints as well as signature verification.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Authentication and access control",
+        "learningObjective": "Explain authentication and access control; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Build a login and protected profile flow using a maintained authentication library. Demonstrate anonymous rejection, expired-token rejection and denial when one student requests another student’s record. Explain hashing and authorization separately.</p><h4>Source questions to address</h4><pre>**Question 11 — Theory**\nExplain authentication, authorization, password hashing, and tokens. Why should passwords never be stored as plain text?\n\n**Question 12 — Hands-on**\nCreate a simple login API. Allow a registered user to log in and receive an authentication token. Create another endpoint that requires the token before the user can access it.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "05. React integration and scalable API responses",
+        "objectives": "Explain react integration and scalable api responses; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 5,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>The browser needs an API contract that remains useful as data grows. Coordinate the UI states with pagination, errors and asynchronous work on the server.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>A frontend request should check the response status before parsing a success payload. Show loading, empty and error states and preserve form data after rejection. Validate pagination limits on the backend; returning every record becomes expensive as a roster grows. Use stable ordering and document page semantics. Rate limiting controls repeated requests but does not replace authentication. CPU-heavy synchronous work can still block the Node event loop even when the containing function is async.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>const response = await fetch(&#x27;/students?page=0&amp;size=20&#x27;);\nif (!response.ok) throw new Error(&#x27;Unable to load students&#x27;);\nconst page = await response.json();\n// Render page.items and use the API pagination metadata.</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Connect a React student list and create form to the API. Add bounded pagination and failure recovery. Explain what would happen with 100,000 records and distinguish I/O concurrency from CPU-heavy processing.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://nodejs.org/en/learn\">https://nodejs.org/en/learn</a></li><li><a href=\"https://expressjs.com/\">https://expressjs.com/</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Frontend Development with React",
+        "Advanced Backend Development"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is React primarily used for?",
+            "options": [
+              {
+                "text": "Building user interfaces",
+                "correct": true
+              },
+              {
+                "text": "Managing relational databases",
+                "correct": false
+              },
+              {
+                "text": "Hosting backend servers",
+                "correct": false
+              },
+              {
+                "text": "Compiling Node.js",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>React is a JavaScript library for building user interfaces using reusable components.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What are props?",
+            "options": [
+              {
+                "text": "Database credentials",
+                "correct": false
+              },
+              {
+                "text": "API servers",
+                "correct": false
+              },
+              {
+                "text": "CSS files",
+                "correct": false
+              },
+              {
+                "text": "Data passed from a parent component to a child component",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Props allow components to receive data and configuration from their parent components.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which Hook is commonly used to manage local component state?",
+            "options": [
+              {
+                "text": "useDatabase",
+                "correct": false
+              },
+              {
+                "text": "useRouteOnly",
+                "correct": false
+              },
+              {
+                "text": "useState",
+                "correct": true
+              },
+              {
+                "text": "useAPI",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`useState` allows functional components to maintain local state.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "Which Hook is commonly used for side effects such as API requests?",
+            "options": [
+              {
+                "text": "useComponent",
+                "correct": false
+              },
+              {
+                "text": "useEffect",
+                "correct": true
+              },
+              {
+                "text": "useStyle",
+                "correct": false
+              },
+              {
+                "text": "useRequestOnly",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`useEffect` is commonly used for side effects such as data fetching, subscriptions, and reacting to changes.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "Why should a frontend application avoid relying entirely on client-side validation?",
+            "options": [
+              {
+                "text": "Client-side validation can be bypassed, so the backend must validate data too",
+                "correct": true
+              },
+              {
+                "text": "Browsers cannot display validation messages",
+                "correct": false
+              },
+              {
+                "text": "React does not support validation",
+                "correct": false
+              },
+              {
+                "text": "APIs do not accept validated data",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Client-side validation improves the user experience, but server-side validation is essential for security and data integrity.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A React application needs to display products from a Node.js API. What is a typical workflow?",
+            "options": [
+              {
+                "text": "Hardcode every product into HTML",
+                "correct": false
+              },
+              {
+                "text": "Store the API response in CSS",
+                "correct": false
+              },
+              {
+                "text": "Restart the browser for every product",
+                "correct": false
+              },
+              {
+                "text": "Send an API request, receive the data, store it in state, and render the products",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>A frontend commonly fetches API data, stores the result in state, and renders the returned data through components.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Why is asynchronous programming important in Node.js?",
+            "options": [
+              {
+                "text": "It eliminates databases",
+                "correct": false
+              },
+              {
+                "text": "It makes every operation synchronous",
+                "correct": false
+              },
+              {
+                "text": "It allows I/O operations to be handled without unnecessarily blocking other work",
+                "correct": true
+              },
+              {
+                "text": "It prevents Node.js from using APIs",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Asynchronous I/O helps Node.js handle many network and file operations efficiently.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What is a Promise rejection?",
+            "options": [
+              {
+                "text": "A successful HTTP 200 response",
+                "correct": false
+              },
+              {
+                "text": "A Promise completing unsuccessfully",
+                "correct": true
+              },
+              {
+                "text": "A successful database query",
+                "correct": false
+              },
+              {
+                "text": "A CSS error",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A Promise can be rejected when an asynchronous operation fails.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What is rate limiting?",
+            "options": [
+              {
+                "text": "Restricting the number of requests a client can make within a specified period",
+                "correct": true
+              },
+              {
+                "text": "Increasing database storage",
+                "correct": false
+              },
+              {
+                "text": "Encrypting passwords",
+                "correct": false
+              },
+              {
+                "text": "Compressing JavaScript",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Rate limiting helps protect APIs from excessive traffic, abuse, and certain denial-of-service patterns.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "Why is centralized error handling useful in an API?",
+            "options": [
+              {
+                "text": "It prevents all errors from occurring",
+                "correct": false
+              },
+              {
+                "text": "It removes the need for logging",
+                "correct": false
+              },
+              {
+                "text": "It replaces authentication",
+                "correct": false
+              },
+              {
+                "text": "It provides a consistent way to process and respond to application errors",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Centralized error handling can standardize responses and simplify application maintenance.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: React integration and scalable API responses",
+        "learningObjective": "Explain react integration and scalable api responses; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Connect a React student list and create form to the API. Add bounded pagination and failure recovery. Explain what would happen with 100,000 records and distinguish I/O concurrency from CPU-heavy processing.</p><h4>Source questions to address</h4><pre>**Question 13 — Theory**\nExplain how a React frontend can communicate with a Node.js backend. What role does an API play between the two applications?\n\n**Question 14 — Hands-on**\nCreate a React page that retrieves a list of students from your Node.js API and displays them. Add a form that allows a new student to be submitted to the backend.\n\n**Question 15 — Theory**\nWhy is asynchronous programming important in Node.js? Explain what could happen if a server had to wait unnecessarily for every database or network operation.\n\n**Question 16 — Practical/Research**\nResearch API rate limiting and pagination. Explain why a production API might limit requests and why a large list of 100,000 records should normally not be returned in a single response.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "06. API tests, documentation and deployment",
+        "objectives": "Explain api tests, documentation and deployment; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 6,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A reliable API has an executable description of its expected behavior. A deployment runbook makes configuration and rollback repeatable.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Unit tests exercise isolated logic; integration tests exercise boundaries such as HTTP handlers and storage. Cover successful requests, invalid input and unauthorized access. Document method, path, authentication, request schema, status codes and representative responses. Configure secrets outside source control, use HTTPS at the deployment boundary and ensure logs contain request context without credentials. Test health checks, graceful shutdown and database connectivity in an isolated preview.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>// Contract example for an isolated test fixture:\nconst response = await fetch(`${baseUrl}/students`);\nif (response.status !== 401) throw new Error(&#x27;Anonymous access must be rejected&#x27;);</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Write an endpoint test and its API contract. Produce a production runbook covering configuration, database migration, startup, HTTPS, logging and rollback. Use a local or isolated preview rather than publishing real student records.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://nodejs.org/en/learn\">https://nodejs.org/en/learn</a></li><li><a href=\"https://expressjs.com/\">https://expressjs.com/</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Testing & API Documentation",
+        "Deployment & Production"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is the purpose of automated testing?",
+            "options": [
+              {
+                "text": "To replace the backend",
+                "correct": false
+              },
+              {
+                "text": "To create databases automatically",
+                "correct": false
+              },
+              {
+                "text": "To prevent deployments",
+                "correct": false
+              },
+              {
+                "text": "To verify application behavior repeatedly and consistently",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Automated tests provide repeatable verification and help detect regressions.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What is a unit test?",
+            "options": [
+              {
+                "text": "A test of a database server's hardware",
+                "correct": false
+              },
+              {
+                "text": "A deployment process",
+                "correct": false
+              },
+              {
+                "text": "A test of a small, isolated piece of logic",
+                "correct": true
+              },
+              {
+                "text": "A test of the entire internet",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Unit tests typically focus on individual functions, modules, or units of business logic.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What is integration testing?",
+            "options": [
+              {
+                "text": "Testing the developer's keyboard",
+                "correct": false
+              },
+              {
+                "text": "Testing how multiple application components work together",
+                "correct": true
+              },
+              {
+                "text": "Testing only variable names",
+                "correct": false
+              },
+              {
+                "text": "Testing CSS colors",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Integration tests verify interactions between multiple components or external dependencies.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What is API documentation used for?",
+            "options": [
+              {
+                "text": "Explaining how developers can use an API",
+                "correct": true
+              },
+              {
+                "text": "Storing user passwords",
+                "correct": false
+              },
+              {
+                "text": "Compiling JavaScript",
+                "correct": false
+              },
+              {
+                "text": "Hosting a database",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>API documentation describes endpoints, parameters, request formats, responses, authentication, and expected behavior.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "Which HTTP status code generally indicates that a request was successful?",
+            "options": [
+              {
+                "text": "404",
+                "correct": false
+              },
+              {
+                "text": "500",
+                "correct": false
+              },
+              {
+                "text": "401",
+                "correct": false
+              },
+              {
+                "text": "200",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>HTTP 200 indicates a successful request in common API scenarios.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A developer changes an API endpoint and several frontend features stop working. What type of testing could help detect this kind of issue?",
+            "options": [
+              {
+                "text": "Logo testing",
+                "correct": false
+              },
+              {
+                "text": "Keyboard testing",
+                "correct": false
+              },
+              {
+                "text": "Integration or end-to-end testing",
+                "correct": true
+              },
+              {
+                "text": "Font testing",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Integration and end-to-end tests can verify that different parts of the system continue to work together after changes.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What is deployment?",
+            "options": [
+              {
+                "text": "Creating a database schema only",
+                "correct": false
+              },
+              {
+                "text": "Making an application available in a runtime environment for users or other systems",
+                "correct": true
+              },
+              {
+                "text": "Writing JavaScript variables",
+                "correct": false
+              },
+              {
+                "text": "Designing a logo",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Deployment involves placing an application into an environment where it can run and be accessed.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Why are environment variables commonly used in Node.js applications?",
+            "options": [
+              {
+                "text": "To manage configuration values separately from application source code",
+                "correct": true
+              },
+              {
+                "text": "To create React components",
+                "correct": false
+              },
+              {
+                "text": "To replace JavaScript",
+                "correct": false
+              },
+              {
+                "text": "To store HTML layouts",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Environment variables can hold values such as database URLs, API keys, ports, and other environment-specific configuration.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Why should production secrets not be hardcoded into a Node.js application?",
+            "options": [
+              {
+                "text": "Node.js cannot process strings",
+                "correct": false
+              },
+              {
+                "text": "Secrets are never needed",
+                "correct": false
+              },
+              {
+                "text": "Hardcoded values always cause syntax errors",
+                "correct": false
+              },
+              {
+                "text": "They can be exposed through source code or application artifacts",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Sensitive values should be managed securely rather than embedded directly in application source code.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What is the purpose of a process manager such as PM2?",
+            "options": [
+              {
+                "text": "To create database tables",
+                "correct": false
+              },
+              {
+                "text": "To replace npm",
+                "correct": false
+              },
+              {
+                "text": "To help manage and keep Node.js applications running",
+                "correct": true
+              },
+              {
+                "text": "To design frontend interfaces",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Process managers can restart applications, manage processes, and provide operational features useful for production Node.js services.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: API tests, documentation and deployment",
+        "learningObjective": "Explain api tests, documentation and deployment; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Write an endpoint test and its API contract. Produce a production runbook covering configuration, database migration, startup, HTTPS, logging and rollback. Use a local or isolated preview rather than publishing real student records.</p><h4>Source questions to address</h4><pre>**Question 17 — Theory**\nWhat is automated testing? Explain the difference between unit testing and integration testing in a Node.js application.\n\n**Question 18 — Hands-on**\nChoose one endpoint from your Node.js API and write a test that checks whether it returns the expected response. Document the endpoint by specifying its URL, HTTP method, request data, and expected response.\n\n**Question 19 — Theory**\nWhat is the difference between running a Node.js application locally and running it in production? Mention at least four things that should be considered before deployment.\n\n**Question 20 — Practical/Research**\nDeploy a simple Node.js API to a cloud hosting platform. Research how environment variables, database connections, logging, process management, and HTTPS should be handled in a production application.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    }
+  ]
+}

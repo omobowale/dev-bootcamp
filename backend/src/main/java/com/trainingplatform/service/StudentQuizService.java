@@ -96,6 +96,7 @@ public class StudentQuizService {
                 .findForUpdate(attemptId, student.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Attempt not found: " + attemptId));
 
+        requireEnrolled(student, attempt.getQuiz());
         if (attempt.getSubmittedAt() != null) {
             throw new BadRequestException("This attempt has already been submitted.");
         }
@@ -170,6 +171,7 @@ public class StudentQuizService {
                 .findByIdAndStudentId(attemptId, student.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Attempt not found: " + attemptId));
 
+        requireEnrolled(student, attempt.getQuiz());
         if (attempt.getSubmittedAt() == null) {
             throw new BadRequestException("This attempt hasn't been submitted yet.");
         }
@@ -203,6 +205,26 @@ public class StudentQuizService {
                 attempt.getPassed(),
                 passingPercentage(attempt),
                 results);
+    }
+
+    @Transactional(readOnly=true)
+    public java.util.Map<String,Integer> getDraft(Long attemptId) {
+        Student student=currentStudentProvider.getCurrentStudent();
+        QuizAttempt attempt=quizAttemptRepository.findByIdAndStudentId(attemptId,student.getId()).orElseThrow(()->new ResourceNotFoundException("Attempt not found."));
+        requireEnrolled(student,attempt.getQuiz());return draft(attempt);
+    }
+    @SuppressWarnings("unchecked") private java.util.Map<String,Integer> draft(QuizAttempt attempt) {
+        return attempt.getDraftAnswers()==null ? new java.util.HashMap<>() : QuizSnapshot.JSON.readValue(attempt.getDraftAnswers(),java.util.HashMap.class);
+    }
+    @Transactional public void saveDraft(Long attemptId, QuizAnswerSubmission answer) {
+        Student student=currentStudentProvider.getCurrentStudent();
+        QuizAttempt attempt=quizAttemptRepository.findForUpdate(attemptId,student.getId()).orElseThrow(()->new ResourceNotFoundException("Attempt not found."));
+        requireEnrolled(student,attempt.getQuiz());
+        if(attempt.getSubmittedAt()!=null) throw new BadRequestException("This attempt is already submitted.");
+        QuizQuestion question=questionsFor(attempt).stream().filter(q->q.getId().equals(answer.questionId())).findFirst().orElseThrow(()->new BadRequestException("Unknown question."));
+        if(answer.selectedOptionPosition()!=null && question.getOptions().stream().noneMatch(o->o.getPosition().equals(answer.selectedOptionPosition()))) throw new BadRequestException("Invalid option.");
+        var values=draft(attempt);values.put(String.valueOf(answer.questionId()),answer.selectedOptionPosition());
+        attempt.setDraftAnswers(QuizSnapshot.JSON.writeValueAsString(values));quizAttemptRepository.save(attempt);
     }
 
     private void freeze(QuizAttempt attempt, List<QuizQuestion> questions) {
@@ -244,6 +266,7 @@ public class StudentQuizService {
     }
 
     private void requireEnrolled(Student student, Quiz quiz) {
+        LearningAccess.require(courseEnrollmentRepository, student.getId(), quiz.getClassSession());
         Long courseId = quiz.getClassSession().getModule().getCourse().getId();
         if (!courseEnrollmentRepository.existsByStudentIdAndCourseId(student.getId(), courseId)) {
             throw new ForbiddenException("You are not enrolled in this course.");

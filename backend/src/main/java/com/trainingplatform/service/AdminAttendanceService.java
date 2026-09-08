@@ -36,9 +36,12 @@ public class AdminAttendanceService {
     @Transactional(readOnly = true)
     public List<AdminAttendanceRowResponse> listForClassSession(Long classSessionId) {
         ClassSession session = getSessionOrThrow(classSessionId);
+        requireCohort(session);
         Long courseId = session.getModule().getCourse().getId();
 
         List<Student> enrolledStudents = courseEnrollmentRepository.findByCourseId(courseId).stream()
+                .filter(e -> e.isActive() && e.getRegistration().getStatus() != com.trainingplatform.entity.RegistrationStatus.CANCELLED)
+                .filter(e -> e.getCohort().getId().equals(session.getCohortId()))
                 .map(CourseEnrollment::getStudent)
                 .distinct()
                 .sorted(Comparator.comparing(Student::getFullName))
@@ -51,7 +54,8 @@ public class AdminAttendanceService {
 
         return enrolledStudents.stream()
                 .map(student -> {
-                    AttendanceRecord record = recordsByStudentId.get(student.getId());
+                    LearningAccess.require(courseEnrollmentRepository, student.getId(), session);
+            AttendanceRecord record = recordsByStudentId.get(student.getId());
                     return record != null
                             ? AdminAttendanceRowResponse.from(student, record)
                             : AdminAttendanceRowResponse.unmarked(student);
@@ -63,6 +67,7 @@ public class AdminAttendanceService {
     public List<AdminAttendanceRowResponse> saveAttendance(Long classSessionId, BulkAttendanceRequest request) {
         ClassSession session = getSessionOrThrow(classSessionId);
 
+        requireCohort(session);
         for (AttendanceEntry entry : request.entries()) {
             if (!courseEnrollmentRepository.existsByStudentIdAndCourseId(entry.studentId(), session.getModule().getCourse().getId())) {
                 throw new BadRequestException("Attendance can only be recorded for enrolled students.");
@@ -71,6 +76,7 @@ public class AdminAttendanceService {
                     .findById(entry.studentId())
                     .orElseThrow(() -> new BadRequestException("Student not found: " + entry.studentId()));
 
+            LearningAccess.require(courseEnrollmentRepository, student.getId(), session);
             AttendanceRecord record = attendanceRecordRepository
                     .findByClassSessionIdAndStudentId(classSessionId, entry.studentId())
                     .orElseGet(() -> {
@@ -94,6 +100,10 @@ public class AdminAttendanceService {
                 request.entries().size() + " student(s) marked");
 
         return listForClassSession(classSessionId);
+    }
+
+    private void requireCohort(ClassSession session) {
+        if(session.getCohortId()==null) throw new BadRequestException("Assign this class to a cohort before recording attendance.");
     }
 
     private ClassSession getSessionOrThrow(Long id) {

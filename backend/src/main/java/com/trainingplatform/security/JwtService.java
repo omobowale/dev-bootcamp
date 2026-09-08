@@ -23,15 +23,25 @@ public class JwtService {
     }
 
     public String generateToken(String subjectEmail, String role) {
+        return generateToken(subjectEmail, role, 0);
+    }
+
+    public String generateToken(String subjectEmail, String role, long authVersion) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + expirationMs);
         return Jwts.builder()
                 .subject(subjectEmail)
                 .claim("role", role)
+                .claim("authVersion", authVersion)
                 .issuedAt(now)
                 .expiration(expiry)
                 .signWith(signingKey)
                 .compact();
+    }
+
+    public long extractAuthVersion(String token) {
+        Number version = parseClaims(token).get("authVersion", Number.class);
+        return version == null ? 0 : version.longValue();
     }
 
     public String extractEmail(String token) {

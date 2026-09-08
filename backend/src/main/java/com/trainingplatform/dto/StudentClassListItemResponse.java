@@ -13,6 +13,6 @@ public record StudentClassListItemResponse(
                 session.getModule().getTitle(),
                 session.getTitle(),
                 session.getPosition(),
-                session.getScheduledAt());
+                session.getCohortId() == null ? null : session.getScheduledAt());
     }
 }

@@ -17,6 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentAuthController {
 
     private final StudentAuthService studentAuthService;
+    private final com.trainingplatform.service.StudentRecoveryService recovery;
+    public record RecoveryRequest(@jakarta.validation.constraints.Email @jakarta.validation.constraints.NotBlank String email) {}
+    public record ResetRequest(@jakarta.validation.constraints.NotBlank String token,
+        @jakarta.validation.constraints.Size(min=8,max=72) @jakarta.validation.constraints.NotBlank String password) {}
+    @PostMapping("/recovery") public java.util.Map<String,String> recover(@Valid @RequestBody RecoveryRequest request) {
+        recovery.request(request.email());
+        return java.util.Map.of("message","If an eligible account exists, a password link has been sent.");
+    }
+    @PostMapping("/reset-password") public void reset(@Valid @RequestBody ResetRequest request) { recovery.reset(request.token(),request.password()); }
+
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest request) {

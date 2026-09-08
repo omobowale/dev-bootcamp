@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StudentCertificateService {
 
     private final CertificateRepository certificateRepository;
+    private final com.trainingplatform.repository.StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final CourseEnrollmentRepository courseEnrollmentRepository;
     private final StudentProgressService studentProgressService;
@@ -37,7 +38,9 @@ public class StudentCertificateService {
 
     @Transactional
     public CertificateResponse issue(Long courseId) {
-        Student student = currentStudentProvider.getCurrentStudent();
+        // Serialize certificate issuance for this learner; concurrent clicks return the same record.
+        Student student = studentRepository.findForUpdate(currentStudentProvider.getCurrentStudent().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found."));
         requireEnrolled(student, courseId);
 
         Optional<Certificate> existing = certificateRepository.findByStudentIdAndCourseId(student.getId(), courseId);
@@ -45,13 +48,13 @@ public class StudentCertificateService {
             return CertificateResponse.from(existing.get());
         }
 
-        if (!studentProgressService.getProgress(courseId).courseComplete()) {
-            throw new BadRequestException("You haven't met this course's completion criteria yet.");
-        }
-
-        Course course = courseRepository
-                .findById(courseId)
+        Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found: " + courseId));
+        if (!course.isCertificateAvailable()) throw new BadRequestException("Certificates are not enabled for this course.");
+        boolean eligible = courseEnrollmentRepository.findByStudentIdOrderByCreatedAtDesc(student.getId()).stream()
+                .filter(e -> e.isActive() && e.getRegistration().getStatus()!=com.trainingplatform.entity.RegistrationStatus.CANCELLED && e.getCourse().getId().equals(courseId))
+                .anyMatch(e -> studentProgressService.getProgressForStudent(student,courseId,e.getCohort().getId()).courseComplete());
+        if (!eligible) throw new BadRequestException("You haven't met this course's completion criteria yet.");
 
         Certificate certificate = new Certificate();
         certificate.setStudent(student);

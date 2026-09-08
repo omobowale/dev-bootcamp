@@ -12,7 +12,8 @@ public interface CourseEnrollmentRepository extends JpaRepository<CourseEnrollme
 
     Optional<CourseEnrollment> findByRegistrationId(Long registrationId);
 
-    boolean existsByStudentIdAndCourseId(Long studentId, Long courseId);
+    @org.springframework.data.jpa.repository.Query("select (count(e)>0) from CourseEnrollment e where e.student.id=:studentId and e.course.id=:courseId and e.active=true and e.registration.status <> com.trainingplatform.entity.RegistrationStatus.CANCELLED")
+    boolean existsByStudentIdAndCourseId(@org.springframework.data.repository.query.Param("studentId") Long studentId, @org.springframework.data.repository.query.Param("courseId") Long courseId);
 
     List<CourseEnrollment> findByCourseId(Long courseId);
 }

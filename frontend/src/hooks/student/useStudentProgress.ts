@@ -2,10 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCourseProgress, markClassComplete } from "../../api/student/progress";
 import { QUERY_KEYS } from "../../constants/queryKeys";
 
-export function useCourseProgress(courseId: number) {
+export function useCourseProgress(courseId: number, cohortId?:number) {
   return useQuery({
-    queryKey: QUERY_KEYS.student.progress(courseId),
-    queryFn: () => getCourseProgress(courseId),
+    queryKey: [...QUERY_KEYS.student.progress(courseId),cohortId],
+    queryFn: () => getCourseProgress(courseId,cohortId),
     enabled: courseId > 0,
   });
 }

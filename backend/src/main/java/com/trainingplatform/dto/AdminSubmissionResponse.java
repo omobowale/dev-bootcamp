@@ -15,7 +15,7 @@ public record AdminSubmissionResponse(
         Instant submittedAt,
         Integer score,
         String feedback,
-        Instant reviewedAt) {
+        Instant reviewedAt, Long version) {
 
     public static AdminSubmissionResponse from(AssignmentSubmission submission) {
         return new AdminSubmissionResponse(
@@ -29,6 +29,6 @@ public record AdminSubmissionResponse(
                 submission.getSubmittedAt(),
                 submission.getScore(),
                 submission.getFeedback(),
-                submission.getReviewedAt());
+                submission.getReviewedAt(), submission.getVersion());
     }
 }

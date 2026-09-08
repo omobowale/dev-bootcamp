@@ -88,6 +88,7 @@ public class AdminAssignmentService {
                 .findById(submissionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Submission not found: " + submissionId));
 
+        if (!java.util.Objects.equals(submission.getVersion(), request.version())) throw new com.trainingplatform.exception.ConflictException("This submission changed. Refresh before reviewing.");
         if (request.status() == AssignmentSubmissionStatus.SUBMITTED) {
             throw new BadRequestException("An admin review can't set the status back to Submitted.");
         }
@@ -107,7 +108,7 @@ public class AdminAssignmentService {
                 || request.status() == AssignmentSubmissionStatus.NEEDS_RESUBMISSION) {
             submission.setReviewedAt(Instant.now());
         }
-        submission = submissionRepository.save(submission);
+        submission = submissionRepository.saveAndFlush(submission);
 
         adminActionLogService.log(
                 currentAdminProvider.getCurrentAdmin(),

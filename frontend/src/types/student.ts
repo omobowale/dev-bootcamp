@@ -61,6 +61,7 @@ export interface StudentQuizSummary {
 export type AssignmentSubmissionStatus = "SUBMITTED" | "UNDER_REVIEW" | "REVIEWED" | "NEEDS_RESUBMISSION";
 
 export interface StudentSubmission {
+  version: number;
   responseText: string | null;
   attachmentUrl: string | null;
   attachmentFilename: string | null;
@@ -86,6 +87,7 @@ export interface StudentAssignment {
 }
 
 export interface StudentClassSession {
+  courseId:number; cohortId:number|null;
   id: number;
   title: string;
   objectives: string | null;

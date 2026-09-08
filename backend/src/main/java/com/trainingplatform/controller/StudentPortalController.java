@@ -39,8 +39,8 @@ public class StudentPortalController {
     }
 
     @GetMapping("/courses/{courseId}/classes")
-    public List<StudentClassListItemResponse> classesForCourse(@PathVariable Long courseId) {
-        return studentPortalService.listClassesForCourse(courseId);
+    public List<StudentClassListItemResponse> classesForCourse(@PathVariable Long courseId, @org.springframework.web.bind.annotation.RequestParam(required=false) Long cohortId) {
+        return studentPortalService.listClassesForCourse(courseId,cohortId);
     }
 
     @GetMapping("/classes/{classSessionId}")
@@ -54,8 +54,8 @@ public class StudentPortalController {
     }
 
     @GetMapping("/courses/{courseId}/progress")
-    public CourseProgressResponse getProgress(@PathVariable Long courseId) {
-        return studentProgressService.getProgress(courseId);
+    public CourseProgressResponse getProgress(@PathVariable Long courseId, @org.springframework.web.bind.annotation.RequestParam(required=false) Long cohortId) {
+        return studentProgressService.getProgress(courseId,cohortId);
     }
 
     // 204, not 404: no certificate yet is the normal state before completion, not an error.

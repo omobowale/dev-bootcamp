@@ -1,3 +1,4 @@
+import { apiClient } from "../../api/client";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,6 +20,10 @@ export function StudentQuizAttemptPage() {
   const startAttempt = useStartQuizAttempt();
   const submitAttempt = useSubmitQuizAttempt();
   const started = useRef(false);
+  const saves = useRef(Promise.resolve());
+  const [draftStatus,setDraftStatus]=useState("");
+  const [savingDraft,setSavingDraft]=useState(false);
+  const [loadingDraft,setLoadingDraft]=useState(true);
   const [answers, setAnswers] = useState<Record<number, number>>({});
 
   useEffect(() => {
@@ -31,7 +36,14 @@ export function StudentQuizAttemptPage() {
   const draftKey = startAttempt.data ? `quiz-draft:${student?.email}:${startAttempt.data.attemptId}` : null;
   useEffect(() => {
     if (!draftKey) return;
-    try { setAnswers(JSON.parse(sessionStorage.getItem(draftKey) || "{}")); } catch { setAnswers({}); }
+    let cancelled=false;
+    setLoadingDraft(true);
+    let local: Record<number,number> = {};
+    try { local=JSON.parse(sessionStorage.getItem(draftKey)||"{}"); } catch { /* Ignore corrupt local drafts. */ }
+    apiClient.get<Record<number,number>>(`/api/student/quiz-attempts/${startAttempt.data!.attemptId}/draft`).then(response=>{
+      if(!cancelled) setAnswers({...response.data,...local});
+    }).catch(()=>{if(!cancelled){setAnswers(local);setDraftStatus("Cloud recovery unavailable. Local draft restored.");}}).finally(()=>{if(!cancelled)setLoadingDraft(false);});
+    return ()=>{cancelled=true;};
   }, [draftKey]);
   useEffect(() => {
     if (submitAttempt.isSuccess && draftKey) sessionStorage.removeItem(draftKey);
@@ -40,6 +52,10 @@ export function StudentQuizAttemptPage() {
     const next = { ...answers, [questionId]: position };
     setAnswers(next);
     if (draftKey) sessionStorage.setItem(draftKey, JSON.stringify(next));
+    if(startAttempt.data){setSavingDraft(true);setDraftStatus("Saving answer…");
+      saves.current=saves.current.catch(()=>{}).then(async()=>{await apiClient.post(`/api/student/quiz-attempts/${startAttempt.data!.attemptId}/draft`,{questionId,selectedOptionPosition:position});});
+      const pending=saves.current;pending.then(()=>{if(saves.current===pending){setSavingDraft(false);setDraftStatus("Answers saved to your account");}}).catch(()=>{if(saves.current===pending){setSavingDraft(false);setDraftStatus("Not synced. Your draft is saved in this tab; keep it open.");}});
+    }
   };
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -83,7 +99,7 @@ export function StudentQuizAttemptPage() {
               <p className="text-muted">Passing score: {startAttempt.data.passingPercentage}%</p>
             </div>
 
-            <div className="quiz-answer-progress" role="status"><strong>{Object.keys(answers).length} of {startAttempt.data.questions.length} answered</strong><span>Take your time. Review your choices before submitting.</span></div><form onSubmit={handleSubmit}>
+            <div className="quiz-answer-progress" role="status"><strong>{Object.keys(answers).length} of {startAttempt.data.questions.length} answered</strong><span>Take your time. Review your choices before submitting.</span></div><p className="text-muted" role="status">{loadingDraft ? "Restoring your answers…" : draftStatus}</p><form onSubmit={handleSubmit}>
               {startAttempt.data.questions.map((question, index) => (
                 <div className="card student-class-card" key={question.id}>
                   <h3>
@@ -94,6 +110,7 @@ export function StudentQuizAttemptPage() {
                       <label className="quiz-options-editor__row" key={option.position}>
                         <input
                           type="radio"
+                          disabled={loadingDraft || submitAttempt.isPending}
                           name={`question-${question.id}`}
                           checked={answers[question.id] === option.position}
                           onChange={() => chooseAnswer(question.id, option.position)}
@@ -105,7 +122,7 @@ export function StudentQuizAttemptPage() {
                 </div>
               ))}
 
-              <button type="submit" className="btn btn-primary" disabled={submitAttempt.isPending}>
+              <button type="submit" className="btn btn-primary" disabled={submitAttempt.isPending || savingDraft || loadingDraft}>
                 {submitAttempt.isPending ? "Submitting…" : "Submit quiz"}
               </button>
             </form>

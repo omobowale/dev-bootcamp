@@ -1,4 +1,4 @@
-﻿/* Academic workspace: shared student and teaching surfaces. */
+/* Academic workspace: shared student and teaching surfaces. */
 .student-shell {background:radial-gradient(ellipse at 95% 0%,color-mix(in srgb,var(--color-primary) 9%,transparent),transparent 46%),var(--color-bg)}
 .student-shell .student-topbar {position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--color-surface) 94%,transparent);backdrop-filter:blur(18px)}
 .student-shell .student-topbar__inner {min-height:84px;gap:20px;padding-block:16px}
@@ -141,3 +141,5 @@
 }
 @media(max-width:360px) {.student-shell .student-course-card {grid-template-columns:64px minmax(0,1fr);gap:12px;padding:14px}.student-shell .student-course-card .course-card__image-link {width:64px;height:80px}.student-shell .student-course-card h3 {font-size:16px}.student-shell .student-topbar__inner {gap:8px}.student-shell .student-topbar__brand {font-size:16px}}
 
+
+.learning-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:18px}.learning-metrics>.card {padding:20px}.learning-metrics span {font-size:12px;color:var(--color-text-muted)}.learning-metrics strong {display:block;font-size:30px;margin-top:10px}.learning-metrics small{font-size:16px;color:var(--color-text-muted)}.learning-overview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.learning-overview-grid .student-class-card{min-width:0}.student-class-card summary{cursor:pointer;font-weight:650}.learning-overview-grid small{font-size:12px;color:var(--color-text-muted);margin-top:5px}@media(max-width:700px){.learning-metrics{gap:8px}.learning-metrics>.card{padding:13px 10px}.learning-metrics strong{font-size:24px}.learning-overview-grid{grid-template-columns:1fr}.learning-metrics span{font-size:11px}}

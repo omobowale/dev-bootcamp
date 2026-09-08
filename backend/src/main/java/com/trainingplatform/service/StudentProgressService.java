@@ -49,7 +49,7 @@ public class StudentProgressService {
         ClassSession session = classSessionRepository
                 .findById(classSessionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Class not found: " + classSessionId));
-        requireEnrolled(student, session.getModule().getCourse().getId());
+        LearningAccess.require(courseEnrollmentRepository, student.getId(), session);
 
         if (classCompletionRepository.existsByClassSessionIdAndStudentId(classSessionId, student.getId())) {
             return;
@@ -62,15 +62,27 @@ public class StudentProgressService {
 
     @Transactional(readOnly = true)
     public CourseProgressResponse getProgress(Long courseId) {
-        Student student = currentStudentProvider.getCurrentStudent();
+        return getProgressForStudent(currentStudentProvider.getCurrentStudent(), courseId);
+    }
+    @Transactional(readOnly=true) public CourseProgressResponse getProgress(Long courseId,Long cohortId) {
+        return getProgressForStudent(currentStudentProvider.getCurrentStudent(),courseId,cohortId);
+    }
+
+    @Transactional(readOnly = true)
+    public CourseProgressResponse getProgressForStudent(Student student, Long courseId) {return getProgressForStudent(student,courseId,null);}
+    @Transactional(readOnly=true)
+    public CourseProgressResponse getProgressForStudent(Student student, Long courseId, Long cohortId) {
         requireEnrolled(student, courseId);
-
-        int classesTotal = classSessionRepository.findByCourseIdOrderByModulePositionAscPositionAsc(courseId).size();
+        LearningAccess.requireCohort(courseEnrollmentRepository,student.getId(),courseId,cohortId);
+        var visibleClasses = classSessionRepository.findByCourseIdOrderByModulePositionAscPositionAsc(courseId).stream()
+                .filter(session -> (cohortId==null || session.getCohortId()==null || cohortId.equals(session.getCohortId())) && LearningAccess.allows(courseEnrollmentRepository, student.getId(), session)).toList();
+        var visibleIds = visibleClasses.stream().map(ClassSession::getId).collect(java.util.stream.Collectors.toSet());
+        int classesTotal = visibleClasses.size();
         int classesCompleted = classCompletionRepository
-                .findByStudentIdAndClassSession_Module_Course_Id(student.getId(), courseId)
-                .size();
+                .findByStudentIdAndClassSession_Module_Course_Id(student.getId(), courseId).stream()
+                .filter(c -> visibleIds.contains(c.getClassSession().getId())).toList().size();
 
-        List<Quiz> quizzes = quizRepository.findByClassSession_Module_Course_Id(courseId);
+        List<Quiz> quizzes = quizRepository.findByClassSession_Module_Course_Id(courseId).stream().filter(q -> visibleIds.contains(q.getClassSession().getId())).toList();
         int quizzesTotal = quizzes.size();
         int quizzesPassed = (int) quizzes.stream()
                 .filter(quiz -> quizAttemptRepository
@@ -79,7 +91,7 @@ public class StudentProgressService {
                         .anyMatch(attempt -> Boolean.TRUE.equals(attempt.getPassed())))
                 .count();
 
-        List<Assignment> assignments = assignmentRepository.findByClassSession_Module_Course_Id(courseId);
+        List<Assignment> assignments = assignmentRepository.findByClassSession_Module_Course_Id(courseId).stream().filter(a -> visibleIds.contains(a.getClassSession().getId())).toList();
         int assignmentsTotal = assignments.size();
         int assignmentsSubmitted = 0;
         int assignmentsReviewed = 0;
@@ -95,16 +107,23 @@ public class StudentProgressService {
         }
 
         List<AttendanceRecord> attendanceRecords =
-                attendanceRecordRepository.findByStudentIdAndClassSession_Module_Course_Id(student.getId(), courseId);
+                attendanceRecordRepository.findByStudentIdAndClassSession_Module_Course_Id(student.getId(), courseId).stream().filter(a -> visibleIds.contains(a.getClassSession().getId())).toList();
         Integer attendanceTotal = attendanceRecords.isEmpty() ? null : attendanceRecords.size();
         Integer attendancePresent = attendanceRecords.isEmpty()
                 ? null
                 : (int) attendanceRecords.stream().filter(r -> r.getStatus() == AttendanceStatus.PRESENT).count();
 
+        CourseCompletionCriteria progressCriteria = courseCompletionCriteriaRepository.findByCourseId(courseId).orElse(null);
+        boolean reviewRequired = progressCriteria != null && progressCriteria.isRequireAllAssignmentsReviewed();
+        // Missing attendance must remain visible in the percentage, too.
+        if (progressCriteria != null && progressCriteria.getMinAttendancePercentage() != null) {
+            attendanceTotal = Math.max(classesTotal, attendanceRecords.size());
+            if (attendancePresent == null) attendancePresent = 0;
+        }
         List<Double> dimensionPercentages = new ArrayList<>();
         if (classesTotal > 0) dimensionPercentages.add(classesCompleted * 100.0 / classesTotal);
         if (quizzesTotal > 0) dimensionPercentages.add(quizzesPassed * 100.0 / quizzesTotal);
-        if (assignmentsTotal > 0) dimensionPercentages.add(assignmentsSubmitted * 100.0 / assignmentsTotal);
+        if (assignmentsTotal > 0) dimensionPercentages.add((reviewRequired ? assignmentsReviewed : assignmentsSubmitted) * 100.0 / assignmentsTotal);
         if (attendanceTotal != null && attendanceTotal > 0) {
             dimensionPercentages.add(attendancePresent * 100.0 / attendanceTotal);
         }

@@ -1,3 +1,4 @@
+import { SubmissionHistory } from "../../components/SubmissionHistory";
 import { Select } from "../../components/Select";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,7 +17,7 @@ const STATUS_LABELS: Record<AssignmentSubmissionStatus, string> = {
   NEEDS_RESUBMISSION: "Needs resubmission",
 };
 
-function SubmissionCard({ submission, assignmentId }: { submission: AdminSubmission; assignmentId: number }) {
+export function SubmissionCard({ submission, assignmentId }: { submission: AdminSubmission; assignmentId: number }) {
   const [score, setScore] = useState<string>(submission.score !== null ? String(submission.score) : "");
   const [feedback, setFeedback] = useState(submission.feedback ?? "");
   const [status, setStatus] = useState<AssignmentSubmissionStatus>(
@@ -27,6 +28,7 @@ function SubmissionCard({ submission, assignmentId }: { submission: AdminSubmiss
   const handleReview = () => {
     review.mutate({
       submissionId: submission.id,
+      version: submission.version,
       status,
       score: status === "REVIEWED" ? Number(score) : null,
       feedback: feedback || null,
@@ -44,6 +46,7 @@ function SubmissionCard({ submission, assignmentId }: { submission: AdminSubmiss
         </span>
       </div>
 
+      <SubmissionHistory url={`/api/admin/assignment-submissions/${submission.id}/history`} />
       <p className="text-muted">Submitted {formatDateTime(submission.submittedAt)}</p>
 
       {submission.responseText && (
@@ -101,7 +104,7 @@ export function AdminAssignmentSubmissionsPage() {
     <div className="container admin-page">
       <div className="admin-page__header">
         <div>
-          <span className="eyebrow">LMS · PHASE 11</span>
+          <span className="eyebrow">LEARNING MANAGEMENT</span>
           <h1>Assignment submissions</h1>
           <p className="text-muted">Review each student's response, score it, and leave feedback.</p>
         </div>
@@ -122,7 +125,7 @@ export function AdminAssignmentSubmissionsPage() {
       )}
 
       {submissions?.map((submission) => (
-        <SubmissionCard key={submission.id} submission={submission} assignmentId={assignmentIdNum} />
+        <SubmissionCard key={`${submission.id}-${submission.version}`} submission={submission} assignmentId={assignmentIdNum} />
       ))}
     </div>
   );

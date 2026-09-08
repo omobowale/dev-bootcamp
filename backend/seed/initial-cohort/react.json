@@ -1,0 +1,1888 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "file": "react.txt",
+    "sha256": "4d782298f4576bfbf1a04816c5decce52802a4a0bd1f4c2767fce4af1f339a64",
+    "note": "Adapted from the supplied course outline and question bank, with original lesson notes and additional application questions. Instructor review required before publication."
+  },
+  "course": {
+    "title": "Modern Frontend Web Development with React — Initial cohort draft",
+    "slug": "react-initial-cohort-draft",
+    "shortDescription": "Six guided classes covering web foundations and modern javascript; components, state and effects; routing and application structure; forms and accessible interactions; server data and responsive dashboards; testing, performance and delivery.",
+    "description": "<p>A guided course for learners who want to build and explain a working student-management application.</p><h3>Outcomes</h3><ol><li>Build a semantic catalogue with five courses, a heading, navigation, and labelled level filter. Explain why filtering should preserve the original array. Test an empty result and restore all courses.</li><li>Create three reusable course cards and a parent selection summary. Add a counter whose document title follows its state. Explain which data is a prop, local state, derived value, or external synchronization.</li><li>Implement Home, Courses, About and Profile pages plus a course detail route. Test a bookmarked detail URL, an invalid ID, an unknown route and browser Back. Document the host fallback required for a direct visit.</li><li>Build the student registration form with name, email, phone and course. Show field-specific errors, a pending state and a retry path that preserves values. Test it with only a keyboard and a deliberately rejected request.</li><li>Connect a course API to a responsive dashboard. Demonstrate loading, empty, error and success states. Test long course titles at 360 px and explain which query should refresh after enrollment changes.</li><li>Deliver the catalogue as a local production preview. Include one behavior test, a bundle size observation, direct-route evidence and a deployment runbook. Explain a measured optimization and a rollback procedure.</li></ol>",
+    "level": "Beginner",
+    "duration": "6 classes · 18 live hours plus independent practice",
+    "mode": "Live online",
+    "price": 0,
+    "requirements": "Basic computer use, a code editor, a browser and a local development environment. Frontend framework tracks assume basic JavaScript; backend tracks include introductory language review.",
+    "targetAudience": "Learners building their first structured web application; instructors should review prerequisites with the cohort.",
+    "certificateAvailable": true,
+    "published": false,
+    "whatsIncluded": []
+  },
+  "completionCriteria": {
+    "requireAllClassesCompleted": true,
+    "requireAllQuizzesPassed": true,
+    "requireAllAssignmentsReviewed": true,
+    "minAttendancePercentage": 80
+  },
+  "module": {
+    "title": "Initial cohort · six guided classes",
+    "description": "A condensed sequence drawing on the ten source-outline modules. Schedule each class for its cohort before launch.",
+    "position": 1
+  },
+  "lessons": [
+    {
+      "class": {
+        "title": "01. Web foundations and modern JavaScript",
+        "objectives": "Explain web foundations and modern javascript; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 1,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>Build a course catalogue from data before adding a framework. HTML supplies document meaning, CSS controls presentation, and JavaScript transforms data and responds to actions. An API is the boundary between the browser and protected backend operations.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Start with an array of course objects with stable IDs. Use filter to select records and map to transform each result. Both return new arrays; neither requires changing the source array. A const binding cannot be reassigned, but its object can still be mutated. Prefer copying when preparing UI data. A promise describes a future result: await it inside an async function and handle rejection explicitly. Keep credentials and authorization decisions on the server.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>const courses = [{id: 1, title: &#x27;React&#x27;, level: &#x27;Beginner&#x27;}, {id: 2, title: &#x27;APIs&#x27;, level: &#x27;Intermediate&#x27;}];\nconst titles = courses.filter(c =&gt; c.level === &#x27;Beginner&#x27;).map(c =&gt; c.title);\nconsole.log(titles); // [&#x27;React&#x27;]</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Build a semantic catalogue with five courses, a heading, navigation, and labelled level filter. Explain why filtering should preserve the original array. Test an empty result and restore all courses.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://react.dev/learn\">https://react.dev/learn</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Web & Frontend Fundamentals",
+        "MODERN JAVASCRIPT"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is the primary responsibility of a frontend application?",
+            "options": [
+              {
+                "text": "Managing database servers",
+                "correct": false
+              },
+              {
+                "text": "Providing the user interface and client-side functionality",
+                "correct": true
+              },
+              {
+                "text": "Managing physical network cables",
+                "correct": false
+              },
+              {
+                "text": "Storing passwords",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The frontend is responsible for the interface users interact with and client-side application behavior.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which technology is primarily responsible for defining the structure of a web page?",
+            "options": [
+              {
+                "text": "CSS",
+                "correct": false
+              },
+              {
+                "text": "SQL",
+                "correct": false
+              },
+              {
+                "text": "HTTP",
+                "correct": false
+              },
+              {
+                "text": "HTML",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>HTML defines the structure and semantic content of web pages.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What is CSS primarily used for?",
+            "options": [
+              {
+                "text": "Styling and layout",
+                "correct": true
+              },
+              {
+                "text": "API authentication",
+                "correct": false
+              },
+              {
+                "text": "Database queries",
+                "correct": false
+              },
+              {
+                "text": "Server authentication",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>CSS controls presentation, including colors, spacing, typography, positioning, and responsive layouts.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "Which technology is primarily responsible for adding programming logic to a web application in the browser?",
+            "options": [
+              {
+                "text": "SQL",
+                "correct": false
+              },
+              {
+                "text": "HTML",
+                "correct": false
+              },
+              {
+                "text": "JavaScript",
+                "correct": true
+              },
+              {
+                "text": "CSS",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>JavaScript provides programming logic and enables interactive behavior in web applications.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What is an API commonly used for in a frontend application?",
+            "options": [
+              {
+                "text": "Connecting the frontend to backend services",
+                "correct": true
+              },
+              {
+                "text": "Styling buttons",
+                "correct": false
+              },
+              {
+                "text": "Creating HTML elements manually",
+                "correct": false
+              },
+              {
+                "text": "Formatting computer hardware",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>APIs allow frontend applications to communicate with backend services and exchange data.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A React application needs to display a list of products retrieved from a backend. What does the frontend typically need to do?",
+            "options": [
+              {
+                "text": "Request the products through an API and render the response",
+                "correct": true
+              },
+              {
+                "text": "Modify the backend database files",
+                "correct": false
+              },
+              {
+                "text": "Restart the server for every request",
+                "correct": false
+              },
+              {
+                "text": "Query the database directly",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A frontend normally communicates with the backend through an API rather than directly accessing the database.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Which keyword declares a variable that cannot be reassigned?",
+            "options": [
+              {
+                "text": "const",
+                "correct": true
+              },
+              {
+                "text": "static",
+                "correct": false
+              },
+              {
+                "text": "let",
+                "correct": false
+              },
+              {
+                "text": "var",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`const` prevents reassignment of the variable binding.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What does an arrow function provide in modern JavaScript?",
+            "options": [
+              {
+                "text": "HTML rendering",
+                "correct": false
+              },
+              {
+                "text": "A shorter function syntax",
+                "correct": true
+              },
+              {
+                "text": "A database connection",
+                "correct": false
+              },
+              {
+                "text": "Automatic API authentication",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Arrow functions provide a concise syntax for defining functions.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Which array method creates a new array by transforming each element?",
+            "options": [
+              {
+                "text": "filter()",
+                "correct": false
+              },
+              {
+                "text": "map()",
+                "correct": true
+              },
+              {
+                "text": "find()",
+                "correct": false
+              },
+              {
+                "text": "reduceOnly()",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`map()` applies a function to each element and returns a new array containing the results.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What does `filter()` generally do?",
+            "options": [
+              {
+                "text": "Converts objects to JSON",
+                "correct": false
+              },
+              {
+                "text": "Returns elements that satisfy a condition",
+                "correct": true
+              },
+              {
+                "text": "Sorts an array alphabetically only",
+                "correct": false
+              },
+              {
+                "text": "Removes the entire array",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`filter()` creates a new array containing elements that pass a specified condition.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Web foundations and modern JavaScript",
+        "learningObjective": "Explain web foundations and modern javascript; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Build a semantic catalogue with five courses, a heading, navigation, and labelled level filter. Explain why filtering should preserve the original array. Test an empty result and restore all courses.</p><h4>Source questions to address</h4><pre>**Question 1 — Theory**\nExplain the roles of HTML, CSS, and JavaScript in a modern web application. How does React fit into this development process?\n\n**Question 2 — Hands-on**\nCreate a simple webpage containing a heading, paragraph, image, navigation links, and button. Use HTML, CSS, and JavaScript to make the page interactive.\n\n**Question 3 — Theory**\nExplain `let`, `const`, arrow functions, destructuring, spread syntax, and promises in modern JavaScript.\n\n**Question 4 — Hands-on**\nCreate a JavaScript array containing at least five courses. Use `map()` to display the courses, `filter()` to find courses in a particular category, and `find()` to locate one specific course.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "02. Components, state and effects",
+        "objectives": "Explain components, state and effects; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 2,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A component describes a reusable part of an interface. A parent passes props; state belongs to the component that owns an interaction. Rendering calculates the UI from these inputs.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Extract CourseCard when several cards share structure. Keep a selected course ID in the nearest common parent when a list and detail panel both need it. Use functional state updates when the next value depends on the previous value. Effects synchronize with external systems such as document titles or subscriptions; derived values can usually be calculated during rendering. Include every reactive dependency, and return cleanup for subscriptions so mounting and unmounting do not leave duplicate listeners.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>function Counter() {\n  const [count, setCount] = useState(0);\n  useEffect(() =&gt; { document.title = `Count: ${count}`; }, [count]);\n  return &lt;button onClick={() =&gt; setCount(n =&gt; n + 1)}&gt;{count}&lt;/button&gt;;\n}</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Create three reusable course cards and a parent selection summary. Add a counter whose document title follows its state. Explain which data is a prop, local state, derived value, or external synchronization.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://react.dev/learn\">https://react.dev/learn</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "REACT FUNDAMENTALS",
+        "REACT HOOKS"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is a React component?",
+            "options": [
+              {
+                "text": "A database table",
+                "correct": false
+              },
+              {
+                "text": "A server operating system",
+                "correct": false
+              },
+              {
+                "text": "An HTTP protocol",
+                "correct": false
+              },
+              {
+                "text": "A reusable piece of UI and application logic",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Components are reusable building blocks used to construct React interfaces.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What are props in React?",
+            "options": [
+              {
+                "text": "CSS files",
+                "correct": false
+              },
+              {
+                "text": "Server routes",
+                "correct": false
+              },
+              {
+                "text": "Data passed from a component to another component",
+                "correct": true
+              },
+              {
+                "text": "Database credentials",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Props allow data and configuration to be passed into components.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which React Hook is commonly used to manage component state?",
+            "options": [
+              {
+                "text": "useServer",
+                "correct": false
+              },
+              {
+                "text": "useRoute",
+                "correct": false
+              },
+              {
+                "text": "useState",
+                "correct": true
+              },
+              {
+                "text": "useDatabase",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`useState` allows functional components to maintain state.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What usually happens when React state changes?",
+            "options": [
+              {
+                "text": "The component may re-render with the updated state",
+                "correct": true
+              },
+              {
+                "text": "The browser shuts down",
+                "correct": false
+              },
+              {
+                "text": "The database is automatically deleted",
+                "correct": false
+              },
+              {
+                "text": "The server restarts",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A state update causes React to schedule a re-render so the UI can reflect the new state.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "Why are reusable components valuable in React?",
+            "options": [
+              {
+                "text": "They eliminate the need for JavaScript",
+                "correct": false
+              },
+              {
+                "text": "They automatically create databases",
+                "correct": false
+              },
+              {
+                "text": "They prevent all runtime errors",
+                "correct": false
+              },
+              {
+                "text": "They reduce duplication and improve maintainability",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Reusable components allow common UI and behavior to be implemented once and reused throughout an application.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A parent component needs to provide a student's name to a child component. What is the standard React approach?",
+            "options": [
+              {
+                "text": "Create a new database",
+                "correct": false
+              },
+              {
+                "text": "Modify React's source code",
+                "correct": false
+              },
+              {
+                "text": "Pass the name as a prop",
+                "correct": true
+              },
+              {
+                "text": "Put the name in CSS",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Props are the standard mechanism for passing data from parent components to child components.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What is the primary purpose of `useEffect`?",
+            "options": [
+              {
+                "text": "Replace JSX",
+                "correct": false
+              },
+              {
+                "text": "Perform side effects in a component",
+                "correct": true
+              },
+              {
+                "text": "Create CSS classes",
+                "correct": false
+              },
+              {
+                "text": "Define database tables",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`useEffect` is commonly used for side effects such as API requests, subscriptions, and interacting with external systems.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "When does an effect with an empty dependency array `[]` generally run after the component mounts?",
+            "options": [
+              {
+                "text": "It generally runs after the initial render",
+                "correct": true
+              },
+              {
+                "text": "It runs every millisecond",
+                "correct": false
+              },
+              {
+                "text": "It never runs",
+                "correct": false
+              },
+              {
+                "text": "It runs only when the server restarts",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>An effect with an empty dependency array generally runs after the component&#x27;s initial render, with development-mode behavior potentially causing an additional invocation under Strict Mode.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What is `useMemo` primarily intended to help with?",
+            "options": [
+              {
+                "text": "Sending HTTP requests",
+                "correct": false
+              },
+              {
+                "text": "Creating database tables",
+                "correct": false
+              },
+              {
+                "text": "Navigating between pages",
+                "correct": false
+              },
+              {
+                "text": "Memoizing a calculated value",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>`useMemo` can cache an expensive calculation until its dependencies change.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What is `useCallback` primarily used for?",
+            "options": [
+              {
+                "text": "Creating CSS files",
+                "correct": false
+              },
+              {
+                "text": "Installing npm packages",
+                "correct": false
+              },
+              {
+                "text": "Memoizing a function reference",
+                "correct": true
+              },
+              {
+                "text": "Fetching database records",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`useCallback` memoizes a function reference and can help avoid unnecessary renders in certain component structures.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Components, state and effects",
+        "learningObjective": "Explain components, state and effects; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Create three reusable course cards and a parent selection summary. Add a counter whose document title follows its state. Explain which data is a prop, local state, derived value, or external synchronization.</p><h4>Source questions to address</h4><pre>**Question 5 — Theory**\nWhat is a React component? Explain the difference between props and state.\n\n**Question 6 — Hands-on**\nCreate a reusable `CourseCard` component that receives a course name, instructor, duration, and price through props. Display at least three course cards on a page.\n\n**Question 7 — Theory**\nWhat are React Hooks? Explain the purpose of `useState` and `useEffect`.\n\n**Question 8 — Hands-on**\nCreate a React counter application using `useState`. Then add a `useEffect` that updates the browser document title whenever the counter changes.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "03. Routing and application structure",
+        "objectives": "Explain routing and application structure; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 3,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A route gives a screen an address that can be bookmarked and opened directly. A useful application handles direct entry, nested pages, and missing resources as carefully as navigation clicks.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Separate the shared layout from page components. Use a route parameter for the course ID and validate it before requesting data. A missing route and a known route with a missing course need appropriate not-found states. Query parameters suit shareable filters. A client-side protected route improves navigation but does not authorize API requests: the server must verify the account and enrollment. In production, configure the host to serve the application entry point for valid client routes.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>// Route pattern: /courses/:courseId\nconst { courseId } = useParams();\nconst id = Number(courseId);\nif (!Number.isInteger(id) || id &lt;= 0) return &lt;p&gt;Course not found&lt;/p&gt;;\nreturn &lt;CourseDetails id={id} /&gt;;</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Implement Home, Courses, About and Profile pages plus a course detail route. Test a bookmarked detail URL, an invalid ID, an unknown route and browser Back. Document the host fallback required for a direct visit.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://react.dev/learn\">https://react.dev/learn</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "ROUTING & APPLICATION STRUCTURE"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is client-side routing used for in a React application?",
+            "options": [
+              {
+                "text": "Encrypting passwords",
+                "correct": false
+              },
+              {
+                "text": "Compiling CSS",
+                "correct": false
+              },
+              {
+                "text": "Navigating between application views without requiring a full page reload",
+                "correct": true
+              },
+              {
+                "text": "Creating database tables",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Client-side routing allows single-page applications to display different views based on the URL.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which library is commonly used for routing in React applications?",
+            "options": [
+              {
+                "text": "MySQL Router",
+                "correct": false
+              },
+              {
+                "text": "React Router",
+                "correct": true
+              },
+              {
+                "text": "Express Router only",
+                "correct": false
+              },
+              {
+                "text": "Django Router",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>React Router is a widely used routing library for React applications.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "A route is `/students/:id`. What does `:id` typically represent?",
+            "options": [
+              {
+                "text": "A dynamic route parameter",
+                "correct": true
+              },
+              {
+                "text": "A CSS variable",
+                "correct": false
+              },
+              {
+                "text": "A database password",
+                "correct": false
+              },
+              {
+                "text": "A React Hook",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Dynamic route parameters allow a URL segment to represent a variable value such as a student&#x27;s ID.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "Why should a large React application be divided into logical components and modules?",
+            "options": [
+              {
+                "text": "To eliminate all API requests",
+                "correct": false
+              },
+              {
+                "text": "To prevent JavaScript execution",
+                "correct": false
+              },
+              {
+                "text": "To remove the need for browsers",
+                "correct": false
+              },
+              {
+                "text": "To improve organization and maintainability",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Good application structure makes large applications easier to understand, test, maintain, and extend.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "A user visits `/courses/15`. The application needs to retrieve course 15. What is a suitable approach?",
+            "options": [
+              {
+                "text": "Hardcode every possible course",
+                "correct": false
+              },
+              {
+                "text": "Query the database directly from the browser",
+                "correct": false
+              },
+              {
+                "text": "Read the route parameter and use it when requesting course data",
+                "correct": true
+              },
+              {
+                "text": "Ignore the URL",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The route parameter can be extracted and used to request the corresponding resource from the backend API.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "What is a protected route?",
+            "options": [
+              {
+                "text": "A database migration",
+                "correct": false
+              },
+              {
+                "text": "A route that requires certain conditions such as authentication before access",
+                "correct": true
+              },
+              {
+                "text": "A route that only contains CSS",
+                "correct": false
+              },
+              {
+                "text": "A route that cannot contain JavaScript",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Protected routes restrict access to users who satisfy requirements such as being authenticated or having a particular role.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "A bookmarked course URL works through a link but returns 404 on refresh. What should you check?",
+            "options": [
+              {
+                "text": "The host fallback for client-side routes",
+                "correct": true
+              },
+              {
+                "text": "The button colour",
+                "correct": false
+              },
+              {
+                "text": "Whether props are mutable",
+                "correct": false
+              },
+              {
+                "text": "The number of useState calls",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The server must serve the application entry point for valid client-side URLs.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Where should an API enforce enrollment access?",
+            "options": [
+              {
+                "text": "Only in a navigation link",
+                "correct": false
+              },
+              {
+                "text": "Only in a React route guard",
+                "correct": false
+              },
+              {
+                "text": "In a CSS rule",
+                "correct": false
+              },
+              {
+                "text": "On every protected server request",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Client navigation checks cannot prevent direct API calls.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Which value belongs in a shareable course-filter URL?",
+            "options": [
+              {
+                "text": "A component function",
+                "correct": false
+              },
+              {
+                "text": "A password hash",
+                "correct": false
+              },
+              {
+                "text": "The selected level query parameter",
+                "correct": true
+              },
+              {
+                "text": "A private API signing key",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A query parameter can preserve a non-secret filter for direct visits.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "A valid detail route contains an unknown course ID. What should the page show?",
+            "options": [
+              {
+                "text": "An endless loader",
+                "correct": false
+              },
+              {
+                "text": "A course-not-found state",
+                "correct": true
+              },
+              {
+                "text": "A blank page",
+                "correct": false
+              },
+              {
+                "text": "An unrelated course",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A valid route can still identify a missing resource.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Routing and application structure",
+        "learningObjective": "Explain routing and application structure; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Implement Home, Courses, About and Profile pages plus a course detail route. Test a bookmarked detail URL, an invalid ID, an unknown route and browser Back. Document the host fallback required for a direct visit.</p><h4>Source questions to address</h4><pre>**Question 9 — Theory**\nWhat is client-side routing? Why is routing useful in a React single-page application?\n\n**Question 10 — Hands-on**\nCreate a React application with the following routes:\n\n* Home\n* Courses\n* About\n* Student Profile\n\nAdd navigation links between the pages and create a dynamic route for viewing a specific course.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "04. Forms and accessible interactions",
+        "objectives": "Explain forms and accessible interactions; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 4,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A registration form coordinates user input, validation and a request to the server. Treat submitting, success and failure as distinct states so a slow request does not appear to lose the response.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Controlled inputs read their displayed value from state and update that state on change. Associate each label with its field and connect error text with aria-describedby. Validate required fields before sending, but also enforce the same business rules on the server because browser checks can be bypassed. Preserve values on failure, prevent duplicate submissions while pending, and move attention to actionable errors. A placeholder is an example, not a replacement for a label.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>const [email, setEmail] = useState(&#x27;&#x27;);\n&lt;label htmlFor=&quot;email&quot;&gt;Email&lt;/label&gt;\n&lt;input id=&quot;email&quot; type=&quot;email&quot; required value={email}\n  onChange={e =&gt; setEmail(e.target.value)} /&gt;</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Build the student registration form with name, email, phone and course. Show field-specific errors, a pending state and a retry path that preserves values. Test it with only a keyboard and a deliberately rejected request.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://react.dev/learn\">https://react.dev/learn</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "FORMS & USER INTERACTION"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is a controlled input in React?",
+            "options": [
+              {
+                "text": "An input controlled only by CSS",
+                "correct": false
+              },
+              {
+                "text": "An input whose value is managed through React state",
+                "correct": true
+              },
+              {
+                "text": "An input controlled by the database",
+                "correct": false
+              },
+              {
+                "text": "An input that cannot receive text",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Controlled inputs use React state as the source of truth for their current value.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Why is client-side form validation useful?",
+            "options": [
+              {
+                "text": "It provides immediate feedback to users",
+                "correct": true
+              },
+              {
+                "text": "It replaces backend validation completely",
+                "correct": false
+              },
+              {
+                "text": "It prevents all security vulnerabilities",
+                "correct": false
+              },
+              {
+                "text": "It removes the need for APIs",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Client-side validation improves user experience by identifying obvious errors before submission.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Why should backend validation still be performed even when frontend validation exists?",
+            "options": [
+              {
+                "text": "React cannot display errors",
+                "correct": false
+              },
+              {
+                "text": "HTML cannot contain forms",
+                "correct": false
+              },
+              {
+                "text": "APIs do not support validation",
+                "correct": false
+              },
+              {
+                "text": "Users can bypass frontend validation",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Client-side validation can be bypassed, so the backend must independently validate incoming data.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "A login form contains email and password fields. What should happen after a successful submission?",
+            "options": [
+              {
+                "text": "The browser should restart",
+                "correct": false
+              },
+              {
+                "text": "The database should be exposed",
+                "correct": false
+              },
+              {
+                "text": "The application should process the authentication response and update the user's authenticated state",
+                "correct": true
+              },
+              {
+                "text": "The application should delete the form",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A successful login typically results in authentication state being established and the UI being updated accordingly.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What is a common way to prevent a form from performing the browser's default submission behavior in React?",
+            "options": [
+              {
+                "text": "Delete the form element",
+                "correct": false
+              },
+              {
+                "text": "Call `event.preventDefault()`",
+                "correct": true
+              },
+              {
+                "text": "Call `event.stopReact()`",
+                "correct": false
+              },
+              {
+                "text": "Use `preventBrowser()`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`event.preventDefault()` prevents the browser&#x27;s default action, allowing React to handle the submission.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A registration form submits invalid data returned by the backend. What is a good frontend behavior?",
+            "options": [
+              {
+                "text": "Display the relevant validation errors to the user",
+                "correct": true
+              },
+              {
+                "text": "Ignore the response",
+                "correct": false
+              },
+              {
+                "text": "Reload the computer",
+                "correct": false
+              },
+              {
+                "text": "Automatically delete the account",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Backend validation errors should be mapped into useful feedback so the user can correct the form.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "A registration request fails. What is the most useful form behavior?",
+            "options": [
+              {
+                "text": "Erase all values",
+                "correct": false
+              },
+              {
+                "text": "Report success",
+                "correct": false
+              },
+              {
+                "text": "Disable the form permanently",
+                "correct": false
+              },
+              {
+                "text": "Preserve entered values and show an actionable error",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Retaining input lets the student correct or retry the request.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What connects a visible form label to its input?",
+            "options": [
+              {
+                "text": "A CSS background",
+                "correct": false
+              },
+              {
+                "text": "The field position",
+                "correct": false
+              },
+              {
+                "text": "Matching htmlFor and id values",
+                "correct": true
+              },
+              {
+                "text": "Matching placeholder and colour",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The programmatic association helps both clicking and assistive technology.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Why must the server validate a form that React already validated?",
+            "options": [
+              {
+                "text": "All requests are cached",
+                "correct": false
+              },
+              {
+                "text": "A caller can bypass browser validation",
+                "correct": true
+              },
+              {
+                "text": "React always changes input types",
+                "correct": false
+              },
+              {
+                "text": "CSS cannot be downloaded",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Only server validation covers all clients and direct requests.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "When should a submit button prevent duplicate requests?",
+            "options": [
+              {
+                "text": "While the current submission is pending",
+                "correct": true
+              },
+              {
+                "text": "Whenever a field has focus",
+                "correct": false
+              },
+              {
+                "text": "After every failed request forever",
+                "correct": false
+              },
+              {
+                "text": "Only when the browser is offline",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A pending state prevents accidental duplicate sends while preserving later retries.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Forms and accessible interactions",
+        "learningObjective": "Explain forms and accessible interactions; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Build the student registration form with name, email, phone and course. Show field-specific errors, a pending state and a retry path that preserves values. Test it with only a keyboard and a deliberately rejected request.</p><h4>Source questions to address</h4><pre>**Question 11 — Theory**\nWhat is a controlled form input in React? Why is client-side form validation useful?\n\n**Question 12 — Hands-on**\nBuild a student registration form containing:\n\n* Name\n* Email\n* Phone number\n* Course\n\nValidate the fields and display appropriate error messages before allowing the form to be submitted.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "05. Server data and responsive dashboards",
+        "objectives": "Explain server data and responsive dashboards; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 5,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>Remote data has a lifecycle beyond component state: it can be loading, stale, refreshed or unavailable. A dashboard should remain understandable in each state and at narrow viewport widths.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Choose a query key containing all inputs that identify the request, such as course and cohort IDs. After a mutation, invalidate affected data rather than manually assuming the server result. Distinguish an empty array from a failed request. Keep filters and open panels as local UI state. Build layout with flexible columns, allow long text to wrap, and preserve visible focus. Measure responsiveness with realistic content and loading states, not only a short successful response.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>const query = useQuery({queryKey: [&#x27;courses&#x27;, level], queryFn: () =&gt; fetchCourses(level)});\nif (query.isPending) return &lt;p role=&quot;status&quot;&gt;Loading courses...&lt;/p&gt;;\nif (query.isError) return &lt;button onClick={() =&gt; query.refetch()}&gt;Retry&lt;/button&gt;;\nreturn &lt;CourseList courses={query.data} /&gt;;</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Connect a course API to a responsive dashboard. Demonstrate loading, empty, error and success states. Test long course titles at 360 px and explain which query should refresh after enrollment changes.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://react.dev/learn\">https://react.dev/learn</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "STATE & SERVER DATA",
+        "MODERN UI DEVELOPMENT"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is application state?",
+            "options": [
+              {
+                "text": "Data that can change during the application's lifetime",
+                "correct": true
+              },
+              {
+                "text": "Only CSS information",
+                "correct": false
+              },
+              {
+                "text": "A database server",
+                "correct": false
+              },
+              {
+                "text": "An HTML document",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>State represents data whose current value affects application behavior or what is displayed.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which tool is commonly suitable for simple local component state?",
+            "options": [
+              {
+                "text": "Redux only",
+                "correct": false
+              },
+              {
+                "text": "SQL",
+                "correct": false
+              },
+              {
+                "text": "Axios",
+                "correct": false
+              },
+              {
+                "text": "useState",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>`useState` is appropriate for managing state that belongs primarily to an individual component.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What is server state?",
+            "options": [
+              {
+                "text": "Data contained in the browser's HTML parser",
+                "correct": false
+              },
+              {
+                "text": "A React component",
+                "correct": false
+              },
+              {
+                "text": "Data managed by a backend or remote server",
+                "correct": true
+              },
+              {
+                "text": "Data stored only in CSS",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Server state includes remotely managed data such as users, courses, orders, and API responses.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "Why might a library such as TanStack Query be useful in a React application?",
+            "options": [
+              {
+                "text": "It replaces HTML",
+                "correct": false
+              },
+              {
+                "text": "It helps manage server-state fetching, caching, synchronization, and mutations",
+                "correct": true
+              },
+              {
+                "text": "It replaces JavaScript",
+                "correct": false
+              },
+              {
+                "text": "It creates operating systems",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>TanStack Query provides tools for fetching and managing asynchronous server state, including caching and refetching.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "A shopping cart must be accessed by many unrelated components. What approach might be appropriate?",
+            "options": [
+              {
+                "text": "Shared application state",
+                "correct": true
+              },
+              {
+                "text": "Duplicate the cart in every component",
+                "correct": false
+              },
+              {
+                "text": "Store the cart in CSS",
+                "correct": false
+              },
+              {
+                "text": "Hardcode the products",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Shared state allows multiple parts of an application to access and update the same data consistently.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A React application displays stale course data after an update. What could help ensure the UI reflects the latest server data?",
+            "options": [
+              {
+                "text": "Changing the CSS font",
+                "correct": false
+              },
+              {
+                "text": "Restarting the user's computer",
+                "correct": false
+              },
+              {
+                "text": "Removing React",
+                "correct": false
+              },
+              {
+                "text": "Appropriate cache invalidation or refetching",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Server-state libraries can invalidate cached data and refetch updated information when mutations occur.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What is responsive design?",
+            "options": [
+              {
+                "text": "Using only JavaScript",
+                "correct": false
+              },
+              {
+                "text": "Removing mobile support",
+                "correct": false
+              },
+              {
+                "text": "Designing interfaces that adapt to different screen sizes and devices",
+                "correct": true
+              },
+              {
+                "text": "Designing only for desktop computers",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Responsive design allows interfaces to work effectively across different screen sizes and orientations.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Which CSS technology is commonly used for two-dimensional page layouts?",
+            "options": [
+              {
+                "text": "HTTP Grid",
+                "correct": false
+              },
+              {
+                "text": "CSS Grid",
+                "correct": true
+              },
+              {
+                "text": "SQL Grid",
+                "correct": false
+              },
+              {
+                "text": "React Grid API",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>CSS Grid provides a powerful system for creating two-dimensional layouts.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Which CSS technology is particularly useful for arranging items along a single row or column?",
+            "options": [
+              {
+                "text": "Flexbox",
+                "correct": true
+              },
+              {
+                "text": "SQL",
+                "correct": false
+              },
+              {
+                "text": "JSON",
+                "correct": false
+              },
+              {
+                "text": "JSX",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Flexbox is designed for arranging elements along one-dimensional rows or columns.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What is a reusable UI component?",
+            "options": [
+              {
+                "text": "A database record",
+                "correct": false
+              },
+              {
+                "text": "A server process",
+                "correct": false
+              },
+              {
+                "text": "A network cable",
+                "correct": false
+              },
+              {
+                "text": "A UI element designed to be used in multiple places",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Reusable components reduce duplication and create consistent interfaces.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Server data and responsive dashboards",
+        "learningObjective": "Explain server data and responsive dashboards; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Connect a course API to a responsive dashboard. Demonstrate loading, empty, error and success states. Test long course titles at 360 px and explain which query should refresh after enrollment changes.</p><h4>Source questions to address</h4><pre>**Question 13 — Theory**\nExplain the difference between local UI state and server state. Why might a library such as TanStack Query be useful for managing server data?\n\n**Question 14 — Hands-on**\nCreate a React page that retrieves a list of courses from an API. Display loading, success, and error states. Add a button that allows the user to refresh the data.\n\n**Question 15 — Theory**\nWhat is responsive web design? Explain why accessibility should be considered when designing a modern frontend application.\n\n**Question 16 — Hands-on**\nCreate a responsive student dashboard containing:\n\n* Sidebar/navigation\n* Header\n* Course cards\n* Progress indicators\n* Recent activities\n\nMake the dashboard usable on both desktop and mobile screen sizes.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "06. Testing, performance and delivery",
+        "objectives": "Explain testing, performance and delivery; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 6,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A release is ready when its important behavior is repeatable in a production build. Tests should follow what a student can observe rather than copying a component implementation.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Test a pure filtering function with empty and mixed input, then test the user journey of selecting a course and submitting a form. Use an integration test for the API boundary. Inspect the built bundle before optimizing; route-level lazy loading can postpone screens that the visitor has not opened. Environment variables embedded in browser bundles are public. Verify production API configuration, direct route loading and error states in a preview deployment before making the site public.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>function visibleCourses(courses, level) {\n  return level === &#x27;All&#x27; ? courses : courses.filter(c =&gt; c.level === level);\n}\nconsole.assert(visibleCourses([], &#x27;Beginner&#x27;).length === 0);</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Deliver the catalogue as a local production preview. Include one behavior test, a bundle size observation, direct-route evidence and a deployment runbook. Explain a measured optimization and a rollback procedure.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://react.dev/learn\">https://react.dev/learn</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "TESTING & PERFORMANCE",
+        "PRODUCTION & DEPLOYMENT"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is the primary purpose of testing a React application?",
+            "options": [
+              {
+                "text": "Replace the backend",
+                "correct": false
+              },
+              {
+                "text": "Create database tables",
+                "correct": false
+              },
+              {
+                "text": "Improve internet speed",
+                "correct": false
+              },
+              {
+                "text": "Verify that components and application behavior work as expected",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Testing helps detect defects and verify expected behavior.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What is a unit test?",
+            "options": [
+              {
+                "text": "A database migration",
+                "correct": false
+              },
+              {
+                "text": "A network configuration",
+                "correct": false
+              },
+              {
+                "text": "A test of a small, isolated piece of functionality",
+                "correct": true
+              },
+              {
+                "text": "A test of an entire production server",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Unit tests focus on small units such as functions or individual pieces of application logic.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What is component testing commonly used to verify?",
+            "options": [
+              {
+                "text": "Internet cables",
+                "correct": false
+              },
+              {
+                "text": "Component rendering and behavior",
+                "correct": true
+              },
+              {
+                "text": "Physical hardware",
+                "correct": false
+              },
+              {
+                "text": "Database server temperature",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Component tests can verify how components render and respond to user interactions or supplied data.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What can unnecessary React re-renders cause?",
+            "options": [
+              {
+                "text": "Performance problems",
+                "correct": true
+              },
+              {
+                "text": "Automatic database encryption",
+                "correct": false
+              },
+              {
+                "text": "Better network speed",
+                "correct": false
+              },
+              {
+                "text": "More storage space",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Excessive rendering can consume unnecessary CPU resources and make interfaces feel slow.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "A page renders thousands of records simultaneously and becomes slow. Which approach could improve the experience?",
+            "options": [
+              {
+                "text": "Add more HTML elements",
+                "correct": false
+              },
+              {
+                "text": "Disable all CSS",
+                "correct": false
+              },
+              {
+                "text": "Duplicate every record",
+                "correct": false
+              },
+              {
+                "text": "Pagination or virtualization",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Pagination or virtualization reduces the amount of content rendered at once.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A React component performs an expensive calculation on every render even though its inputs rarely change. What could be considered?",
+            "options": [
+              {
+                "text": "Removing state management",
+                "correct": false
+              },
+              {
+                "text": "Increasing HTML size",
+                "correct": false
+              },
+              {
+                "text": "Memoization",
+                "correct": true
+              },
+              {
+                "text": "More API requests",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Memoization can avoid repeating expensive calculations when their inputs have not changed.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What is a production build?",
+            "options": [
+              {
+                "text": "A Git branch that cannot be changed",
+                "correct": false
+              },
+              {
+                "text": "An optimized version of an application intended for deployment",
+                "correct": true
+              },
+              {
+                "text": "A development-only HTML file",
+                "correct": false
+              },
+              {
+                "text": "A database backup",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Production builds are optimized and prepared to run in a deployment environment.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What is the purpose of environment variables in a React application?",
+            "options": [
+              {
+                "text": "Store environment-specific configuration",
+                "correct": true
+              },
+              {
+                "text": "Replace JSX",
+                "correct": false
+              },
+              {
+                "text": "Create database tables directly",
+                "correct": false
+              },
+              {
+                "text": "Automatically write components",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Environment variables can provide configuration such as API base URLs and other non-secret environment-specific values.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Which information should generally NOT be treated as a secret in a browser-based frontend?",
+            "options": [
+              {
+                "text": "A user's password",
+                "correct": false
+              },
+              {
+                "text": "A private API credential",
+                "correct": false
+              },
+              {
+                "text": "A server-side database password",
+                "correct": false
+              },
+              {
+                "text": "A value that is intentionally bundled into the client application",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Anything shipped to a browser can potentially be inspected by users. True secrets such as database credentials and private API keys must remain on the server.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What is the purpose of a CDN when deploying a frontend application?",
+            "options": [
+              {
+                "text": "Generate passwords",
+                "correct": false
+              },
+              {
+                "text": "Run SQL queries",
+                "correct": false
+              },
+              {
+                "text": "Deliver static assets efficiently from geographically distributed locations",
+                "correct": true
+              },
+              {
+                "text": "Replace the application's database",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A CDN caches and serves static assets such as JavaScript, CSS, images, and fonts from locations closer to users.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Testing, performance and delivery",
+        "learningObjective": "Explain testing, performance and delivery; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Deliver the catalogue as a local production preview. Include one behavior test, a bundle size observation, direct-route evidence and a deployment runbook. Explain a measured optimization and a rollback procedure.</p><h4>Source questions to address</h4><pre>**Question 17 — Theory**\nExplain why frontend applications should be tested. What is the difference between testing a JavaScript function and testing a React component?\n\n**Question 18 — Practical/Research**\nCreate a React page containing a large list of items. Research at least two techniques for improving frontend performance and explain when each technique would be useful.\n\n**Question 19 — Theory**\nExplain the purpose of a production build. Why should frontend applications use environment-specific configuration?\n\n**Question 20 — Practical/Research**\nBuild and deploy a React application to a hosting platform such as Cloudflare Pages or another suitable platform. Document the steps involved, including the build command, environment variables, custom domain, and API configuration.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    }
+  ]
+}

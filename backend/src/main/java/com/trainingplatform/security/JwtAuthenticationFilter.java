@@ -45,6 +45,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // the actual authority granted still comes from a fresh DB lookup below, not from
             // anything the token itself claims, so a forged/stale role claim can't grant access.
             boolean isStudent = "STUDENT".equals(jwtService.extractRole(token));
+            if (isStudent && !studentUserDetailsService.acceptsVersion(email, jwtService.extractAuthVersion(token))) {
+                filterChain.doFilter(request, response); return;
+            }
             UserDetails userDetails = isStudent
                     ? studentUserDetailsService.loadUserByUsername(email)
                     : adminUserDetailsService.loadUserByUsername(email);

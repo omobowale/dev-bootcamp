@@ -109,6 +109,7 @@ export interface LessonSectionInput {
 }
 
 export interface AdminClassSession {
+  cohortId: number | null;
   id: number;
   moduleId: number;
   topicId: number | null;
@@ -204,6 +205,7 @@ export interface AdminAssignment {
 export type AdminAssignmentInput = Omit<AdminAssignment, "id" | "classSessionId">;
 
 export interface AdminSubmission {
+  version: number;
   id: number;
   studentId: string;
   studentName: string;

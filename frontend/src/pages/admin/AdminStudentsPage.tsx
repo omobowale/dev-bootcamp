@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Select } from "../../components/Select";
 import { useAdminStudents } from "../../hooks/admin/useAdminStudents";
 import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
@@ -5,13 +8,14 @@ import { formatDate } from "../../utils/formatDate";
 import "./adminShared.css";
 
 export function AdminStudentsPage() {
+  const [search,setSearch]=useState("");const [status,setStatus]=useState("");
   const { data: students, isLoading, isError, refetch } = useAdminStudents();
 
   return (
     <div className="container admin-page">
       <div className="admin-page__header">
         <div>
-          <span className="eyebrow">LMS · PHASE 8</span>
+          <span className="eyebrow">LEARNING MANAGEMENT</span>
           <h1>Students</h1>
           <p className="text-muted">
             Accounts are created automatically the moment a registration is marked Confirmed.
@@ -22,6 +26,7 @@ export function AdminStudentsPage() {
       {isLoading && <LoadingState label="Loading students…" />}
       {isError && <ErrorState message="Couldn't load students." onRetry={() => refetch()} />}
 
+      <div className="admin-filters"><input aria-label="Search students" placeholder="Search name, email or student ID" value={search} onChange={e=>setSearch(e.target.value)}/><Select aria-label="Account status" value={status} onChange={e=>setStatus(e.target.value)}><option value="">All statuses</option><option value="ACTIVE">Active</option><option value="INVITED">Invited</option></Select></div>
       {students && (
         <div className="admin-table-wrapper">
           <table className="admin-table">
@@ -43,10 +48,10 @@ export function AdminStudentsPage() {
                   </td>
                 </tr>
               )}
-              {students.map((student) => (
+              {students.filter(s=>(!status||s.status===status)&&`${s.fullName} ${s.email} ${s.studentId}`.toLowerCase().includes(search.toLowerCase())).map((student) => (
                 <tr key={student.id}>
                   <td data-label="Student ID">{student.studentId}</td>
-                  <td data-label="Name">{student.fullName}</td>
+                  <td data-label="Name"><Link to={`/admin/students/${student.id}`}>{student.fullName}</Link></td>
                   <td data-label="Email">{student.email}</td>
                   <td data-label="Status">
                     <span className={`status-badge status-badge--${student.status.toLowerCase()}`}>

@@ -1,17 +1,23 @@
+import { lazy, Suspense } from "react";
+import { LoadingState } from "./components/LoadingState";
+const StudentQuizResultPage = lazy(() => import("./pages/student/StudentQuizResultPage").then(module => ({ default: module.StudentQuizResultPage })));
+const AdminGradingPage = lazy(() => import("./pages/admin/AdminGradingPage").then(module => ({ default: module.AdminGradingPage })));
+const AdminStudentDetailPage = lazy(() => import("./pages/admin/AdminStudentDetailPage").then(module => ({ default: module.AdminStudentDetailPage })));
+const StudentRecoveryPage = lazy(() => import("./pages/student/StudentRecoveryPage").then(module => ({ default: module.StudentRecoveryPage })));
 import { ConfirmDialogProvider } from "./context/ConfirmDialogContext";
-import { TermsPage } from "./pages/TermsPage";
-import { PrivateTutorialsPage } from "./pages/PrivateTutorialsPage";
-import { AdminTermsPage } from "./pages/admin/AdminTermsPage";
-import { AdminStudentsPage } from "./pages/admin/AdminStudentsPage";
-import { StudentLoginPage } from "./pages/student/StudentLoginPage";
-import { StudentInvitePage } from "./pages/student/StudentInvitePage";
-import { StudentDashboardPage } from "./pages/student/StudentDashboardPage";
-import { StudentCourseClassesPage } from "./pages/student/StudentCourseClassesPage";
-import { StudentClassSessionPage } from "./pages/student/StudentClassSessionPage";
-import { StudentQuizAttemptPage } from "./pages/student/StudentQuizAttemptPage";
-import { AdminClassSessionFormPage } from "./pages/admin/AdminClassSessionFormPage";
-import { AdminQuizAttemptsPage } from "./pages/admin/AdminQuizAttemptsPage";
-import { AdminAssignmentSubmissionsPage } from "./pages/admin/AdminAssignmentSubmissionsPage";
+const TermsPage = lazy(() => import("./pages/TermsPage").then(module => ({ default: module.TermsPage })));
+const PrivateTutorialsPage = lazy(() => import("./pages/PrivateTutorialsPage").then(module => ({ default: module.PrivateTutorialsPage })));
+const AdminTermsPage = lazy(() => import("./pages/admin/AdminTermsPage").then(module => ({ default: module.AdminTermsPage })));
+const AdminStudentsPage = lazy(() => import("./pages/admin/AdminStudentsPage").then(module => ({ default: module.AdminStudentsPage })));
+const StudentLoginPage = lazy(() => import("./pages/student/StudentLoginPage").then(module => ({ default: module.StudentLoginPage })));
+const StudentInvitePage = lazy(() => import("./pages/student/StudentInvitePage").then(module => ({ default: module.StudentInvitePage })));
+const StudentDashboardPage = lazy(() => import("./pages/student/StudentDashboardPage").then(module => ({ default: module.StudentDashboardPage })));
+const StudentCourseClassesPage = lazy(() => import("./pages/student/StudentCourseClassesPage").then(module => ({ default: module.StudentCourseClassesPage })));
+const StudentClassSessionPage = lazy(() => import("./pages/student/StudentClassSessionPage").then(module => ({ default: module.StudentClassSessionPage })));
+const StudentQuizAttemptPage = lazy(() => import("./pages/student/StudentQuizAttemptPage").then(module => ({ default: module.StudentQuizAttemptPage })));
+const AdminClassSessionFormPage = lazy(() => import("./pages/admin/AdminClassSessionFormPage").then(module => ({ default: module.AdminClassSessionFormPage })));
+const AdminQuizAttemptsPage = lazy(() => import("./pages/admin/AdminQuizAttemptsPage").then(module => ({ default: module.AdminQuizAttemptsPage })));
+const AdminAssignmentSubmissionsPage = lazy(() => import("./pages/admin/AdminAssignmentSubmissionsPage").then(module => ({ default: module.AdminAssignmentSubmissionsPage })));
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Outlet, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { StudentAuthProvider } from "./context/StudentAuthContext";
@@ -21,20 +27,20 @@ import { StudentProtectedRoute } from "./routes/StudentProtectedRoute";
 import { PublicLayout } from "./layouts/PublicLayout";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { HomePage } from "./pages/HomePage";
-import { CoursesPage } from "./pages/CoursesPage";
-import { CourseDetailPage } from "./pages/CourseDetailPage";
-import { AboutPage } from "./pages/AboutPage";
-import { RegisterPage } from "./pages/RegisterPage";
-import { RegistrationSuccessPage } from "./pages/RegistrationSuccessPage";
-import { AdminLoginPage } from "./pages/admin/AdminLoginPage";
-import { AdminDashboardPage } from "./pages/admin/AdminDashboardPage";
-import { AdminCoursesPage } from "./pages/admin/AdminCoursesPage";
-import { AdminCourseFormPage } from "./pages/admin/AdminCourseFormPage";
-import { AdminCourseOutlinePage } from "./pages/admin/AdminCourseOutlinePage";
-import { AdminCohortsPage } from "./pages/admin/AdminCohortsPage";
-import { AdminRegistrationsPage } from "./pages/admin/AdminRegistrationsPage";
-import { AdminRegistrationDetailPage } from "./pages/admin/AdminRegistrationDetailPage";
-import { AdminGlobalFaqsPage } from "./pages/admin/AdminGlobalFaqsPage";
+const CoursesPage = lazy(() => import("./pages/CoursesPage").then(module => ({ default: module.CoursesPage })));
+const CourseDetailPage = lazy(() => import("./pages/CourseDetailPage").then(module => ({ default: module.CourseDetailPage })));
+const AboutPage = lazy(() => import("./pages/AboutPage").then(module => ({ default: module.AboutPage })));
+const RegisterPage = lazy(() => import("./pages/RegisterPage").then(module => ({ default: module.RegisterPage })));
+const RegistrationSuccessPage = lazy(() => import("./pages/RegistrationSuccessPage").then(module => ({ default: module.RegistrationSuccessPage })));
+const AdminLoginPage = lazy(() => import("./pages/admin/AdminLoginPage").then(module => ({ default: module.AdminLoginPage })));
+const AdminDashboardPage = lazy(() => import("./pages/admin/AdminDashboardPage").then(module => ({ default: module.AdminDashboardPage })));
+const AdminCoursesPage = lazy(() => import("./pages/admin/AdminCoursesPage").then(module => ({ default: module.AdminCoursesPage })));
+const AdminCourseFormPage = lazy(() => import("./pages/admin/AdminCourseFormPage").then(module => ({ default: module.AdminCourseFormPage })));
+const AdminCourseOutlinePage = lazy(() => import("./pages/admin/AdminCourseOutlinePage").then(module => ({ default: module.AdminCourseOutlinePage })));
+const AdminCohortsPage = lazy(() => import("./pages/admin/AdminCohortsPage").then(module => ({ default: module.AdminCohortsPage })));
+const AdminRegistrationsPage = lazy(() => import("./pages/admin/AdminRegistrationsPage").then(module => ({ default: module.AdminRegistrationsPage })));
+const AdminRegistrationDetailPage = lazy(() => import("./pages/admin/AdminRegistrationDetailPage").then(module => ({ default: module.AdminRegistrationDetailPage })));
+const AdminGlobalFaqsPage = lazy(() => import("./pages/admin/AdminGlobalFaqsPage").then(module => ({ default: module.AdminGlobalFaqsPage })));
 
 import { Toasts } from './components/Toasts';
 import { RouteExperience } from './components/RouteExperience';
@@ -43,7 +49,7 @@ import { VerifyCertificatePage } from './pages/VerifyCertificatePage';
 import { AdminSiteContentPage } from './pages/admin/AdminSiteContentPage';
 import './modern.css';
 import './academic.css';
-const router = createBrowserRouter(createRoutesFromElements(<Route element={<><RouteExperience /><Toasts /><Outlet /></>}>
+const router = createBrowserRouter(createRoutesFromElements(<Route element={<><RouteExperience /><Toasts /><Suspense fallback={<LoadingState label="Loading page…" />}><Outlet /></Suspense></>}>
             <Route element={<PublicLayout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/courses" element={<CoursesPage />} />
@@ -52,6 +58,7 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
               <Route path="/registration/success" element={<RegistrationSuccessPage />} />
               <Route path="/terms" element={<TermsPage />} /><Route path="/private-tutorials" element={<PrivateTutorialsPage />} />
 <Route path="/about" element={<AboutPage />} />
+<Route path="/student/quiz-results/:attemptId" element={<StudentProtectedRoute><StudentQuizResultPage /></StudentProtectedRoute>} /><Route path="/student/recover" element={<StudentRecoveryPage />} /><Route path="/student/reset-password/:token" element={<StudentRecoveryPage />} />
 <Route path="/verify" element={<VerifyCertificatePage />} />
 <Route path="/verify/:verificationId" element={<VerifyCertificatePage />} />
 <Route path="*" element={<NotFoundPage />} />
@@ -118,7 +125,7 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
               <Route path="/admin/registrations" element={<AdminRegistrationsPage />} />
               <Route path="/admin/registrations/:id" element={<AdminRegistrationDetailPage />} />
               <Route path="/admin/settings/terms" element={<AdminTermsPage />} />
-<Route path="/admin/students" element={<AdminStudentsPage />} />
+<Route path="/admin/students/:studentId" element={<AdminStudentDetailPage />} /><Route path="/admin/grading" element={<AdminGradingPage />} /><Route path="/admin/students" element={<AdminStudentsPage />} />
 <Route path="/admin/faqs" element={<AdminGlobalFaqsPage />} />
 <Route path="/admin/site-content" element={<AdminSiteContentPage />} />
             </Route>

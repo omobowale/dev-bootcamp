@@ -1,7 +1,8 @@
 import { sanitizeRichText } from "../../utils/richText";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon, type IconName } from "../Icon";
 import "./RichTextEditor.css";
+import { Select } from "../Select";
 
 interface ToolbarButton {
   command: string;
@@ -27,23 +28,7 @@ const TEXT_STYLES = [
   { value: "<h4>", label: "Subheading" },
 ] as const;
 
-/**
- * A lightweight "fake WYSIWYG" — a contentEditable div with a formatting toolbar driven by
- * document.execCommand. Deliberately not a full rich-text engine (no undo stack management,
- * no paste-cleaning) — this is scoped to what an admin needs for course/FAQ prose: bold,
- * italic, underline, and lists. Stores its value as an HTML string; whatever renders this
- * content publicly must use dangerouslySetInnerHTML (see CourseDetailPage, FaqAccordion) — this
- * is admin-authored content behind login, not public user input.
- *
- * The editor re-syncs its DOM from `value` whenever `value` changes from the OUTSIDE, but stops
- * doing that the moment the user types a first keystroke (tracked via `editedRef`) — after that
- * point it manages its own DOM state, since re-syncing on every keystroke would fight the
- * browser's cursor position. This matters because a parent that loads its initial value
- * asynchronously (e.g. editing an existing course) does NOT have it ready in the exact render
- * where its own loading flag flips to false — there's a one-render gap while the parent's own
- * effect copies query data into local form state — so a mount-only sync would capture an empty
- * string and never pick up the real value once it arrives a render later.
- */
+/** Sanitized rich text with a searchable style menu that preserves the editing selection. */
 export function RichTextEditor({
   value,
   onChange,
@@ -57,6 +42,28 @@ export function RichTextEditor({
 }) {
   const editorRef = useRef<HTMLDivElement>(null);
   const editedRef = useRef(false);
+  const selectionRef = useRef<Range | null>(null);
+  const [textStyle,setTextStyle] = useState("<p>");
+  const [activeTools,setActiveTools] = useState<Record<string,boolean>>({});
+  useEffect(() => {
+    const remember = () => {
+      const selection = window.getSelection();
+      if (!selection?.rangeCount || !editorRef.current?.contains(selection.anchorNode)) return;
+      selectionRef.current = selection.getRangeAt(0).cloneRange();
+      const block = document.queryCommandValue("formatBlock").toLowerCase().replace(/[<>]/g, "");
+      setTextStyle(block === "h3" || block === "h4" ? `<${block}>` : "<p>");
+      setActiveTools(Object.fromEntries([...TEXT_TOOLS,...LIST_TOOLS].map(tool => [tool.command,document.queryCommandState(tool.command)])));
+    };
+    document.addEventListener("selectionchange",remember);
+    return () => document.removeEventListener("selectionchange",remember);
+  }, []);
+  const restoreSelection = () => {
+    editorRef.current?.focus();
+    const selection=window.getSelection();
+    if(selection && selectionRef.current && editorRef.current?.contains(selectionRef.current.commonAncestorContainer)) {
+      selection.removeAllRanges(); selection.addRange(selectionRef.current);
+    }
+  };
 
   useEffect(() => {
     if (editedRef.current) return;
@@ -70,14 +77,14 @@ export function RichTextEditor({
   };
 
   const exec = (command: string) => {
-    editorRef.current?.focus();
+    restoreSelection();
     document.execCommand(command);
     markEdited();
     onChange(editorRef.current?.innerHTML ?? "");
   };
 
   const execFormatBlock = (tag: string) => {
-    editorRef.current?.focus();
+    restoreSelection();
     document.execCommand("formatBlock", false, tag);
     markEdited();
     onChange(editorRef.current?.innerHTML ?? "");
@@ -86,18 +93,18 @@ export function RichTextEditor({
   return (
     <div className="rich-text-editor">
       <div className="rich-text-editor__toolbar" role="toolbar" aria-label="Formatting">
-        <select
+        <Select
           className="rich-text-editor__style-select"
           aria-label="Text style"
-          defaultValue="<p>"
-          onChange={(e) => execFormatBlock(e.target.value)}
+          value={textStyle}
+          onChange={(e) => { setTextStyle(e.target.value); execFormatBlock(e.target.value); }}
         >
           {TEXT_STYLES.map((style) => (
             <option key={style.value} value={style.value}>
               {style.label}
             </option>
           ))}
-        </select>
+        </Select>
         <span className="rich-text-editor__divider" />
         <div className="rich-text-editor__group">
           {TEXT_TOOLS.map((btn) => (
@@ -107,6 +114,7 @@ export function RichTextEditor({
               className={`rich-text-editor__glyph rich-text-editor__glyph--${btn.glyph}`}
               title={btn.title}
               aria-label={btn.title}
+              aria-pressed={!!activeTools[btn.command]}
               onClick={() => exec(btn.command)}
               onMouseDown={(e) => e.preventDefault()}
             >
@@ -122,6 +130,7 @@ export function RichTextEditor({
               type="button"
               title={btn.title}
               aria-label={btn.title}
+              aria-pressed={!!activeTools[btn.command]}
               onClick={() => exec(btn.command)}
               onMouseDown={(e) => e.preventDefault()}
             >

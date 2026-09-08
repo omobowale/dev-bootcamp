@@ -1,0 +1,1888 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "file": "vue.txt",
+    "sha256": "3f6246854d92e38425ef2158e9835f809ec4e9512714313e6e14e2873b3672f5",
+    "note": "Adapted from the supplied course outline and question bank, with original lesson notes and additional application questions. Instructor review required before publication."
+  },
+  "course": {
+    "title": "Modern Frontend Web Development with Vue.js — Initial cohort draft",
+    "slug": "vue-initial-cohort-draft",
+    "shortDescription": "Six guided classes covering web foundations and javascript collections; templates and the composition api; props, events and component ownership; forms and validation; apis, routing and shared state; testing and production diagnosis.",
+    "description": "<p>A guided course for learners who want to build and explain a working student-management application.</p><h3>Outcomes</h3><ol><li>Create a responsive academy page with three cards. Extend its dataset to five courses and add category filtering. Explain shallow copying and demonstrate an empty filter result.</li><li>Build a reusable CourseCard list and a reactive counter. Add a computed even/odd label and a watcher that records changes. Explain why the label belongs in computed rather than another writable ref.</li><li>Build a CourseCard that emits its course ID and a parent showing the selected course. Add a slot for a badge. Reorder the list and verify the correct course remains selected.</li><li>Build a registration form with name, email, phone and course. Demonstrate invalid input, a server rejection and a successful retry. Include keyboard-only test notes and explain why frontend validation is insufficient.</li><li>Create course list and detail routes plus a dashboard. Add shared account state and simulated API failures. Explain what happens on a direct detail URL and why the API still checks access.</li><li>Produce a local production preview and a troubleshooting checklist for a missing asset, failed API request and direct-route 404. Include one interaction test and measured before/after bundle evidence.</li></ol>",
+    "level": "Beginner",
+    "duration": "6 classes · 18 live hours plus independent practice",
+    "mode": "Live online",
+    "price": 0,
+    "requirements": "Basic computer use, a code editor, a browser and a local development environment. Frontend framework tracks assume basic JavaScript; backend tracks include introductory language review.",
+    "targetAudience": "Learners building their first structured web application; instructors should review prerequisites with the cohort.",
+    "certificateAvailable": true,
+    "published": false,
+    "whatsIncluded": []
+  },
+  "completionCriteria": {
+    "requireAllClassesCompleted": true,
+    "requireAllQuizzesPassed": true,
+    "requireAllAssignmentsReviewed": true,
+    "minAttendancePercentage": 80
+  },
+  "module": {
+    "title": "Initial cohort · six guided classes",
+    "description": "A condensed sequence drawing on the ten source-outline modules. Schedule each class for its cohort before launch.",
+    "position": 1
+  },
+  "lessons": [
+    {
+      "class": {
+        "title": "01. Web foundations and JavaScript collections",
+        "objectives": "Explain web foundations and javascript collections; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 1,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>Vue builds on HTML, CSS and JavaScript. First model the information and user interaction without a framework so reactive rendering has a clear source of truth.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Represent each course with a stable identifier and meaningful fields. Filter selects a subset while map transforms results. Spread creates a shallow copy: nested objects remain shared unless copied separately. Destructuring extracts named values. Use async functions for readable promise-based workflows, with a visible error path for rejected operations. The browser consumes API responses and must not contain a database password or private service key.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>const courses = [{id: 1, title: &#x27;Vue&#x27;, level: &#x27;Beginner&#x27;}];\nconst beginners = courses.filter(({level}) =&gt; level === &#x27;Beginner&#x27;);\nconsole.log(beginners.map(({title}) =&gt; title));</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Create a responsive academy page with three cards. Extend its dataset to five courses and add category filtering. Explain shallow copying and demonstrate an empty filter result.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://vuejs.org/guide/introduction.html\">https://vuejs.org/guide/introduction.html</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Modern Frontend Development",
+        "JavaScript for Vue Applications"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is the primary responsibility of a frontend application?",
+            "options": [
+              {
+                "text": "Managing server hardware",
+                "correct": false
+              },
+              {
+                "text": "Providing the user interface and interacting with users",
+                "correct": true
+              },
+              {
+                "text": "Managing database backups",
+                "correct": false
+              },
+              {
+                "text": "Configuring DNS",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The frontend is responsible for what users see and interact with in a web application. It communicates with backend services when it needs data or server-side operations.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which three technologies form the basic foundation of the web?",
+            "options": [
+              {
+                "text": "HTML, CSS, JavaScript",
+                "correct": true
+              },
+              {
+                "text": "SQL, JSON, XML",
+                "correct": false
+              },
+              {
+                "text": "Git, Docker, Linux",
+                "correct": false
+              },
+              {
+                "text": "Python, Java, PHP",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>HTML provides the structure, CSS controls presentation and styling, and JavaScript provides behavior and interactivity.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What is Vue.js?",
+            "options": [
+              {
+                "text": "A programming language",
+                "correct": false
+              },
+              {
+                "text": "A web server",
+                "correct": false
+              },
+              {
+                "text": "A database system",
+                "correct": false
+              },
+              {
+                "text": "A JavaScript framework for building user interfaces",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Vue.js is a JavaScript framework designed for building user interfaces. It provides features such as components, reactivity, routing integration, and state-management support.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What is a Single-Page Application (SPA)?",
+            "options": [
+              {
+                "text": "A website without JavaScript",
+                "correct": false
+              },
+              {
+                "text": "A website containing only one HTML element",
+                "correct": false
+              },
+              {
+                "text": "An application that generally updates content without full page reloads",
+                "correct": true
+              },
+              {
+                "text": "A website with only one route",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A SPA typically loads the application shell once and then updates parts of the page as users navigate or interact with the application.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What is an API commonly used for in a frontend application?",
+            "options": [
+              {
+                "text": "Styling buttons",
+                "correct": false
+              },
+              {
+                "text": "Communicating with backend services",
+                "correct": true
+              },
+              {
+                "text": "Compiling CSS",
+                "correct": false
+              },
+              {
+                "text": "Creating HTML files",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>An API provides a way for the frontend to communicate with the backend. For example, a Vue application can request a list of courses from a Django or Laravel API.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "Which is a common architecture for a Vue frontend connected to a backend?",
+            "options": [
+              {
+                "text": "Vue → Database directly",
+                "correct": false
+              },
+              {
+                "text": "Browser → Database directly",
+                "correct": false
+              },
+              {
+                "text": "Vue → CSS → Database",
+                "correct": false
+              },
+              {
+                "text": "Vue → API → Backend → Database",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>The frontend normally communicates with the backend through an API. The backend handles business logic and communicates with the database. This also prevents the frontend from directly exposing database credentials.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Which keyword declares a variable that cannot be reassigned?",
+            "options": [
+              {
+                "text": "const",
+                "correct": true
+              },
+              {
+                "text": "static",
+                "correct": false
+              },
+              {
+                "text": "let",
+                "correct": false
+              },
+              {
+                "text": "var",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`const` prevents reassignment of the variable. It is commonly preferred when the variable itself does not need to be reassigned.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Which method creates a new array by transforming each item?",
+            "options": [
+              {
+                "text": "push()",
+                "correct": false
+              },
+              {
+                "text": "filter()",
+                "correct": false
+              },
+              {
+                "text": "map()",
+                "correct": true
+              },
+              {
+                "text": "find()",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`map()` runs a function on every item and returns a new array containing the transformed results.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Which method returns items that satisfy a condition?",
+            "options": [
+              {
+                "text": "filter()",
+                "correct": true
+              },
+              {
+                "text": "map()",
+                "correct": false
+              },
+              {
+                "text": "reduce()",
+                "correct": false
+              },
+              {
+                "text": "push()",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`filter()` creates a new array containing only the elements for which the supplied condition returns true.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What does destructuring allow you to do?",
+            "options": [
+              {
+                "text": "Extract values from arrays or objects",
+                "correct": true
+              },
+              {
+                "text": "Encrypt variables",
+                "correct": false
+              },
+              {
+                "text": "Convert JavaScript to HTML",
+                "correct": false
+              },
+              {
+                "text": "Delete objects",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Destructuring provides a convenient way to extract values from objects or arrays into variables.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Web foundations and JavaScript collections",
+        "learningObjective": "Explain web foundations and javascript collections; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Create a responsive academy page with three cards. Extend its dataset to five courses and add category filtering. Explain shallow copying and demonstrate an empty filter result.</p><h4>Source questions to address</h4><pre>**Question 1 — Theory**\nExplain the roles of HTML, CSS, and JavaScript in frontend development. What problem does a framework such as Vue.js help solve?\n\n**Question 2 — Hands-on**\nCreate a simple student academy webpage containing a navigation bar, welcome section, three course cards, and a footer. Make the page responsive.\n\n**Question 3 — Theory**\nExplain `map()`, `filter()`, destructuring, spread syntax, Promises, and `async/await`. Give one practical use case for each.\n\n**Question 4 — Hands-on**\nCreate a JavaScript array containing at least five courses. Use `map()` to display the courses, `filter()` to find courses in a category, and `find()` to retrieve one specific course.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "02. Templates and the Composition API",
+        "objectives": "Explain templates and the composition api; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 2,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>Vue connects reactive state to a template. A component groups that template with its behavior, allowing one course card design to serve many records.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Use ref for a reactive value and access its value property in script. Templates unwrap refs in common expressions. Use computed for derived values such as whether a counter is even; use watch when a change must trigger an external action. Use v-if for conditional content and v-for with stable keys for lists. Do not compute a second mutable copy of a value that can be derived from existing state.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>&lt;script setup&gt;\nimport { ref, computed } from &#x27;vue&#x27;;\nconst count = ref(0);\nconst even = computed(() =&gt; count.value % 2 === 0);\n&lt;/script&gt;\n&lt;template&gt;&lt;button @click=&quot;count++&quot;&gt;{{ count }}: {{ even ? &#x27;even&#x27; : &#x27;odd&#x27; }}&lt;/button&gt;&lt;/template&gt;</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Build a reusable CourseCard list and a reactive counter. Add a computed even/odd label and a watcher that records changes. Explain why the label belongs in computed rather than another writable ref.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://vuejs.org/guide/introduction.html\">https://vuejs.org/guide/introduction.html</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Vue.js Fundamentals",
+        "Vue Reactivity & Composition API"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is a Vue component?",
+            "options": [
+              {
+                "text": "A reusable piece of UI and logic",
+                "correct": true
+              },
+              {
+                "text": "A server",
+                "correct": false
+              },
+              {
+                "text": "An HTTP request",
+                "correct": false
+              },
+              {
+                "text": "A database table",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Components allow an application to be divided into smaller, reusable pieces. For example, an LMS could have `CourseCard`, `StudentProfile`, and `Navbar` components.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What file extension is commonly used for Vue Single-File Components?",
+            "options": [
+              {
+                "text": "`.component`",
+                "correct": false
+              },
+              {
+                "text": "`.vjs`",
+                "correct": false
+              },
+              {
+                "text": "`.jsx`",
+                "correct": false
+              },
+              {
+                "text": "`.vue`",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Vue Single-File Components normally use the `.vue` extension. A component can contain its template, JavaScript logic, and styling in one file.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which syntax displays a JavaScript value inside a Vue template?",
+            "options": [
+              {
+                "text": "`[name]`",
+                "correct": false
+              },
+              {
+                "text": "`${name}`",
+                "correct": false
+              },
+              {
+                "text": "`{{ name }}`",
+                "correct": true
+              },
+              {
+                "text": "`<%= name %>`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Vue uses double curly braces for text interpolation. For example, `{{ student.name }}` displays the student&#x27;s name.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "Which directive is commonly used for conditional rendering?",
+            "options": [
+              {
+                "text": "`v-if`",
+                "correct": true
+              },
+              {
+                "text": "`v-show-list`",
+                "correct": false
+              },
+              {
+                "text": "`v-condition`",
+                "correct": false
+              },
+              {
+                "text": "`v-check`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`v-if` conditionally renders an element based on an expression. For example, it can display an admin dashboard only when the user has the appropriate role.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "Which directive is commonly used to render a list?",
+            "options": [
+              {
+                "text": "`v-list`",
+                "correct": false
+              },
+              {
+                "text": "`v-for`",
+                "correct": true
+              },
+              {
+                "text": "`v-each`",
+                "correct": false
+              },
+              {
+                "text": "`v-array`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`v-for` is used to iterate over arrays or other collections and generate elements or components for each item.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "Which directive is commonly used to handle events?",
+            "options": [
+              {
+                "text": "`v-action`",
+                "correct": false
+              },
+              {
+                "text": "`v-click`",
+                "correct": false
+              },
+              {
+                "text": "`v-event`",
+                "correct": false
+              },
+              {
+                "text": "`v-on`",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>`v-on` listens for DOM events such as clicks and keyboard events. The shorthand `@click` is commonly used instead of `v-on:click`.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What is Vue's reactivity system used for?",
+            "options": [
+              {
+                "text": "Encrypting passwords",
+                "correct": false
+              },
+              {
+                "text": "Automatically responding to changes in application state",
+                "correct": true
+              },
+              {
+                "text": "Creating databases",
+                "correct": false
+              },
+              {
+                "text": "Managing DNS",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Vue&#x27;s reactivity system tracks changes to reactive data and updates the relevant parts of the user interface when that data changes.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Which function is commonly used to create reactive state in the Composition API?",
+            "options": [
+              {
+                "text": "state()",
+                "correct": false
+              },
+              {
+                "text": "reactiveState()",
+                "correct": false
+              },
+              {
+                "text": "ref()",
+                "correct": true
+              },
+              {
+                "text": "observe()",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`ref()` creates a reactive reference. In JavaScript, its value is accessed through `.value`, while Vue templates generally unwrap refs automatically.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What property is commonly used to access the value of a `ref` in JavaScript?",
+            "options": [
+              {
+                "text": "`.value`",
+                "correct": true
+              },
+              {
+                "text": "`.state`",
+                "correct": false
+              },
+              {
+                "text": "`.current`",
+                "correct": false
+              },
+              {
+                "text": "`.data`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>If `count` is created with `ref(0)`, JavaScript code accesses its current value using `count.value`.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What is `computed()` primarily useful for?",
+            "options": [
+              {
+                "text": "Creating routes",
+                "correct": false
+              },
+              {
+                "text": "Creating databases",
+                "correct": false
+              },
+              {
+                "text": "Creating derived reactive values",
+                "correct": true
+              },
+              {
+                "text": "Making API requests",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A computed property derives a value from other reactive data. For example, a student&#x27;s total score or course completion percentage can be computed from other state.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Templates and the Composition API",
+        "learningObjective": "Explain templates and the composition api; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Build a reusable CourseCard list and a reactive counter. Add a computed even/odd label and a watcher that records changes. Explain why the label belongs in computed rather than another writable ref.</p><h4>Source questions to address</h4><pre>**Question 5 — Theory**\nWhat is Vue.js? Explain the purpose of components, templates, interpolation, conditional rendering, and list rendering.\n\n**Question 6 — Hands-on**\nCreate a Vue application with a reusable `CourseCard` component. Display at least three courses, showing the course name, instructor, duration, and description.\n\n**Question 7 — Theory**\nExplain Vue&#x27;s reactivity system. What are `ref()`, `reactive()`, `computed()`, and `watch()` used for?\n\n**Question 8 — Hands-on**\nCreate a Vue counter application using `ref()`. Add a computed value that determines whether the counter is even or odd, and use a watcher to log changes to the counter.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "03. Props, events and component ownership",
+        "objectives": "Explain props, events and component ownership; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 3,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A component contract defines what a child receives and what it reports to its parent. Explicit contracts make reusable cards easier to understand and test.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Pass course information through props and emit an enroll event containing the course ID. The parent owns enrollment state and decides what to do with the event. Avoid mutating a prop or a nested object received from the parent. A slot lets a parent supply presentation content without forcing the child to know every layout. Keep emitted event names and payloads consistent, and use stable record IDs instead of array positions when items can move.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>&lt;script setup&gt;\nconst props = defineProps({ course: Object });\nconst emit = defineEmits([&#x27;enroll&#x27;]);\n&lt;/script&gt;\n&lt;template&gt;&lt;button @click=&quot;emit(&#x27;enroll&#x27;, props.course.id)&quot;&gt;Enroll&lt;/button&gt;&lt;/template&gt;</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Build a CourseCard that emits its course ID and a parent showing the selected course. Add a slot for a badge. Reorder the list and verify the correct course remains selected.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://vuejs.org/guide/introduction.html\">https://vuejs.org/guide/introduction.html</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Components, Props & Events"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What are props used for?",
+            "options": [
+              {
+                "text": "Creating CSS",
+                "correct": false
+              },
+              {
+                "text": "Starting a server",
+                "correct": false
+              },
+              {
+                "text": "Passing data from a parent component to a child",
+                "correct": true
+              },
+              {
+                "text": "Connecting to a database",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Props allow a parent component to provide data to a child component. For example, a parent can pass course information to a `CourseCard`.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "How does a child component normally communicate an event to its parent?",
+            "options": [
+              {
+                "text": "By refreshing the browser",
+                "correct": false
+              },
+              {
+                "text": "By directly modifying the parent",
+                "correct": false
+              },
+              {
+                "text": "By emitting an event",
+                "correct": true
+              },
+              {
+                "text": "By changing the database",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A child component can emit a custom event that the parent listens for. This creates a clear communication pattern between components.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What is the purpose of `emit`?",
+            "options": [
+              {
+                "text": "To send custom events from a component",
+                "correct": true
+              },
+              {
+                "text": "To create a database",
+                "correct": false
+              },
+              {
+                "text": "To load CSS",
+                "correct": false
+              },
+              {
+                "text": "To create routes",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Emitting events allows a child component to notify its parent that something happened, such as a user clicking an &quot;Enroll&quot; button.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What is a slot used for?",
+            "options": [
+              {
+                "text": "Storing passwords",
+                "correct": false
+              },
+              {
+                "text": "Calling APIs",
+                "correct": false
+              },
+              {
+                "text": "Managing routes",
+                "correct": false
+              },
+              {
+                "text": "Passing content into a component",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Slots allow a component to accept custom content from its parent. This makes components more flexible and reusable.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What is `v-model` commonly used for?",
+            "options": [
+              {
+                "text": "Calling databases",
+                "correct": false
+              },
+              {
+                "text": "Loading images",
+                "correct": false
+              },
+              {
+                "text": "Two-way binding of form input data",
+                "correct": true
+              },
+              {
+                "text": "Creating routes",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`v-model` simplifies keeping form input values synchronized with component state. It is commonly used with text inputs, selects, checkboxes, and other form controls.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "Why are reusable components useful?",
+            "options": [
+              {
+                "text": "They automatically create databases",
+                "correct": false
+              },
+              {
+                "text": "They reduce duplicated UI and logic",
+                "correct": true
+              },
+              {
+                "text": "They eliminate JavaScript",
+                "correct": false
+              },
+              {
+                "text": "They remove the need for APIs",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Reusable components make applications easier to maintain. A single `Button` or `CourseCard` component can be reused throughout an application instead of recreating the same code repeatedly.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "A child CourseCard needs to request enrollment. What should it send?",
+            "options": [
+              {
+                "text": "An emitted event containing the course ID",
+                "correct": true
+              },
+              {
+                "text": "A mutation of the parent prop",
+                "correct": false
+              },
+              {
+                "text": "A database password",
+                "correct": false
+              },
+              {
+                "text": "An array index as permanent identity",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The parent owns the action and can use the stable course ID.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What is a slot useful for in a reusable card?",
+            "options": [
+              {
+                "text": "Hashing a password",
+                "correct": false
+              },
+              {
+                "text": "Creating a database transaction",
+                "correct": false
+              },
+              {
+                "text": "Authorizing API calls",
+                "correct": false
+              },
+              {
+                "text": "Allowing parent-supplied presentation content",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Slots allow composition without teaching the child every possible layout.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "A list can be reordered. Which key should identify each course?",
+            "options": [
+              {
+                "text": "A new random number on each render",
+                "correct": false
+              },
+              {
+                "text": "The total list length",
+                "correct": false
+              },
+              {
+                "text": "Its stable unique course ID",
+                "correct": true
+              },
+              {
+                "text": "Its current array index",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Stable identity preserves the relationship between a record and its rendered component.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "A child wants to change a prop received from a parent. What is the preferred contract?",
+            "options": [
+              {
+                "text": "Write to the URL password field",
+                "correct": false
+              },
+              {
+                "text": "Emit an event and let the parent update its state",
+                "correct": true
+              },
+              {
+                "text": "Modify the prop silently",
+                "correct": false
+              },
+              {
+                "text": "Copy the entire application into the child",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Explicit events keep ownership of parent state clear.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Props, events and component ownership",
+        "learningObjective": "Explain props, events and component ownership; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Build a CourseCard that emits its course ID and a parent showing the selected course. Add a slot for a badge. Reorder the list and verify the correct course remains selected.</p><h4>Source questions to address</h4><pre>**Question 9 — Theory**\nExplain how data and events are passed between parent and child components in Vue. What are props and emitted events?\n\n**Question 10 — Hands-on**\nCreate a parent component containing a list of courses and a child `CourseCard` component. Pass course information through props and emit an event when the user clicks an &quot;Enroll&quot; button.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "04. Forms and validation",
+        "objectives": "Explain forms and validation; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 4,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A form is a conversation with the user: labels explain what is needed, validation explains what to fix, and submission state explains what is happening.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Use v-model to bind form state and handle submit at the form level so Enter works. Apply appropriate input types and visible labels. Validate required fields and display field errors near the associated inputs. Backend validation remains authoritative. Keep entered values after a failed request and disable repeated submission only while pending. Custom controls must preserve keyboard interaction and an accessible name.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>&lt;script setup&gt;\nimport { ref } from &#x27;vue&#x27;;\nconst email = ref(&#x27;&#x27;);\n&lt;/script&gt;\n&lt;template&gt;&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&lt;input id=&quot;email&quot; v-model=&quot;email&quot; type=&quot;email&quot; required /&gt;&lt;/template&gt;</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Build a registration form with name, email, phone and course. Demonstrate invalid input, a server rejection and a successful retry. Include keyboard-only test notes and explain why frontend validation is insufficient.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://vuejs.org/guide/introduction.html\">https://vuejs.org/guide/introduction.html</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Forms & User Interaction"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "Which Vue directive is commonly used with form inputs?",
+            "options": [
+              {
+                "text": "`v-bind-form`",
+                "correct": false
+              },
+              {
+                "text": "`v-model`",
+                "correct": true
+              },
+              {
+                "text": "`v-form-data`",
+                "correct": false
+              },
+              {
+                "text": "`v-input-data`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`v-model` provides a convenient way to synchronize form input values with reactive state.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Why is client-side validation useful?",
+            "options": [
+              {
+                "text": "It provides immediate feedback to users",
+                "correct": true
+              },
+              {
+                "text": "It replaces backend security",
+                "correct": false
+              },
+              {
+                "text": "It eliminates databases",
+                "correct": false
+              },
+              {
+                "text": "It encrypts passwords",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Client-side validation improves the user experience by identifying common input problems immediately. However, it should not be considered a replacement for backend validation.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Should backend validation still be performed when frontend validation exists?",
+            "options": [
+              {
+                "text": "Only for administrators",
+                "correct": false
+              },
+              {
+                "text": "Yes",
+                "correct": true
+              },
+              {
+                "text": "Only on mobile",
+                "correct": false
+              },
+              {
+                "text": "No",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Frontend validation can be bypassed because users control the client application. The backend must independently validate incoming data before processing it.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What should an application display while a long form submission is being processed?",
+            "options": [
+              {
+                "text": "A database table",
+                "correct": false
+              },
+              {
+                "text": "Nothing",
+                "correct": false
+              },
+              {
+                "text": "Another login form",
+                "correct": false
+              },
+              {
+                "text": "A loading or submitting state",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>A loading state tells the user that their request is being processed. It can also prevent them from accidentally submitting the form multiple times.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "A registration form receives invalid email data from the backend. What should the frontend ideally do?",
+            "options": [
+              {
+                "text": "Delete the form",
+                "correct": false
+              },
+              {
+                "text": "Ignore it",
+                "correct": false
+              },
+              {
+                "text": "Display an appropriate validation error",
+                "correct": true
+              },
+              {
+                "text": "Reload the server",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Backend validation errors should be communicated clearly to the user so they can correct the submitted information.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "Why should submit buttons sometimes be disabled while a request is processing?",
+            "options": [
+              {
+                "text": "To prevent accidental duplicate submissions",
+                "correct": true
+              },
+              {
+                "text": "To make CSS work",
+                "correct": false
+              },
+              {
+                "text": "To create a route",
+                "correct": false
+              },
+              {
+                "text": "To increase database size",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>If a user clicks a submit button multiple times while the first request is still processing, duplicate records or transactions could potentially be created. Disabling the button helps prevent this.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Which Vue directive binds a text field to form state?",
+            "options": [
+              {
+                "text": "v-for",
+                "correct": false
+              },
+              {
+                "text": "v-if",
+                "correct": false
+              },
+              {
+                "text": "v-once",
+                "correct": false
+              },
+              {
+                "text": "v-model",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>v-model coordinates a field value with reactive state.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "A server rejects a registration. What should the form preserve?",
+            "options": [
+              {
+                "text": "An apparent success message",
+                "correct": false
+              },
+              {
+                "text": "The private server stack trace",
+                "correct": false
+              },
+              {
+                "text": "The user-entered values",
+                "correct": true
+              },
+              {
+                "text": "Only the page background",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Retained values support correction and retry without starting over.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "How should a form support the Enter key?",
+            "options": [
+              {
+                "text": "Hide the input labels",
+                "correct": false
+              },
+              {
+                "text": "Handle submission on the form element",
+                "correct": true
+              },
+              {
+                "text": "Only use a pointer-click handler on a div",
+                "correct": false
+              },
+              {
+                "text": "Remove the submit button",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Form submission semantics support keyboard interaction.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "Which validation layer can enforce rules against a direct HTTP client?",
+            "options": [
+              {
+                "text": "Server-side validation",
+                "correct": true
+              },
+              {
+                "text": "Only v-model",
+                "correct": false
+              },
+              {
+                "text": "Only a required HTML attribute",
+                "correct": false
+              },
+              {
+                "text": "Only a placeholder",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A direct caller can bypass all browser-side checks.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Forms and validation",
+        "learningObjective": "Explain forms and validation; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Build a registration form with name, email, phone and course. Demonstrate invalid input, a server rejection and a successful retry. Include keyboard-only test notes and explain why frontend validation is insufficient.</p><h4>Source questions to address</h4><pre>**Question 11 — Theory**\nExplain how `v-model` works in Vue forms. Why is frontend validation useful, and why should validation also be performed on the backend?\n\n**Question 12 — Hands-on**\nBuild a student registration form containing name, email, phone number, and selected course. Add basic validation and display appropriate error messages.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "05. APIs, routing and shared state",
+        "objectives": "Explain apis, routing and shared state; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 5,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>An application needs shareable screen addresses and a clear policy for where remote data lives. Keep route state, local interaction state and shared account state distinct.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Create loading, error, empty and success branches for API requests. Avoid allowing a slow earlier request to replace a later result. Route parameters identify a detail resource; query parameters can preserve filters. A Pinia store can coordinate shared account information, while temporary field state usually belongs in the form. A route guard controls navigation, but the backend must independently reject unauthorized data requests.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>async function loadCourses() {\n  loading.value = true; error.value = &#x27;&#x27;;\n  try {\n    const response = await fetch(&#x27;/api/courses&#x27;);\n    if (!response.ok) throw new Error(&#x27;Could not load courses&#x27;);\n    courses.value = await response.json();\n  } catch (e) { error.value = e.message; }\n  finally { loading.value = false; }\n}</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Create course list and detail routes plus a dashboard. Add shared account state and simulated API failures. Explain what happens on a direct detail URL and why the API still checks access.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://vuejs.org/guide/introduction.html\">https://vuejs.org/guide/introduction.html</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "API Integration",
+        "Routing & State Management"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "Which HTTP method is normally used to retrieve data?",
+            "options": [
+              {
+                "text": "POST",
+                "correct": false
+              },
+              {
+                "text": "DELETE",
+                "correct": false
+              },
+              {
+                "text": "GET",
+                "correct": true
+              },
+              {
+                "text": "PATCH",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>GET requests are generally used to retrieve resources from a server, such as retrieving a list of courses.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which format is commonly used for API data?",
+            "options": [
+              {
+                "text": "PSD",
+                "correct": false
+              },
+              {
+                "text": "EXE",
+                "correct": false
+              },
+              {
+                "text": "DLL",
+                "correct": false
+              },
+              {
+                "text": "JSON",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>JSON is widely used for exchanging structured data between frontend applications and backend APIs because it is lightweight and easy for JavaScript applications to process.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which HTTP method is commonly used to create a new resource?",
+            "options": [
+              {
+                "text": "DELETE",
+                "correct": false
+              },
+              {
+                "text": "HEAD",
+                "correct": false
+              },
+              {
+                "text": "GET",
+                "correct": false
+              },
+              {
+                "text": "POST",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>POST is commonly used when sending data to a server to create a new resource, such as registering a new student.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What should a Vue application usually do while waiting for an API response?",
+            "options": [
+              {
+                "text": "Restart the browser",
+                "correct": false
+              },
+              {
+                "text": "Show a loading state",
+                "correct": true
+              },
+              {
+                "text": "Close the application",
+                "correct": false
+              },
+              {
+                "text": "Delete existing data",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Displaying a loading state provides feedback to the user and makes it clear that the application is still processing the request.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What does HTTP status code 401 generally indicate?",
+            "options": [
+              {
+                "text": "Successful request",
+                "correct": false
+              },
+              {
+                "text": "Unauthorized/authentication problem",
+                "correct": true
+              },
+              {
+                "text": "Server created successfully",
+                "correct": false
+              },
+              {
+                "text": "Resource deleted",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A 401 response generally indicates that authentication is required or that the provided authentication credentials are not valid.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A Vue application needs to display courses from a Django API. What is the appropriate approach?",
+            "options": [
+              {
+                "text": "Request the course data through the API",
+                "correct": true
+              },
+              {
+                "text": "Copy the database into Vue",
+                "correct": false
+              },
+              {
+                "text": "Store database passwords in Vue",
+                "correct": false
+              },
+              {
+                "text": "Connect Vue directly to the database",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The Vue application should communicate with the Django backend through an API. The backend controls database access and business logic rather than exposing the database directly to the browser.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What is Vue Router used for?",
+            "options": [
+              {
+                "text": "CSS processing",
+                "correct": false
+              },
+              {
+                "text": "Password hashing",
+                "correct": false
+              },
+              {
+                "text": "Client-side routing",
+                "correct": true
+              },
+              {
+                "text": "Database management",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Vue Router allows a Vue application to define different routes and display different components based on the current URL.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What is a route parameter?",
+            "options": [
+              {
+                "text": "A JavaScript package",
+                "correct": false
+              },
+              {
+                "text": "A value included in a URL route",
+                "correct": true
+              },
+              {
+                "text": "A database password",
+                "correct": false
+              },
+              {
+                "text": "A CSS variable",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A route parameter represents dynamic information in a URL. For example, `/courses/25` could use `25` as the course ID.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What would `/courses/:id` commonly represent?",
+            "options": [
+              {
+                "text": "A dynamic course route",
+                "correct": true
+              },
+              {
+                "text": "A CSS class",
+                "correct": false
+              },
+              {
+                "text": "A database connection",
+                "correct": false
+              },
+              {
+                "text": "A static image",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`:id` represents a dynamic route parameter. Different course IDs can therefore use the same route structure.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What is a navigation guard commonly used for?",
+            "options": [
+              {
+                "text": "Creating CSS",
+                "correct": false
+              },
+              {
+                "text": "Formatting JSON",
+                "correct": false
+              },
+              {
+                "text": "Creating database tables",
+                "correct": false
+              },
+              {
+                "text": "Controlling access to routes",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Navigation guards can be used to determine whether a user should be allowed to navigate to a route. For example, an LMS might protect its student dashboard from unauthenticated users.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: APIs, routing and shared state",
+        "learningObjective": "Explain apis, routing and shared state; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Create course list and detail routes plus a dashboard. Add shared account state and simulated API failures. Explain what happens on a direct detail URL and why the API still checks access.</p><h4>Source questions to address</h4><pre>**Question 13 — Theory**\nExplain how a Vue application communicates with a backend API. Describe the purpose of loading, success, and error states.\n\n**Question 14 — Hands-on**\nConnect your Vue application to a public or locally created API. Retrieve and display a list of courses. Add loading and error handling.\n\n**Question 15 — Theory**\nExplain the purpose of Vue Router and Pinia. Give an example of information that might be stored in a Pinia store in an LMS.\n\n**Question 16 — Hands-on**\nCreate a Vue application with routes for:\n\n* Home\n* Courses\n* Course Details\n* Student Dashboard\n* Login\n\nAdd a protected dashboard route and create a small Pinia store for the authenticated student&#x27;s information.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "06. Testing and production diagnosis",
+        "objectives": "Explain testing and production diagnosis; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 6,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A production build changes asset paths and configuration, so development success alone does not establish deployment readiness. Use evidence to diagnose a blank page.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Inspect the console for script failures and the network panel for missing assets or rejected API requests. Check the host SPA fallback for direct routes, the configured public API URL and cross-origin response headers. Test visible behavior such as emitted enrollment events and error recovery. Lazy-load routes when it reduces initial work; measure the resulting build. Never embed private credentials in browser environment variables.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>// Example route definition with a deferred page import\nconst routes = [{ path: &#x27;/courses&#x27;, component: () =&gt; import(&#x27;./pages/CoursesPage.vue&#x27;) }];</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Produce a local production preview and a troubleshooting checklist for a missing asset, failed API request and direct-route 404. Include one interaction test and measured before/after bundle evidence.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://vuejs.org/guide/introduction.html\">https://vuejs.org/guide/introduction.html</a></li><li><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Testing, Performance & Best Practices",
+        "Production & Deployment"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is the purpose of automated testing?",
+            "options": [
+              {
+                "text": "To replace the database",
+                "correct": false
+              },
+              {
+                "text": "To write CSS",
+                "correct": false
+              },
+              {
+                "text": "To deploy DNS",
+                "correct": false
+              },
+              {
+                "text": "To automatically check that software behaves as expected",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Automated tests allow developers to repeatedly verify that application functionality works correctly and that new changes have not introduced unexpected problems.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What is a unit test?",
+            "options": [
+              {
+                "text": "A database backup",
+                "correct": false
+              },
+              {
+                "text": "A deployment script",
+                "correct": false
+              },
+              {
+                "text": "A test of a small isolated piece of functionality",
+                "correct": true
+              },
+              {
+                "text": "A test of an entire production server",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A unit test focuses on a small piece of functionality, such as a JavaScript function or a particular piece of application logic.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What tool can help developers inspect Vue components during development?",
+            "options": [
+              {
+                "text": "File Explorer",
+                "correct": false
+              },
+              {
+                "text": "Vue DevTools",
+                "correct": true
+              },
+              {
+                "text": "Photoshop",
+                "correct": false
+              },
+              {
+                "text": "Excel",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Vue DevTools provides development tools for inspecting Vue components, application state, events, and other useful information.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What is lazy loading useful for?",
+            "options": [
+              {
+                "text": "Loading resources or features only when needed",
+                "correct": true
+              },
+              {
+                "text": "Making passwords weaker",
+                "correct": false
+              },
+              {
+                "text": "Removing APIs",
+                "correct": false
+              },
+              {
+                "text": "Deleting components",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Lazy loading can reduce the amount of JavaScript that needs to be loaded initially. For example, an admin section can be loaded only when an administrator visits it.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "Which is an important accessibility practice?",
+            "options": [
+              {
+                "text": "Removing all keyboard support",
+                "correct": false
+              },
+              {
+                "text": "Using images without alternatives",
+                "correct": false
+              },
+              {
+                "text": "Making text unreadable",
+                "correct": false
+              },
+              {
+                "text": "Providing meaningful labels for form controls",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Meaningful labels help users understand form controls and improve accessibility for people using assistive technologies.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "Why should large Vue applications be organized into reusable components?",
+            "options": [
+              {
+                "text": "To avoid JavaScript",
+                "correct": false
+              },
+              {
+                "text": "To prevent routing",
+                "correct": false
+              },
+              {
+                "text": "To improve maintainability and reduce duplication",
+                "correct": true
+              },
+              {
+                "text": "To eliminate APIs",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Breaking a large application into logical reusable components makes the code easier to understand, test, maintain, and modify.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Which command commonly creates a production build in a modern Vue project?",
+            "options": [
+              {
+                "text": "`npm run database`",
+                "correct": false
+              },
+              {
+                "text": "`npm run build`",
+                "correct": true
+              },
+              {
+                "text": "`npm run delete`",
+                "correct": false
+              },
+              {
+                "text": "`npm run production-server`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>In a typical Vue project created with Vite, `npm run build` creates an optimized production build that can be deployed to a web server or hosting platform.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Where is the production build commonly generated in a Vite-powered Vue project?",
+            "options": [
+              {
+                "text": "`src/`",
+                "correct": false
+              },
+              {
+                "text": "`public/`",
+                "correct": false
+              },
+              {
+                "text": "`dist/`",
+                "correct": true
+              },
+              {
+                "text": "`database/`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Vite normally places the generated production files inside the `dist` directory. These are the files that can be deployed to static hosting.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Why are environment variables useful?",
+            "options": [
+              {
+                "text": "They automatically encrypt all application data",
+                "correct": false
+              },
+              {
+                "text": "They replace authentication",
+                "correct": false
+              },
+              {
+                "text": "They create databases",
+                "correct": false
+              },
+              {
+                "text": "They allow configuration such as API URLs to vary between environments",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Environment-specific configuration allows the application to use different values in development, testing, and production. For example, development might use a local API while production uses a deployed API.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "Should a secret API key that must remain private normally be placed in frontend JavaScript?",
+            "options": [
+              {
+                "text": "Only in production",
+                "correct": false
+              },
+              {
+                "text": "Only on mobile",
+                "correct": false
+              },
+              {
+                "text": "Yes",
+                "correct": false
+              },
+              {
+                "text": "No",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Frontend JavaScript is delivered to the user&#x27;s browser, meaning users can inspect it. Truly private secrets should remain on a trusted backend rather than being embedded in client-side code.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Testing and production diagnosis",
+        "learningObjective": "Explain testing and production diagnosis; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Produce a local production preview and a troubleshooting checklist for a missing asset, failed API request and direct-route 404. Include one interaction test and measured before/after bundle evidence.</p><h4>Source questions to address</h4><pre>**Question 17 — Theory**\nExplain why testing, accessibility, performance optimization, and good component organization are important in a production Vue application.\n\n**Question 18 — Practical/Research**\nResearch two Vue performance techniques, such as lazy loading, component optimization, or efficient rendering. Apply at least one technique to a small Vue application and explain the improvement.\n\n**Question 19 — Hands-on**\nBuild a production version of your Vue application and deploy it to a hosting platform. Configure the production API URL and test the deployed application.\n\n**Question 20 — Practical/Research**\nYour Vue application works correctly locally but displays a blank page or fails to load API data after deployment. Research the likely causes, including SPA routing, environment variables, CORS, API URLs, and authentication, and explain how you would troubleshoot the problem.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    }
+  ]
+}

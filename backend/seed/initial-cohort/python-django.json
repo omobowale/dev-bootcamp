@@ -1,0 +1,1888 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "file": "python-django.txt",
+    "sha256": "113c152e685ea6734d29c91a489fdcad6bbdaa0154b8d93f0fe101b75f2c0dec",
+    "note": "Adapted from the supplied course outline and question bank, with original lesson notes and additional application questions. Instructor review required before publication."
+  },
+  "course": {
+    "title": "Full-Stack Web Application Development with Python & Django — Initial cohort draft",
+    "slug": "python-django-initial-cohort-draft",
+    "shortDescription": "Six guided classes covering web requests and python data modelling; django applications, models and migrations; forms and server-side validation; rest apis and serializers; authentication and reusable templates; security tests and production operations.",
+    "description": "<p>A guided course for learners who want to build and explain a working student-management application.</p><h3>Outcomes</h3><ol><li>Draw the request lifecycle and write a five-student score program. Calculate the average and highest score, handle an empty dataset and explain your chosen data structures.</li><li>Create a students app, dashboard view and Student model. Apply the migration in an isolated database and add three records. Show duplicate student-code rejection and a missing-record response.</li><li>Build a name/email/course registration form. Demonstrate invalid email handling, retained values, CSRF protection and a successful redirect. Explain why a student must not be able to submit an administrator flag.</li><li>Create student list and create endpoints with Django REST Framework. Document request and response examples, include invalid input tests and restrict the list to authorized users. Explain which fields are writable and why.</li><li>Build a dashboard using template inheritance and a shared navigation bar. Demonstrate login protection and denied administrator access for a student. Explain the difference between hiding a link and securing its endpoint.</li><li>Write dashboard/API access tests and a deployment runbook covering secrets, DEBUG, allowed hosts, database migrations, static files, application server and rollback. Demonstrate the app in a local production-style preview.</li></ol>",
+    "level": "Beginner",
+    "duration": "6 classes · 18 live hours plus independent practice",
+    "mode": "Live online",
+    "price": 0,
+    "requirements": "Basic computer use, a code editor, a browser and a local development environment. Frontend framework tracks assume basic JavaScript; backend tracks include introductory language review.",
+    "targetAudience": "Learners building their first structured web application; instructors should review prerequisites with the cohort.",
+    "certificateAvailable": true,
+    "published": false,
+    "whatsIncluded": []
+  },
+  "completionCriteria": {
+    "requireAllClassesCompleted": true,
+    "requireAllQuizzesPassed": true,
+    "requireAllAssignmentsReviewed": true,
+    "minAttendancePercentage": 80
+  },
+  "module": {
+    "title": "Initial cohort · six guided classes",
+    "description": "A condensed sequence drawing on the ten source-outline modules. Schedule each class for its cohort before launch.",
+    "position": 1
+  },
+  "lessons": [
+    {
+      "class": {
+        "title": "01. Web requests and Python data modelling",
+        "objectives": "Explain web requests and python data modelling; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 1,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A browser sends a request and a Django application decides how to respond. Python data structures help model the records and transformations within that workflow.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Lists preserve an ordered collection, tuples represent fixed sequences, dictionaries map keys to values and sets represent distinct values. Choose a structure based on the required operations. Validate input before calculations and handle an empty collection explicitly. A server must enforce rules even when a browser form has already checked them. Trace a request from URL to view to storage to response so errors can be located at the correct boundary.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>scores = {&#x27;Ada&#x27;: 82, &#x27;Sam&#x27;: 74, &#x27;Mina&#x27;: 91}\nif scores:\n    average = sum(scores.values()) / len(scores)\n    best = max(scores, key=scores.get)\n    print(round(average, 1), best)</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Draw the request lifecycle and write a five-student score program. Calculate the average and highest score, handle an empty dataset and explain your chosen data structures.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://docs.python.org/3/tutorial/\">https://docs.python.org/3/tutorial/</a></li><li><a href=\"https://docs.djangoproject.com/en/stable/intro/\">https://docs.djangoproject.com/en/stable/intro/</a></li><li><a href=\"https://www.django-rest-framework.org/tutorial/quickstart/\">https://www.django-rest-framework.org/tutorial/quickstart/</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "Web Development Fundamentals",
+        "PYTHON PROGRAMMING"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What does HTTP stand for?",
+            "options": [
+              {
+                "text": "HyperText Transfer Protocol",
+                "correct": true
+              },
+              {
+                "text": "High Transfer Text Protocol",
+                "correct": false
+              },
+              {
+                "text": "Hyperlink Transmission Process",
+                "correct": false
+              },
+              {
+                "text": "Host Transfer Technology",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>HTTP is the protocol used for communication between web clients and servers.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which component is primarily responsible for displaying the user interface of a web application?",
+            "options": [
+              {
+                "text": "Frontend",
+                "correct": true
+              },
+              {
+                "text": "Server",
+                "correct": false
+              },
+              {
+                "text": "API",
+                "correct": false
+              },
+              {
+                "text": "Database",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The frontend is the part of a web application users interact with in their browser.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which HTTP method is normally used to retrieve data from a server?",
+            "options": [
+              {
+                "text": "GET",
+                "correct": true
+              },
+              {
+                "text": "DELETE",
+                "correct": false
+              },
+              {
+                "text": "POST",
+                "correct": false
+              },
+              {
+                "text": "PUT",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>GET requests are generally used to retrieve resources without modifying server data.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What does CRUD represent?",
+            "options": [
+              {
+                "text": "Configure, Read, Update, Debug",
+                "correct": false
+              },
+              {
+                "text": "Create, Read, Update, Delete",
+                "correct": true
+              },
+              {
+                "text": "Connect, Run, Upload, Download",
+                "correct": false
+              },
+              {
+                "text": "Create, Render, Use, Deploy",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>CRUD describes the four basic operations commonly performed on stored data.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "A Django application needs to store information about registered students. Which component would normally be responsible for persistent storage?",
+            "options": [
+              {
+                "text": "Browser",
+                "correct": false
+              },
+              {
+                "text": "CSS",
+                "correct": false
+              },
+              {
+                "text": "Database",
+                "correct": true
+              },
+              {
+                "text": "HTML",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Databases provide persistent storage for application data such as students, courses, and assignments.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A browser sends a request to `/courses/`. Which backend component should generally determine what happens when that URL is requested?",
+            "options": [
+              {
+                "text": "URL routing configuration",
+                "correct": true
+              },
+              {
+                "text": "Database index",
+                "correct": false
+              },
+              {
+                "text": "JavaScript variable",
+                "correct": false
+              },
+              {
+                "text": "CSS file",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>URL routing maps requested URLs to the appropriate backend view or handler.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Which keyword is used to define a function in Python?",
+            "options": [
+              {
+                "text": "def",
+                "correct": true
+              },
+              {
+                "text": "method",
+                "correct": false
+              },
+              {
+                "text": "function",
+                "correct": false
+              },
+              {
+                "text": "func",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Python uses the `def` keyword to define functions.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Which Python data structure stores key-value pairs?",
+            "options": [
+              {
+                "text": "Set",
+                "correct": false
+              },
+              {
+                "text": "Tuple",
+                "correct": false
+              },
+              {
+                "text": "Dictionary",
+                "correct": true
+              },
+              {
+                "text": "List",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A dictionary stores data using keys associated with corresponding values.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Which Python collection is ordered and can contain duplicate values?",
+            "options": [
+              {
+                "text": "List",
+                "correct": true
+              },
+              {
+                "text": "Set",
+                "correct": false
+              },
+              {
+                "text": "Dictionary key set",
+                "correct": false
+              },
+              {
+                "text": "None",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Python lists maintain order and allow duplicate elements.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What is the purpose of a Python class?",
+            "options": [
+              {
+                "text": "To define a blueprint for creating objects",
+                "correct": true
+              },
+              {
+                "text": "To connect directly to a browser",
+                "correct": false
+              },
+              {
+                "text": "To install packages",
+                "correct": false
+              },
+              {
+                "text": "To store only strings",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Classes define attributes and behavior that objects created from the class can have.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Web requests and Python data modelling",
+        "learningObjective": "Explain web requests and python data modelling; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Draw the request lifecycle and write a five-student score program. Calculate the average and highest score, handle an empty dataset and explain your chosen data structures.</p><h4>Source questions to address</h4><pre>**Question 1 — Theory**\nExplain the difference between a client and a server. Describe what happens when a user submits a form on a website.\n\n**Question 2 — Hands-on**\nCreate a simple diagram showing the relationship between a browser, Django application, API, and database. Briefly explain what happens when the user requests a page.\n\n**Question 3 — Theory**\nExplain the difference between a list, tuple, dictionary, and set in Python. Give one example of when each could be useful.\n\n**Question 4 — Hands-on**\nWrite a Python program that stores five students and their scores in a dictionary. Calculate the average score and identify the student with the highest score.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "02. Django applications, models and migrations",
+        "objectives": "Explain django applications, models and migrations; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 2,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A Django project supplies configuration while applications organize related features. Models describe persistent domain data and views coordinate responses.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Connect a URL pattern to a view and render a template with explicit context. Define a Student model with appropriate field types and a unique student code. Generate and review a migration before applying it to a development database. The ORM translates query operations into database work; lazy querysets are evaluated when consumed. Avoid loading unrelated rows just to find one record. Use a detail lookup that returns a clear not-found response.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>from django.db import models\nclass Student(models.Model):\n    name = models.CharField(max_length=120)\n    email = models.EmailField()\n    student_code = models.CharField(max_length=30, unique=True)</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Create a students app, dashboard view and Student model. Apply the migration in an isolated database and add three records. Show duplicate student-code rejection and a missing-record response.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://docs.python.org/3/tutorial/\">https://docs.python.org/3/tutorial/</a></li><li><a href=\"https://docs.djangoproject.com/en/stable/intro/\">https://docs.djangoproject.com/en/stable/intro/</a></li><li><a href=\"https://www.django-rest-framework.org/tutorial/quickstart/\">https://www.django-rest-framework.org/tutorial/quickstart/</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "DJANGO FUNDAMENTALS",
+        "DATABASE DEVELOPMENT"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is Django?",
+            "options": [
+              {
+                "text": "A Python web framework",
+                "correct": true
+              },
+              {
+                "text": "A JavaScript library",
+                "correct": false
+              },
+              {
+                "text": "An operating system",
+                "correct": false
+              },
+              {
+                "text": "A database engine",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django is a high-level Python web framework for building web applications.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which command-line tool is commonly used to manage Django projects?",
+            "options": [
+              {
+                "text": "`manage.py`",
+                "correct": true
+              },
+              {
+                "text": "webpack",
+                "correct": false
+              },
+              {
+                "text": "npm",
+                "correct": false
+              },
+              {
+                "text": "composer",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django&#x27;s `manage.py` provides commands for tasks such as running the server, migrations, and creating applications.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What is the main purpose of `settings.py`?",
+            "options": [
+              {
+                "text": "Create database records automatically",
+                "correct": false
+              },
+              {
+                "text": "Define database and application configuration",
+                "correct": true
+              },
+              {
+                "text": "Store HTML pages",
+                "correct": false
+              },
+              {
+                "text": "Define JavaScript functions",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`settings.py` contains configuration such as installed apps, database settings, middleware, templates, and security options.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What is the primary purpose of Django URL configuration?",
+            "options": [
+              {
+                "text": "Styling pages",
+                "correct": false
+              },
+              {
+                "text": "Mapping URLs to views",
+                "correct": true
+              },
+              {
+                "text": "Creating database tables",
+                "correct": false
+              },
+              {
+                "text": "Encrypting passwords",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django&#x27;s URL configuration determines which view handles a particular URL.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What is the role of a Django view?",
+            "options": [
+              {
+                "text": "Store CSS styles",
+                "correct": false
+              },
+              {
+                "text": "Create Python virtual environments",
+                "correct": false
+              },
+              {
+                "text": "Manage the operating system",
+                "correct": false
+              },
+              {
+                "text": "Handle a request and return an appropriate response",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Views contain the logic required to process requests and generate responses.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "What is Django middleware?",
+            "options": [
+              {
+                "text": "A frontend framework",
+                "correct": false
+              },
+              {
+                "text": "A Python package manager",
+                "correct": false
+              },
+              {
+                "text": "A database table",
+                "correct": false
+              },
+              {
+                "text": "A layer that can process requests and responses",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Middleware sits between the request and response processing stages and can perform tasks such as authentication, security checks, and logging.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What is Django's ORM?",
+            "options": [
+              {
+                "text": "Object Routing Mechanism",
+                "correct": false
+              },
+              {
+                "text": "Object-Relational Mapping",
+                "correct": true
+              },
+              {
+                "text": "Object Request Manager",
+                "correct": false
+              },
+              {
+                "text": "Online Resource Model",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django&#x27;s ORM allows developers to interact with database data using Python objects and query APIs.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Where are Django database models commonly defined?",
+            "options": [
+              {
+                "text": "`views.py`",
+                "correct": false
+              },
+              {
+                "text": "`models.py`",
+                "correct": true
+              },
+              {
+                "text": "`urls.py`",
+                "correct": false
+              },
+              {
+                "text": "`admin.py`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django models are normally defined in an application&#x27;s `models.py` file.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What is the purpose of a Django migration?",
+            "options": [
+              {
+                "text": "To apply model/schema changes to the database",
+                "correct": true
+              },
+              {
+                "text": "To create CSS files",
+                "correct": false
+              },
+              {
+                "text": "To authenticate users",
+                "correct": false
+              },
+              {
+                "text": "To move a website to another domain",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Migrations allow Django to track and apply database schema changes.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "A `Course` can have many `Student` enrollments. Which relationship would commonly represent this type of association?",
+            "options": [
+              {
+                "text": "One-to-many",
+                "correct": true
+              },
+              {
+                "text": "No relationship",
+                "correct": false
+              },
+              {
+                "text": "One-to-one",
+                "correct": false
+              },
+              {
+                "text": "Many-to-many",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>One course can be associated with many enrollment records, representing a one-to-many relationship.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Django applications, models and migrations",
+        "learningObjective": "Explain django applications, models and migrations; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Create a students app, dashboard view and Student model. Apply the migration in an isolated database and add three records. Show duplicate student-code rejection and a missing-record response.</p><h4>Source questions to address</h4><pre>**Question 5 — Theory**\nWhat is Django? Explain the purpose of a Django project, application, view, URL configuration, and template.\n\n**Question 6 — Hands-on**\nCreate a Django project with a `students` application. Create a URL and view that displays a simple &quot;Student Dashboard&quot; page in the browser.\n\n**Question 7 — Theory**\nWhat is an ORM? Explain how Django&#x27;s ORM allows developers to interact with a database using Python.\n\n**Question 8 — Hands-on**\nCreate a Django `Student` model containing a name, email, student ID, and course. Create and run the required migration, then add several students to the database.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "03. Forms and server-side validation",
+        "objectives": "Explain forms and server-side validation; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 3,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A Django form turns untrusted request data into validated values and usable error messages. Rendering a form and accepting its submission are separate steps.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>For a GET request show an unbound form; for POST bind the request data and call is_valid before reading cleaned_data. Keep invalid forms bound so errors and entered values are preserved. Use CSRF protection for session-authenticated state-changing browser requests. A ModelForm must explicitly restrict editable fields rather than exposing privileged fields unintentionally. Redirect after a successful POST to reduce accidental repeat submissions.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>from django import forms\nclass RegistrationForm(forms.Form):\n    name = forms.CharField(max_length=120)\n    email = forms.EmailField()\n# form = RegistrationForm(request.POST)\n# if form.is_valid(): use form.cleaned_data</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Build a name/email/course registration form. Demonstrate invalid email handling, retained values, CSRF protection and a successful redirect. Explain why a student must not be able to submit an administrator flag.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://docs.python.org/3/tutorial/\">https://docs.python.org/3/tutorial/</a></li><li><a href=\"https://docs.djangoproject.com/en/stable/intro/\">https://docs.djangoproject.com/en/stable/intro/</a></li><li><a href=\"https://www.django-rest-framework.org/tutorial/quickstart/\">https://www.django-rest-framework.org/tutorial/quickstart/</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "FORMS & USER INTERACTION"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is the primary purpose of a Django Form?",
+            "options": [
+              {
+                "text": "Replace the database",
+                "correct": false
+              },
+              {
+                "text": "Compile Python code",
+                "correct": false
+              },
+              {
+                "text": "Handle and validate user input",
+                "correct": true
+              },
+              {
+                "text": "Create operating systems",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django Forms provide tools for rendering, validating, and processing user-submitted data.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What is a `ModelForm`?",
+            "options": [
+              {
+                "text": "A template engine",
+                "correct": false
+              },
+              {
+                "text": "A form automatically generated from a Django model",
+                "correct": true
+              },
+              {
+                "text": "A database server",
+                "correct": false
+              },
+              {
+                "text": "A JavaScript component",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>`ModelForm` simplifies form creation by generating form fields based on a Django model.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Why should data submitted through a form be validated?",
+            "options": [
+              {
+                "text": "To make the browser faster",
+                "correct": false
+              },
+              {
+                "text": "To ensure the submitted data meets expected rules",
+                "correct": true
+              },
+              {
+                "text": "To automatically deploy the application",
+                "correct": false
+              },
+              {
+                "text": "To change the database engine",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Validation helps ensure submitted data is complete, correctly formatted, and acceptable to the application.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "Which HTTP method is normally used when submitting a form that changes server-side data?",
+            "options": [
+              {
+                "text": "POST",
+                "correct": true
+              },
+              {
+                "text": "HEAD",
+                "correct": false
+              },
+              {
+                "text": "OPTIONS",
+                "correct": false
+              },
+              {
+                "text": "GET",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>POST is commonly used for operations that submit or modify data on the server.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "What security mechanism does Django commonly use to protect POST forms against CSRF attacks?",
+            "options": [
+              {
+                "text": "`secure_form`",
+                "correct": false
+              },
+              {
+                "text": "`auth_key`",
+                "correct": false
+              },
+              {
+                "text": "`csrf_token`",
+                "correct": true
+              },
+              {
+                "text": "`password_hash`",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django&#x27;s CSRF protection uses a token to help ensure that POST requests originate from trusted pages.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A registration form requires an email address. The user submits the form without one. What should Django ideally do?",
+            "options": [
+              {
+                "text": "Delete the database",
+                "correct": false
+              },
+              {
+                "text": "Accept the empty value regardless",
+                "correct": false
+              },
+              {
+                "text": "Validate the input and display an appropriate error",
+                "correct": true
+              },
+              {
+                "text": "Shut down the server",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Form validation should identify invalid or missing required data and return useful feedback to the user.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "When should a bound Django form expose values through cleaned_data for processing?",
+            "options": [
+              {
+                "text": "After is_valid succeeds",
+                "correct": true
+              },
+              {
+                "text": "Before receiving a request",
+                "correct": false
+              },
+              {
+                "text": "Only after disabling validation",
+                "correct": false
+              },
+              {
+                "text": "Whenever the template loads",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Successful validation produces cleaned values suitable for the next operation.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "An invalid form POST should normally render which form?",
+            "options": [
+              {
+                "text": "A new blank form with no errors",
+                "correct": false
+              },
+              {
+                "text": "A success-only page",
+                "correct": false
+              },
+              {
+                "text": "A database debug page",
+                "correct": false
+              },
+              {
+                "text": "The bound form with errors and entered values",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>A bound form preserves input and validation feedback.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Why explicitly list editable ModelForm fields?",
+            "options": [
+              {
+                "text": "To publish database credentials",
+                "correct": false
+              },
+              {
+                "text": "To disable CSRF",
+                "correct": false
+              },
+              {
+                "text": "To prevent unintended editing of privileged fields",
+                "correct": true
+              },
+              {
+                "text": "To remove all validation",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>An explicit allowlist avoids exposing fields such as roles unintentionally.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "Why redirect after a successful form POST?",
+            "options": [
+              {
+                "text": "To make every request a POST",
+                "correct": false
+              },
+              {
+                "text": "To reduce accidental repeat submission on refresh",
+                "correct": true
+              },
+              {
+                "text": "To bypass authentication",
+                "correct": false
+              },
+              {
+                "text": "To remove server validation",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>The subsequent page refresh repeats a GET rather than the original POST.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Forms and server-side validation",
+        "learningObjective": "Explain forms and server-side validation; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Build a name/email/course registration form. Demonstrate invalid email handling, retained values, CSRF protection and a successful redirect. Explain why a student must not be able to submit an administrator flag.</p><h4>Source questions to address</h4><pre>**Question 9 — Theory**\nWhat is the purpose of a form in a Django application? Explain why server-side validation is important even when the frontend performs validation.\n\n**Question 10 — Hands-on**\nCreate a Django form that allows a user to register a student with a name, email, and course. Validate the form and display appropriate error messages when invalid data is submitted.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "04. REST APIs and serializers",
+        "objectives": "Explain rest apis and serializers; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 4,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>An API exposes a structured contract for another client, such as React or a mobile application. A serializer controls how data is validated and represented.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Use explicit serializer fields and validate incoming data before saving. Keep list and create behavior predictable with documented status codes. JSON encoding does not perform authorization: views must enforce permissions and scope querysets to allowed records. Use pagination for growing lists. Mark server-owned fields read-only and avoid exposing password hashes or private internal metadata. Test malformed input and missing records alongside successful requests.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>from rest_framework import serializers\nclass StudentSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Student\n        fields = [&#x27;id&#x27;, &#x27;name&#x27;, &#x27;email&#x27;, &#x27;student_code&#x27;]\n        read_only_fields = [&#x27;id&#x27;]</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Create student list and create endpoints with Django REST Framework. Document request and response examples, include invalid input tests and restrict the list to authorized users. Explain which fields are writable and why.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://docs.python.org/3/tutorial/\">https://docs.python.org/3/tutorial/</a></li><li><a href=\"https://docs.djangoproject.com/en/stable/intro/\">https://docs.djangoproject.com/en/stable/intro/</a></li><li><a href=\"https://www.django-rest-framework.org/tutorial/quickstart/\">https://www.django-rest-framework.org/tutorial/quickstart/</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "REST API DEVELOPMENT"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is Django REST Framework commonly used for?",
+            "options": [
+              {
+                "text": "Managing computer hardware",
+                "correct": false
+              },
+              {
+                "text": "Building Web APIs with Django",
+                "correct": true
+              },
+              {
+                "text": "Creating operating systems",
+                "correct": false
+              },
+              {
+                "text": "Editing images",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django REST Framework (DRF) provides tools for building APIs with Django.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What is the purpose of a serializer in Django REST Framework?",
+            "options": [
+              {
+                "text": "Convert complex data such as model instances into representations such as JSON and validate input",
+                "correct": true
+              },
+              {
+                "text": "Start the Django development server",
+                "correct": false
+              },
+              {
+                "text": "Create CSS files",
+                "correct": false
+              },
+              {
+                "text": "Manage Python packages",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Serializers convert data between Python/model objects and representations such as JSON while also supporting validation.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which HTTP method is typically used to create a new resource through an API?",
+            "options": [
+              {
+                "text": "POST",
+                "correct": true
+              },
+              {
+                "text": "DELETE",
+                "correct": false
+              },
+              {
+                "text": "HEAD",
+                "correct": false
+              },
+              {
+                "text": "GET",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>POST is commonly used to submit data that creates a new resource.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "Which HTTP status code generally indicates that a resource was successfully retrieved?",
+            "options": [
+              {
+                "text": "200",
+                "correct": true
+              },
+              {
+                "text": "404",
+                "correct": false
+              },
+              {
+                "text": "201",
+                "correct": false
+              },
+              {
+                "text": "301",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>HTTP 200 OK generally indicates that the request was successfully processed.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "A mobile application needs to retrieve a student's course list from Django. What would normally provide this data?",
+            "options": [
+              {
+                "text": "Database migration file",
+                "correct": false
+              },
+              {
+                "text": "REST API endpoint",
+                "correct": true
+              },
+              {
+                "text": "CSS stylesheet",
+                "correct": false
+              },
+              {
+                "text": "Python virtual environment",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>A REST API endpoint can expose course data to mobile or frontend applications.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "An API receives a request containing invalid student registration data. What should the API generally return?",
+            "options": [
+              {
+                "text": "Successful response with invalid data",
+                "correct": false
+              },
+              {
+                "text": "Appropriate validation errors and an error status code",
+                "correct": true
+              },
+              {
+                "text": "Server credentials",
+                "correct": false
+              },
+              {
+                "text": "Database password",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>APIs should validate incoming data and provide useful error responses rather than accepting invalid information.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Which serializer field should generally be read-only when the server creates it?",
+            "options": [
+              {
+                "text": "Every user-editable name",
+                "correct": false
+              },
+              {
+                "text": "Every email address",
+                "correct": false
+              },
+              {
+                "text": "Every course selection",
+                "correct": false
+              },
+              {
+                "text": "The generated record ID",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>The client should not assign a server-owned generated identifier.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Does serializing a private record to JSON authorize its release?",
+            "options": [
+              {
+                "text": "Yes, if the response is small",
+                "correct": false
+              },
+              {
+                "text": "Only on a mobile client",
+                "correct": false
+              },
+              {
+                "text": "No, permissions and queryset scoping are still required",
+                "correct": true
+              },
+              {
+                "text": "Yes, JSON is automatically private",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Representation and access control solve different problems.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What should a growing student-list API support?",
+            "options": [
+              {
+                "text": "No error responses",
+                "correct": false
+              },
+              {
+                "text": "Bounded pagination",
+                "correct": true
+              },
+              {
+                "text": "An unlimited full database dump",
+                "correct": false
+              },
+              {
+                "text": "Plaintext passwords",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Pagination limits response size and work per request.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What should an API do with invalid create data?",
+            "options": [
+              {
+                "text": "Return validation errors without saving the invalid record",
+                "correct": true
+              },
+              {
+                "text": "Always save first",
+                "correct": false
+              },
+              {
+                "text": "Return another student’s record",
+                "correct": false
+              },
+              {
+                "text": "Expose a database password",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Validation must precede persistence of the requested changes.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: REST APIs and serializers",
+        "learningObjective": "Explain rest apis and serializers; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Create student list and create endpoints with Django REST Framework. Document request and response examples, include invalid input tests and restrict the list to authorized users. Explain which fields are writable and why.</p><h4>Source questions to address</h4><pre>**Question 11 — Theory**\nWhat is a REST API? Explain why a Django application might use an API when communicating with a React or mobile application.\n\n**Question 12 — Hands-on**\nUsing Django REST Framework, create an API endpoint that returns a list of students as JSON. Add another endpoint that allows a new student to be created.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "05. Authentication and reusable templates",
+        "objectives": "Explain authentication and reusable templates; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 5,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A dashboard combines identity, permissions and presentation. Reusable templates reduce duplicated markup, while authorization controls which records reach the template.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Use Django’s authentication facilities and protect the dashboard with a login requirement. Check permissions separately for administrator actions. Scope student queries to the authenticated account rather than accepting ownership from a query parameter. Put shared navigation in a base template and pass view data through context. Templates escape ordinary values by default; avoid marking untrusted content safe. Keep static assets distinct from private uploaded documents.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>from django.contrib.auth.decorators import login_required\nfrom django.shortcuts import render\n@login_required\ndef dashboard(request):\n    return render(request, &#x27;students/dashboard.html&#x27;, {&#x27;student_name&#x27;: request.user.get_username()})</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Build a dashboard using template inheritance and a shared navigation bar. Demonstrate login protection and denied administrator access for a student. Explain the difference between hiding a link and securing its endpoint.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://docs.python.org/3/tutorial/\">https://docs.python.org/3/tutorial/</a></li><li><a href=\"https://docs.djangoproject.com/en/stable/intro/\">https://docs.djangoproject.com/en/stable/intro/</a></li><li><a href=\"https://www.django-rest-framework.org/tutorial/quickstart/\">https://www.django-rest-framework.org/tutorial/quickstart/</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "AUTHENTICATION & AUTHORIZATION",
+        "FRONTEND DEVELOPMENT"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is authentication?",
+            "options": [
+              {
+                "text": "Determining what a user is allowed to do",
+                "correct": false
+              },
+              {
+                "text": "Verifying a user's identity",
+                "correct": true
+              },
+              {
+                "text": "Creating database indexes",
+                "correct": false
+              },
+              {
+                "text": "Formatting HTML",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Authentication verifies that a user is who they claim to be.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "What is authorization?",
+            "options": [
+              {
+                "text": "Determining what an authenticated user is permitted to access",
+                "correct": true
+              },
+              {
+                "text": "Creating a Django project",
+                "correct": false
+              },
+              {
+                "text": "Sending an HTTP request",
+                "correct": false
+              },
+              {
+                "text": "Verifying a user's password",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Authorization determines what actions or resources a user is allowed to access.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "Which Django component provides built-in functionality for managing users and authentication?",
+            "options": [
+              {
+                "text": "Django static files system",
+                "correct": false
+              },
+              {
+                "text": "Django migration system",
+                "correct": false
+              },
+              {
+                "text": "Django authentication system",
+                "correct": true
+              },
+              {
+                "text": "Django template engine",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django includes a built-in authentication system for users, passwords, groups, permissions, login, and logout.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "Why should user passwords never be stored as plain text?",
+            "options": [
+              {
+                "text": "SQL databases do not support passwords",
+                "correct": false
+              },
+              {
+                "text": "Plain-text passwords can be exposed directly if the database is compromised",
+                "correct": true
+              },
+              {
+                "text": "Django cannot read plain text",
+                "correct": false
+              },
+              {
+                "text": "Browsers cannot submit passwords",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Passwords should be securely hashed so that a database breach does not directly expose users&#x27; passwords.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "A student is logged in but attempts to access an administrator-only page. What should happen?",
+            "options": [
+              {
+                "text": "The student should automatically become an administrator",
+                "correct": false
+              },
+              {
+                "text": "Access should be denied",
+                "correct": true
+              },
+              {
+                "text": "The database should be deleted",
+                "correct": false
+              },
+              {
+                "text": "The student should receive the admin password",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Authentication alone does not grant permission to perform every action. Authorization must be enforced.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "What is a good way to implement different access levels such as Student, Instructor, and Admin?",
+            "options": [
+              {
+                "text": "Use roles/groups and permissions",
+                "correct": true
+              },
+              {
+                "text": "Store roles in CSS",
+                "correct": false
+              },
+              {
+                "text": "Hide admin links only with JavaScript",
+                "correct": false
+              },
+              {
+                "text": "Hardcode passwords in templates",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Roles, groups, and permissions provide a structured way to control access to application functionality.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "Which Django feature is primarily used to generate dynamic HTML pages?",
+            "options": [
+              {
+                "text": "Middleware",
+                "correct": false
+              },
+              {
+                "text": "Models",
+                "correct": false
+              },
+              {
+                "text": "Templates",
+                "correct": true
+              },
+              {
+                "text": "Migrations",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Django templates allow HTML pages to include dynamic data and logic provided by views.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "What is template inheritance used for?",
+            "options": [
+              {
+                "text": "Installing Python packages",
+                "correct": false
+              },
+              {
+                "text": "Reusing common HTML layouts across multiple pages",
+                "correct": true
+              },
+              {
+                "text": "Creating database tables",
+                "correct": false
+              },
+              {
+                "text": "Encrypting passwords",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Template inheritance allows pages to share common structures such as headers, navigation, and footers.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "What does the Django template expression `{{ student.name }}` generally do?",
+            "options": [
+              {
+                "text": "Deletes a student",
+                "correct": false
+              },
+              {
+                "text": "Displays the value of `student.name`",
+                "correct": true
+              },
+              {
+                "text": "Creates a database table",
+                "correct": false
+              },
+              {
+                "text": "Defines a URL",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Double curly braces are used to output values from the template context.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What is Django's static files system used for?",
+            "options": [
+              {
+                "text": "Storing database passwords",
+                "correct": false
+              },
+              {
+                "text": "Running database migrations",
+                "correct": false
+              },
+              {
+                "text": "Creating user accounts",
+                "correct": false
+              },
+              {
+                "text": "Managing files such as CSS, JavaScript, and frontend images",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Static files include assets such as CSS, JavaScript, fonts, and images used by the frontend.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Authentication and reusable templates",
+        "learningObjective": "Explain authentication and reusable templates; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Build a dashboard using template inheritance and a shared navigation bar. Demonstrate login protection and denied administrator access for a student. Explain the difference between hiding a link and securing its endpoint.</p><h4>Source questions to address</h4><pre>**Question 13 — Theory**\nExplain the difference between authentication and authorization using an LMS as an example.\n\n**Question 14 — Practical**\nCreate a simple Django login system. Protect a student dashboard so that only authenticated users can access it. Explain how you would restrict an administrator page to authorized users.\n\n**Question 15 — Theory**\nExplain the purpose of Django templates, template inheritance, static files, and context data.\n\n**Question 16 — Hands-on**\nCreate a Django-based student dashboard with a reusable base template, navigation bar, student information, and a list of enrolled courses.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    },
+    {
+      "class": {
+        "title": "06. Security tests and production operations",
+        "objectives": "Explain security tests and production operations; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "position": 6,
+        "topicId": null,
+        "cohortId": null,
+        "scheduledAt": null,
+        "meetingLink": null,
+        "recordingUrl": null,
+        "sections": [
+          {
+            "title": "Introduction and context",
+            "body": "<p>A production Django application needs explicit configuration and repeatable checks. A development server and a successful homepage request are insufficient evidence of readiness.</p>"
+          },
+          {
+            "title": "Lesson plan · 180 minutes",
+            "body": "<p>15 min: recall and goals; 45 min: guided explanation; 30 min: code demonstration; 10 min: break; 45 min: practical exercise; 20 min: review and quiz; 15 min: assignment briefing.</p>"
+          },
+          {
+            "title": "Concepts and explanations",
+            "body": "<p>Test authenticated and anonymous responses, invalid form submissions and cross-account access. Use a disposable database for tests. Disable DEBUG in production, configure allowed hosts, protect secrets and use an appropriate application server behind HTTPS. Plan database migrations and backups, collect static assets and restrict access to private uploads. Examine errors through controlled logs rather than exposing debugging pages to visitors. Verify the deployment configuration before switching traffic.</p>"
+          },
+          {
+            "title": "Worked demonstration",
+            "body": "<p>Read the example, predict its output or behavior, then run it in the appropriate project. Framework snippets assume the lesson project and the shown imports or surrounding setup. Inspect the result before making the extension below.</p><pre><code>from django.test import TestCase\nclass DashboardAccessTests(TestCase):\n    def test_anonymous_user_is_redirected(self):\n        response = self.client.get(&#x27;/dashboard/&#x27;)\n        self.assertEqual(response.status_code, 302)</code></pre>"
+          },
+          {
+            "title": "Guided practical exercise",
+            "body": "<p>Write dashboard/API access tests and a deployment runbook covering secrets, DEBUG, allowed hosts, database migrations, static files, application server and rollback. Demonstrate the app in a local production-style preview.</p><p>Work in a disposable project using synthetic student data. Record expected behavior before running it. Compare the result with your prediction and explain one mistake you corrected.</p>"
+          },
+          {
+            "title": "Key takeaways and self-check",
+            "body": "<p>Explain the input, transformation and output of your solution. Identify one boundary where data can fail or access must be checked. Describe the evidence that your solution handles that boundary. Return to the concepts above if you cannot explain your code without reading it aloud.</p>"
+          },
+          {
+            "title": "Recommended resources",
+            "body": "<ul><li><a href=\"https://docs.python.org/3/tutorial/\">https://docs.python.org/3/tutorial/</a></li><li><a href=\"https://docs.djangoproject.com/en/stable/intro/\">https://docs.djangoproject.com/en/stable/intro/</a></li><li><a href=\"https://www.django-rest-framework.org/tutorial/quickstart/\">https://www.django-rest-framework.org/tutorial/quickstart/</a></li></ul>"
+          },
+          {
+            "title": "Live class and submission schedule",
+            "body": "<p>Schedule pending instructor setup. The administrator will assign the cohort, date, meeting link and optional recording in the class editor. Suggested assignment window: seven days after the live class; set an explicit due date before opening submissions.</p>"
+          }
+        ]
+      },
+      "sourceModules": [
+        "TESTING & SECURITY",
+        "DEPLOYMENT"
+      ],
+      "quiz": {
+        "settings": {
+          "passingPercentage": 70,
+          "maxAttempts": 3
+        },
+        "questions": [
+          {
+            "text": "What is the primary purpose of automated testing?",
+            "options": [
+              {
+                "text": "To replace the production server",
+                "correct": false
+              },
+              {
+                "text": "To create CSS automatically",
+                "correct": false
+              },
+              {
+                "text": "To remove the database",
+                "correct": false
+              },
+              {
+                "text": "To identify defects and verify expected behavior",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Automated tests help verify that application behavior matches expectations and can detect regressions.</p>",
+            "points": 1,
+            "position": 1
+          },
+          {
+            "text": "Which Django class is commonly used as a base for tests that require Django's testing features and database support?",
+            "options": [
+              {
+                "text": "`UnitClass`",
+                "correct": false
+              },
+              {
+                "text": "`DatabaseTest`",
+                "correct": false
+              },
+              {
+                "text": "`DjangoTest`",
+                "correct": false
+              },
+              {
+                "text": "`TestCase`",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Django&#x27;s `TestCase` provides a convenient foundation for testing Django applications, including database interactions.</p>",
+            "points": 1,
+            "position": 2
+          },
+          {
+            "text": "What type of attack attempts to inject malicious SQL into an application's database queries?",
+            "options": [
+              {
+                "text": "DDoS",
+                "correct": false
+              },
+              {
+                "text": "CSRF",
+                "correct": false
+              },
+              {
+                "text": "SQL injection",
+                "correct": true
+              },
+              {
+                "text": "XSS",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>SQL injection occurs when attackers manipulate database queries through unsafe handling of input.</p>",
+            "points": 1,
+            "position": 3
+          },
+          {
+            "text": "What does XSS stand for?",
+            "options": [
+              {
+                "text": "XML Secure System",
+                "correct": false
+              },
+              {
+                "text": "Cross-Site Scripting",
+                "correct": true
+              },
+              {
+                "text": "Extended Server Security",
+                "correct": false
+              },
+              {
+                "text": "Cross-System Storage",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Cross-Site Scripting involves injecting malicious scripts into content that is delivered to users.</p>",
+            "points": 1,
+            "position": 4
+          },
+          {
+            "text": "Why should `DEBUG` generally be set to `False` in a production Django deployment?",
+            "options": [
+              {
+                "text": "To prevent users from logging in",
+                "correct": false
+              },
+              {
+                "text": "To avoid exposing sensitive debugging information",
+                "correct": true
+              },
+              {
+                "text": "To disable the database",
+                "correct": false
+              },
+              {
+                "text": "To expose detailed error information",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Production applications should not expose detailed debugging information because it can reveal sensitive implementation details.</p>",
+            "points": 1,
+            "position": 5
+          },
+          {
+            "text": "A Django application is deployed publicly, but its `SECRET_KEY` is stored directly in source code on GitHub. What is the best response?",
+            "options": [
+              {
+                "text": "Make the repository larger",
+                "correct": false
+              },
+              {
+                "text": "Put the secret in a CSS file",
+                "correct": false
+              },
+              {
+                "text": "Leave it there because GitHub is secure",
+                "correct": false
+              },
+              {
+                "text": "Rotate the exposed secret and move secrets to secure environment/configuration storage",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Sensitive secrets should not be committed to source control. An exposed secret should be rotated and replaced with securely managed configuration.</p>",
+            "points": 1,
+            "position": 6
+          },
+          {
+            "text": "What does deployment mean in web development?",
+            "options": [
+              {
+                "text": "Designing an HTML button",
+                "correct": false
+              },
+              {
+                "text": "Making an application available in a target environment for users",
+                "correct": true
+              },
+              {
+                "text": "Writing Python syntax",
+                "correct": false
+              },
+              {
+                "text": "Creating a database model",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Deployment involves making the application available on infrastructure where users or other systems can access it.</p>",
+            "points": 1,
+            "position": 7
+          },
+          {
+            "text": "Which server is commonly used to serve a Django application through the WSGI interface in production?",
+            "options": [
+              {
+                "text": "Gunicorn",
+                "correct": true
+              },
+              {
+                "text": "npm",
+                "correct": false
+              },
+              {
+                "text": "MySQL",
+                "correct": false
+              },
+              {
+                "text": "Redis",
+                "correct": false
+              }
+            ],
+            "explanation": "<p>Gunicorn is a commonly used Python WSGI application server for deploying Django applications.</p>",
+            "points": 1,
+            "position": 8
+          },
+          {
+            "text": "Why are environment variables commonly used in production Django applications?",
+            "options": [
+              {
+                "text": "To replace HTML",
+                "correct": false
+              },
+              {
+                "text": "To compile Python",
+                "correct": false
+              },
+              {
+                "text": "To create CSS styles",
+                "correct": false
+              },
+              {
+                "text": "To store configuration and sensitive values outside source code",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>Environment variables can hold values such as database credentials, secret keys, API keys, and environment-specific configuration.</p>",
+            "points": 1,
+            "position": 9
+          },
+          {
+            "text": "What command is commonly used to apply existing Django migrations to the database?",
+            "options": [
+              {
+                "text": "`python manage.py deploy`",
+                "correct": false
+              },
+              {
+                "text": "`python manage.py database`",
+                "correct": false
+              },
+              {
+                "text": "`python manage.py makemigrations`",
+                "correct": false
+              },
+              {
+                "text": "`python manage.py migrate`",
+                "correct": true
+              }
+            ],
+            "explanation": "<p>`migrate` applies migration files to the configured database. `makemigrations` creates migration files from model changes.</p>",
+            "points": 1,
+            "position": 10
+          }
+        ]
+      },
+      "assignment": {
+        "title": "Apply: Security tests and production operations",
+        "learningObjective": "Explain security tests and production operations; implement the demonstrated workflow; test a normal and a failure case; justify design choices using evidence.",
+        "instructions": "<p>Complete the practical exercise and write a 400–700 word explanation of your approach. Submit original work with setup instructions and evidence of a successful and a failure case. Cite any external code or reference used. Select a code archive or written report attachment if needed.</p>",
+        "tasks": "<p>Write dashboard/API access tests and a deployment runbook covering secrets, DEBUG, allowed hosts, database migrations, static files, application server and rollback. Demonstrate the app in a local production-style preview.</p><h4>Source questions to address</h4><pre>**Question 17 — Theory**\nIdentify and explain three common security risks in web applications. Describe one measure Django provides to help protect against each risk.\n\n**Question 18 — Hands-on**\nWrite a simple Django test that checks whether a student dashboard or API endpoint responds correctly. Include at least one test for an unsuccessful or unauthorized request.\n\n**Question 19 — Theory**\nExplain the difference between Django&#x27;s development server and a production server such as Gunicorn. Why should `DEBUG` normally be disabled in production?\n\n**Question 20 — Practical/Research**\nDeploy a simple Django application to a hosting platform. Research and document how to configure environment variables, the production database, static files, migrations, and the application server.</pre>",
+        "submissionRequirements": "Written explanation, source code or repository link, reproducible run instructions, test evidence, and one limitation. Use synthetic data; do not include credentials. Suggested due date: 7 days after class; administrator sets the actual deadline.",
+        "maxScore": 100,
+        "dueAt": null,
+        "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
+        "allowedAttachmentTypes": ".pdf,.txt,.zip"
+      }
+    }
+  ]
+}
