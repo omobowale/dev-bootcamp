@@ -41,7 +41,7 @@ export function AdminLoginPage() {
         }
     };
     return (<div className="admin-login">
-      <aside className="login-story"><Brand /><div><span className="eyebrow">THE WORK BEHIND THE POSSIBILITY</span><h2>Build the place<br />where great<br /><span>learning happens.</span></h2><p>Your courses. Your cohorts. Your community.<br />One thoughtful workspace to bring it all together.</p><div className="login-story-features"><span><Icon name="book" size={18} /> Shape the curriculum</span><span><Icon name="users" size={18} /> Connect with learners</span><span><Icon name="layers" size={18} /> Keep everything in focus</span></div></div><small>DevTraining · Admin workspace</small></aside>
+      <aside className="login-story"><Brand /><div><span className="eyebrow">THE WORK BEHIND THE POSSIBILITY</span><h2>Build the place<br />where great<br /><span>learning happens.</span></h2><p>Your courses. Your cohorts. Your community.<br />One thoughtful workspace to bring it all together.</p><div className="login-story-features"><span><Icon name="book" size={18} /> Shape the curriculum</span><span><Icon name="users" size={18} /> Connect with learners</span><span><Icon name="layers" size={18} /> Keep everything in focus</span></div></div><small>Bukiva Learn · Admin workspace</small></aside>
       <div className="login-form-area"><div className="login-theme"><ThemeToggle /></div>
       <form className="card admin-login__card" onSubmit={handleSubmit}>
         <span className="login-lock"><Icon name="shield" size={25} /></span><span className="eyebrow">ADMIN WORKSPACE</span><h1 className="admin-login__title">Good to see you again.</h1>
@@ -64,6 +64,6 @@ export function AdminLoginPage() {
         <button type="submit" className="btn btn-primary admin-login__submit" disabled={submitting}>
           {submitting ? "Signing in..." : "Sign in"}
         </button>
-      <Link to="/" className="admin-login__back">Back to DevTraining</Link></form></div>
+      <Link to="/" className="admin-login__back">Back to Bukiva Learn</Link></form></div>
     </div>);
 }

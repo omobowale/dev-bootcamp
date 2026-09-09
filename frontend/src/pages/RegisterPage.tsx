@@ -276,7 +276,7 @@ export function RegisterPage() {
           <label className="register-form__consent">
             <Checkbox id="consentGiven" aria-invalid={!!fieldErrors.consentGiven} aria-describedby={fieldErrors.consentGiven ? "consentGiven-error" : undefined} checked={consentGiven} onChange={(e) => setConsentGiven(e.target.checked)} />
             <span>
-              I consent to be contacted by DevTraining via email and WhatsApp about this registration, and I've read the{" "}
+              I consent to be contacted by Bukiva Learn via email and WhatsApp about this registration, and I've read the{" "}
               <Link to="/terms" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</Link>.
             </span>
           </label>

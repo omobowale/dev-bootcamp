@@ -1,4 +1,4 @@
-# DevTraining — Software Development Training Platform
+# Bukiva Learn — Software Development Training Platform
 
 A course catalog, registration, and admin management platform for a software development training business — built with a React + Vite + TypeScript frontend and a Java Spring Boot + PostgreSQL backend.
 

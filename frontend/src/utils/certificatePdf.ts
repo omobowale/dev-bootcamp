@@ -33,14 +33,14 @@ function seal(doc: Doc, x: number, y: number) {
 export async function createCertificatePdf(certificate: Certificate, origin = window.location.origin) {
   const JsPdf = await loadJsPdf();
   const doc = new JsPdf({ unit: "pt", format: "a4", orientation: "landscape", compress: true });
-  doc.setProperties({ title: `Certificate of Completion - ${certificate.studentName}`, subject: certificate.courseTitle, author: "DevTraining", creator: "DevTraining Learning Platform" });
+  doc.setProperties({ title: `Certificate of Completion - ${certificate.studentName}`, subject: certificate.courseTitle, author: "Bukiva Learn", creator: "Bukiva Learn" });
   doc.setFillColor("#FAF9F5");doc.rect(0,0,W,H,"F");
   doc.setFillColor(GREEN);doc.rect(20,20,168,H-40,"F");
   doc.setDrawColor("#28614E");doc.setLineWidth(.5);
   for(let i=0;i<9;i++) { doc.line(20,220+i*25,188,85+i*25); }
   doc.setFillColor(GREEN);doc.rect(35,38,138,99,"F");
   doc.setTextColor("#FFFFFF");doc.setFont("courier","bold");doc.setFontSize(29);doc.text("</>",53,77);
-  doc.setFont("helvetica","bold");doc.setFontSize(17);doc.text("DevTraining.",40,110);
+  doc.setFont("helvetica","bold");doc.setFontSize(17);doc.text("Bukiva Learn.",40,110);
   label(doc,"LEARN. BUILD. GROW.",40,130,"#D5E5DA");
   seal(doc,104,376);
   label(doc,"COMPLETION",62,435,"#E6D5B3");label(doc,"AWARD",83,451,"#E6D5B3");
@@ -52,7 +52,7 @@ export async function createCertificatePdf(certificate: Certificate, origin = wi
   doc.setDrawColor(GOLD);doc.setLineWidth(2);doc.line(226,43,271,43);doc.line(226,43,226,68);
   doc.line(W-39,H-43,W-84,H-43);doc.line(W-39,H-43,W-39,H-68);
   const x=236, width=544;
-  label(doc,"DEVTRAINING LEARNING PLATFORM",x,77);
+  label(doc,"BUKIVA LEARN",x,77);
   doc.setFont("times","normal");doc.setFontSize(46);doc.setTextColor(INK);doc.text("Certificate",x,132);
   label(doc,"OF COMPLETION",x+2,155,GREEN);
   doc.setDrawColor(GOLD);doc.setLineWidth(.8);doc.line(x,177,x+width,177);
@@ -68,7 +68,7 @@ export async function createCertificatePdf(certificate: Certificate, origin = wi
   doc.setFont("helvetica","bold");doc.setTextColor(INK);
   fitted(doc,formatDate(certificate.completionDate) || certificate.completionDate,x,490,246,12,1);
   fitted(doc,certificate.studentCode,x+272,490,272,12,1);
-  label(doc,"ISSUED BY DEVTRAINING",x,520);
+  label(doc,"ISSUED BY BUKIVA LEARN",x,520);
   const verifyUrl = new URL(`/verify/${encodeURIComponent(certificate.verificationId)}`,origin).href;
   doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(MUTED);
   doc.text("Certificate ID",x,543);
@@ -81,5 +81,5 @@ export async function createCertificatePdf(certificate: Certificate, origin = wi
 
 export async function downloadCertificatePdf(certificate: Certificate) {
   const doc = await createCertificatePdf(certificate);
-  doc.save(`DevTraining-Certificate-${certificate.verificationId.replace(/[^a-zA-Z0-9_-]/g,"_")}.pdf`);
+  doc.save(`BukivaLearn-Certificate-${certificate.verificationId.replace(/[^a-zA-Z0-9_-]/g,"_")}.pdf`);
 }

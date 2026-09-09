@@ -29,7 +29,7 @@ export function CourseDetailPage() {
       "@type": "Course",
       name: course.title,
       description: course.shortDescription ?? course.title,
-      provider: { "@type": "Organization", name: "DevTraining" },
+      provider: { "@type": "Organization", name: "Bukiva Learn" },
       ...(course.price != null
         ? {
             offers: {
@@ -44,7 +44,7 @@ export function CourseDetailPage() {
   }, [course]);
 
   useDocumentMeta({
-    title: course ? `${course.title} — DevTraining` : "Loading course… — DevTraining",
+    title: course ? `${course.title} — Bukiva Learn` : "Loading course… — Bukiva Learn",
     description: course?.shortDescription ?? undefined,
     jsonLd,
   });
@@ -161,7 +161,7 @@ export function CourseDetailPage() {
             <h2>Projects you'll build</h2>
             <ul className="course-detail__project-list">
               {projects.map((project) => (
-                <li key={project}>{project}</li>
+                <li key={project}><Icon name="arrow" size={17} className="course-detail__project-icon" /><span>{project}</span></li>
               ))}
             </ul>
           </section>

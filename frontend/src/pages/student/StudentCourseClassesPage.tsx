@@ -23,7 +23,7 @@ export function StudentCourseClassesPage() {
     <div className="student-shell">
       <header className="student-topbar">
         <div className="container student-topbar__inner">
-          <a href="/student" className="student-topbar__brand">DevTraining<span>Learning space</span></a>
+          <a href="/student" className="student-topbar__brand">Bukiva Learn<span>Learning space</span></a>
           <div className="student-topbar__profile"><ThemeToggle />
             <span className="student-avatar">{(me?.fullName ?? student?.name ?? "S").charAt(0).toUpperCase()}</span>
             <div>

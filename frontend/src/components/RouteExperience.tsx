@@ -6,7 +6,7 @@ export function RouteExperience() {
     let focused = false;
     const update = () => {
       const heading = document.querySelector('h1');
-      document.title = `${heading?.textContent?.trim() || 'Explore'} — DevTraining`;
+      document.title = `${heading?.textContent?.trim() || 'Explore'} — Bukiva Learn`;
       if (heading && !focused) { heading.setAttribute('tabindex', '-1'); heading.classList.add('route-heading'); heading.focus({ preventScroll: true }); focused = true; }
     };
     update();

@@ -246,9 +246,15 @@ em {
   width: 37px;
   height: 37px;
   border-radius: 11px;
-  color: #fff;
-  background: linear-gradient(145deg, #36b38b, #08745c);
-  box-shadow: inset 0 1px 1px #ffffff66, 0 4px 10px #087f6825;
+  background: #ffffff;
+  border: 1px solid #e0e8e5;
+  box-shadow: 0 4px 10px #087f6825;
+  flex-shrink: 0;
+}
+.brand-symbol img {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 .brand-light {
   font-weight: 550;

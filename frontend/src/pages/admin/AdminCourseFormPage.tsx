@@ -276,7 +276,7 @@ export function AdminCourseFormPage() {
 
             <div className="form-field form-field--full">
               <div className="course-form-online-note">
-                <Icon name="globe" size={15} /> All DevTraining courses are delivered 100% online.
+                <Icon name="globe" size={15} /> All Bukiva Learn courses are delivered 100% online.
               </div>
             </div>
 

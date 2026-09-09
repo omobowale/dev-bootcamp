@@ -70,7 +70,7 @@ export function StudentLoginPage() {
             </span>
           </div>
         </div>
-        <small>DevTraining · Student portal</small>
+        <small>Bukiva Learn · Student portal</small>
       </aside>
       <div className="student-login-form-area">
         <div className="student-login-theme">
@@ -137,7 +137,7 @@ export function StudentLoginPage() {
             {submitting ? "Signing in..." : "Sign in"}
           </button>
           <Link to="/" className="student-login__back">
-            Back to DevTraining
+            Back to Bukiva Learn
           </Link>
         </form>
       </div>

@@ -34,7 +34,7 @@ export function VerifyCertificatePage() {
           <h1>
             Verify a <em>certificate.</em>
           </h1>
-          <p>Enter a verification ID to confirm a DevTraining certificate is genuine.</p>
+          <p>Enter a verification ID to confirm a Bukiva Learn certificate is genuine.</p>
         </div>
       </section>
 

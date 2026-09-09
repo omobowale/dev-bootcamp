@@ -66,7 +66,7 @@ export function StudentInvitePage() {
             You'll use it to sign in from now on.
           </p>
         </div>
-        <small>DevTraining · Student portal</small>
+        <small>Bukiva Learn · Student portal</small>
       </aside>
       <div className="student-login-form-area">
         <div className="student-login-theme">
@@ -77,7 +77,7 @@ export function StudentInvitePage() {
             <Icon name="shield" size={25} />
           </span>
           <span className="eyebrow">SET YOUR PASSWORD</span>
-          <h1 className="student-login__title">Welcome to DevTraining.</h1>
+          <h1 className="student-login__title">Welcome to Bukiva Learn.</h1>
           <p className="text-muted student-login__subtitle">Choose a password to activate your account.</p>
 
           {error && (
@@ -127,7 +127,7 @@ export function StudentInvitePage() {
             {submitting ? "Setting password…" : "Set password & sign in"}
           </button>
           <Link to="/" className="student-login__back">
-            Back to DevTraining
+            Back to Bukiva Learn
           </Link>
         </form>
       </div>

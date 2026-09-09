@@ -18,7 +18,7 @@ const loadJsPdf = async () => {
   return jsPDF;
 };
 
-/** Draws the DevTraining brand mark (the same rounded "</>" glyph used on the live site) directly with vector primitives, so the PDF never depends on a separate logo image file. */
+/** Draws the Bukiva Learn brand mark (the same rounded "</>" glyph used on the live site) directly with vector primitives, so the PDF never depends on a separate logo image file. */
 function drawBrandMark(doc: InstanceType<Awaited<ReturnType<typeof loadJsPdf>>>, x: number, y: number, size: number) {
   doc.setFillColor(BRAND_PRIMARY);
   doc.roundedRect(x, y, size, size, size * 0.28, size * 0.28, "F");
@@ -35,7 +35,7 @@ function addWatermark(doc: InstanceType<Awaited<ReturnType<typeof loadJsPdf>>>) 
   doc.setTextColor(BRAND_PRIMARY);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(92);
-  doc.text("DEVTRAINING", PAGE_WIDTH / 2, PAGE_HEIGHT / 2, { align: "center", angle: 35 });
+  doc.text("BUKIVA LEARN", PAGE_WIDTH / 2, PAGE_HEIGHT / 2, { align: "center", angle: 35 });
   doc.restoreGraphicsState();
 }
 
@@ -46,7 +46,7 @@ function addLetterhead(doc: InstanceType<Awaited<ReturnType<typeof loadJsPdf>>>)
   doc.setTextColor("#ffffff");
   doc.setFont("helvetica", "bold");
   doc.setFontSize(15);
-  doc.text("DevTraining.", MARGIN + 44, 33);
+  doc.text("Bukiva Learn.", MARGIN + 44, 33);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
   doc.setTextColor("#c9dcd6");
@@ -58,7 +58,7 @@ function addFooter(doc: InstanceType<Awaited<ReturnType<typeof loadJsPdf>>>) {
   doc.setFontSize(8);
   doc.setTextColor(BRAND_MUTED);
   doc.text(`Generated ${new Date().toLocaleString()}`, MARGIN, PAGE_HEIGHT - 28);
-  doc.text("This confirms your registration of interest, not payment. devtraining.example", PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 28, { align: "right" });
+  doc.text("This confirms your registration of interest, not payment. learn.bukiva.com", PAGE_WIDTH - MARGIN, PAGE_HEIGHT - 28, { align: "right" });
 }
 
 function row(
@@ -140,5 +140,5 @@ export async function downloadRegistrationConfirmationPdf(registration: Registra
   doc.text(wrapped, MARGIN, y);
 
   addFooter(doc);
-  doc.save(`DevTraining-${registration.registrationNumber}.pdf`);
+  doc.save(`BukivaLearn-${registration.registrationNumber}.pdf`);
 }
