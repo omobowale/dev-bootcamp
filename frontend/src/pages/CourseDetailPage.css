@@ -49,6 +49,10 @@
   line-height: 1.9;
   white-space: pre-line;
 }
+/* Keep notices and error states in the same vertical rhythm as lesson sections. */
+.course-detail-content > * + * {
+  margin-top: 34px;
+}
 .course-detail-content section + section {
   border-top: 1px solid var(--color-border);
   padding-top: 34px;
@@ -78,10 +82,16 @@
   border: 1px solid var(--color-border);
   border-radius: 10px;
 }
-.course-detail__project-list li::before {
-  content: "↗";
+.course-detail__project-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.course-detail__project-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
   color: var(--color-primary);
-  margin-right: 12px;
+  transform: rotate(-45deg);
 }
 .course-detail__included-card {
   padding: 6px 30px;

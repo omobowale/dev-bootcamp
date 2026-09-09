@@ -8,6 +8,7 @@ import { Icon, type IconName } from "../components/Icon";
 import "./AdminLayout.css";
 const links: { to: string; label: string; icon: IconName; end?: boolean }[] = [
   { to: ROUTES.admin, label: "Overview", icon: "grid", end: true },
+  { to: "/admin/analytics", label: "Learning analytics", icon: "grid" },
   { to: ROUTES.adminCourses, label: "Courses", icon: "book" },
   { to: ROUTES.adminCohorts, label: "Cohorts", icon: "calendar" },
   { to: ROUTES.adminRegistrations, label: "Registrations", icon: "users" },

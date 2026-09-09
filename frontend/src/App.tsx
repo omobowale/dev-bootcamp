@@ -1,5 +1,7 @@
 import { lazy, Suspense } from "react";
 import { LoadingState } from "./components/LoadingState";
+const AdminAnalyticsPage = lazy(() => import("./pages/admin/AdminLearningInsights").then(m=>({default:m.AdminAnalyticsPage})));
+const AdminLearningPreviewPage = lazy(() => import("./pages/admin/AdminLearningInsights").then(m=>({default:m.AdminLearningPreviewPage})));
 const StudentWorkspacePage = lazy(() => import("./pages/student/StudentWorkspacePage").then(module => ({default:module.StudentWorkspacePage})));
 const StudentQuizResultPage = lazy(() => import("./pages/student/StudentQuizResultPage").then(module => ({ default: module.StudentQuizResultPage })));
 const AdminGradingPage = lazy(() => import("./pages/admin/AdminGradingPage").then(module => ({ default: module.AdminGradingPage })));
@@ -111,6 +113,8 @@ const router = createBrowserRouter(createRoutesFromElements(<Route element={<><R
               }
             >
               <Route path="/admin" element={<AdminDashboardPage />} />
+<Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
+<Route path="/admin/courses/:id/preview" element={<AdminLearningPreviewPage />} />
               <Route path="/admin/courses" element={<AdminCoursesPage />} />
               <Route path="/admin/courses/new" element={<AdminCourseFormPage />} />
               <Route path="/admin/courses/:id/edit" element={<AdminCourseFormPage />} />

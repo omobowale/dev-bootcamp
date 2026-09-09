@@ -22,6 +22,8 @@ def validate():
             assert lesson['class']['cohortId'] is None and lesson['class']['meetingLink'] is None
             assert len(lesson['quiz']['questions'])==10
             assert lesson['assignment']['rubric'] and lesson['assignment']['maxScore']==100
+            assert sum(c['maxPoints'] for c in lesson['scoringCriteria'])==100
+            assert len({c['id'] for c in lesson['scoringCriteria']})==len(lesson['scoringCriteria'])
             for q in lesson['quiz']['questions']:
                 stems.append(q['text'])
                 assert len(q['options'])==4 and sum(o['correct'] for o in q['options'])==1
@@ -93,6 +95,7 @@ def main():
                 step(key+f'question-{number}','POST',f'/api/admin/quizzes/{quiz}/questions',question)
             assignment=step(key+'assignment','POST',f'/api/admin/class-sessions/{session}/assignment',{})['id']
             step(key+'rubric','PUT',f'/api/admin/assignments/{assignment}',lesson['assignment'])
+            step(key+'scoring-criteria','PUT',f'/api/admin/assignments/{assignment}/rubric',{'version':0,'criteria':lesson['scoringCriteria']})
         print('Imported draft:',package['course']['title'])
     print('All four courses remain unpublished. Assign instructor, pricing, cohort schedules and deadlines before publication.')
 

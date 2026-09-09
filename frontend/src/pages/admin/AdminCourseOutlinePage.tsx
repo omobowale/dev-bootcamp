@@ -355,6 +355,7 @@ export function AdminCourseOutlinePage() {
           <h1>{course?.title ?? "Course"}</h1>
           <p className="text-muted">Manage modules, topics and course-specific FAQs.</p>
         </div>
+        <Link to={`/admin/courses/${courseId}/preview`} className="btn btn-primary">Preview student content</Link>
         <Link to={ROUTES.adminCourses} className="btn btn-secondary">
           <Icon name="arrow" size={15} style={{ transform: "rotate(180deg)" }} /> Back to courses
         </Link>

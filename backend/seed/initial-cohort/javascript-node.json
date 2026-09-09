@@ -339,7 +339,39 @@
         "dueAt": null,
         "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
         "allowedAttachmentTypes": ".pdf,.txt,.zip"
-      }
+      },
+      "scoringCriteria": [
+        {
+          "id": "implementation",
+          "label": "Working implementation",
+          "maxPoints": 35,
+          "description": "Required behavior works, including normal, empty and failure cases."
+        },
+        {
+          "id": "reasoning",
+          "label": "Conceptual reasoning",
+          "maxPoints": 25,
+          "description": "Explain the lesson concepts accurately using your own implementation."
+        },
+        {
+          "id": "testing",
+          "label": "Validation and testing",
+          "maxPoints": 20,
+          "description": "Provide reproducible checks, including an invalid or unauthorized case."
+        },
+        {
+          "id": "quality",
+          "label": "Code quality and accessibility",
+          "maxPoints": 10,
+          "description": "Use readable structure, appropriate labels and keyboard access, or a clear API contract."
+        },
+        {
+          "id": "documentation",
+          "label": "Documentation and reflection",
+          "maxPoints": 10,
+          "description": "Provide reproducible setup steps and explain a limitation or improvement."
+        }
+      ]
     },
     {
       "class": {
@@ -648,7 +680,39 @@
         "dueAt": null,
         "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
         "allowedAttachmentTypes": ".pdf,.txt,.zip"
-      }
+      },
+      "scoringCriteria": [
+        {
+          "id": "implementation",
+          "label": "Working implementation",
+          "maxPoints": 35,
+          "description": "Required behavior works, including normal, empty and failure cases."
+        },
+        {
+          "id": "reasoning",
+          "label": "Conceptual reasoning",
+          "maxPoints": 25,
+          "description": "Explain the lesson concepts accurately using your own implementation."
+        },
+        {
+          "id": "testing",
+          "label": "Validation and testing",
+          "maxPoints": 20,
+          "description": "Provide reproducible checks, including an invalid or unauthorized case."
+        },
+        {
+          "id": "quality",
+          "label": "Code quality and accessibility",
+          "maxPoints": 10,
+          "description": "Use readable structure, appropriate labels and keyboard access, or a clear API contract."
+        },
+        {
+          "id": "documentation",
+          "label": "Documentation and reflection",
+          "maxPoints": 10,
+          "description": "Provide reproducible setup steps and explain a limitation or improvement."
+        }
+      ]
     },
     {
       "class": {
@@ -956,7 +1020,39 @@
         "dueAt": null,
         "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
         "allowedAttachmentTypes": ".pdf,.txt,.zip"
-      }
+      },
+      "scoringCriteria": [
+        {
+          "id": "implementation",
+          "label": "Working implementation",
+          "maxPoints": 35,
+          "description": "Required behavior works, including normal, empty and failure cases."
+        },
+        {
+          "id": "reasoning",
+          "label": "Conceptual reasoning",
+          "maxPoints": 25,
+          "description": "Explain the lesson concepts accurately using your own implementation."
+        },
+        {
+          "id": "testing",
+          "label": "Validation and testing",
+          "maxPoints": 20,
+          "description": "Provide reproducible checks, including an invalid or unauthorized case."
+        },
+        {
+          "id": "quality",
+          "label": "Code quality and accessibility",
+          "maxPoints": 10,
+          "description": "Use readable structure, appropriate labels and keyboard access, or a clear API contract."
+        },
+        {
+          "id": "documentation",
+          "label": "Documentation and reflection",
+          "maxPoints": 10,
+          "description": "Provide reproducible setup steps and explain a limitation or improvement."
+        }
+      ]
     },
     {
       "class": {
@@ -1264,7 +1360,39 @@
         "dueAt": null,
         "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
         "allowedAttachmentTypes": ".pdf,.txt,.zip"
-      }
+      },
+      "scoringCriteria": [
+        {
+          "id": "implementation",
+          "label": "Working implementation",
+          "maxPoints": 35,
+          "description": "Required behavior works, including normal, empty and failure cases."
+        },
+        {
+          "id": "reasoning",
+          "label": "Conceptual reasoning",
+          "maxPoints": 25,
+          "description": "Explain the lesson concepts accurately using your own implementation."
+        },
+        {
+          "id": "testing",
+          "label": "Validation and testing",
+          "maxPoints": 20,
+          "description": "Provide reproducible checks, including an invalid or unauthorized case."
+        },
+        {
+          "id": "quality",
+          "label": "Code quality and accessibility",
+          "maxPoints": 10,
+          "description": "Use readable structure, appropriate labels and keyboard access, or a clear API contract."
+        },
+        {
+          "id": "documentation",
+          "label": "Documentation and reflection",
+          "maxPoints": 10,
+          "description": "Provide reproducible setup steps and explain a limitation or improvement."
+        }
+      ]
     },
     {
       "class": {
@@ -1573,7 +1701,39 @@
         "dueAt": null,
         "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
         "allowedAttachmentTypes": ".pdf,.txt,.zip"
-      }
+      },
+      "scoringCriteria": [
+        {
+          "id": "implementation",
+          "label": "Working implementation",
+          "maxPoints": 35,
+          "description": "Required behavior works, including normal, empty and failure cases."
+        },
+        {
+          "id": "reasoning",
+          "label": "Conceptual reasoning",
+          "maxPoints": 25,
+          "description": "Explain the lesson concepts accurately using your own implementation."
+        },
+        {
+          "id": "testing",
+          "label": "Validation and testing",
+          "maxPoints": 20,
+          "description": "Provide reproducible checks, including an invalid or unauthorized case."
+        },
+        {
+          "id": "quality",
+          "label": "Code quality and accessibility",
+          "maxPoints": 10,
+          "description": "Use readable structure, appropriate labels and keyboard access, or a clear API contract."
+        },
+        {
+          "id": "documentation",
+          "label": "Documentation and reflection",
+          "maxPoints": 10,
+          "description": "Provide reproducible setup steps and explain a limitation or improvement."
+        }
+      ]
     },
     {
       "class": {
@@ -1882,7 +2042,39 @@
         "dueAt": null,
         "rubric": "<ul><li><strong>Working implementation (35 points)</strong>: All required behavior works; normal, empty and failure cases are demonstrated. Partial credit: some behavior works with documented gaps. Zero: no runnable evidence.</li><li><strong>Conceptual reasoning (25 points)</strong>: Explain the lesson concepts accurately using your own implementation. Partial credit: correct examples with incomplete reasoning. Zero: unsupported or absent explanation.</li><li><strong>Validation and testing (20 points)</strong>: Reproducible checks include an invalid or unauthorized case appropriate to the task. Partial credit: happy path only. Zero: no check evidence.</li><li><strong>Code quality and accessibility (10 points)</strong>: Readable names and separation of concerns; interface tasks include labels and keyboard operation. API-only work documents clear request/response contracts. Partial credit for inconsistent application.</li><li><strong>Documentation and reflection (10 points)</strong>: Setup steps reproduce the result, and a limitation or improvement is explained. Partial credit for incomplete setup steps.</li></ul>",
         "allowedAttachmentTypes": ".pdf,.txt,.zip"
-      }
+      },
+      "scoringCriteria": [
+        {
+          "id": "implementation",
+          "label": "Working implementation",
+          "maxPoints": 35,
+          "description": "Required behavior works, including normal, empty and failure cases."
+        },
+        {
+          "id": "reasoning",
+          "label": "Conceptual reasoning",
+          "maxPoints": 25,
+          "description": "Explain the lesson concepts accurately using your own implementation."
+        },
+        {
+          "id": "testing",
+          "label": "Validation and testing",
+          "maxPoints": 20,
+          "description": "Provide reproducible checks, including an invalid or unauthorized case."
+        },
+        {
+          "id": "quality",
+          "label": "Code quality and accessibility",
+          "maxPoints": 10,
+          "description": "Use readable structure, appropriate labels and keyboard access, or a clear API contract."
+        },
+        {
+          "id": "documentation",
+          "label": "Documentation and reflection",
+          "maxPoints": 10,
+          "description": "Provide reproducible setup steps and explain a limitation or improvement."
+        }
+      ]
     }
   ]
 }

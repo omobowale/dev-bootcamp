@@ -21,3 +21,5 @@ The importer creates separate **unpublished** courses through the existing admin
 - Publish only after reviewing the course as a student. Draft files contain answer keys and belong in backend tooling, never the public frontend assets.
 
 The importer does not send invitations or create enrollments. No live course has been published by generating these files.
+
+Each assignment now also includes five structured scoring criteria (35/25/20/10/10 points). The importer configures them before students submit. Criteria become locked once submissions begin, and student reviews retain the awarded marks and criterion feedback.
